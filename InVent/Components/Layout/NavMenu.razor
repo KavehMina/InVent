@@ -1,0 +1,76 @@
+﻿@inject NavigationManager NavigationManager
+@using InVent.Extensions
+
+
+<div class="appbar">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="OpenDrawer"></MudIconButton>
+    <div>
+        <MudText Typo="Typo.body2">@PageTitleExtension.GetPageTitle(this.NavigationManager.Uri)</MudText>
+    </div>
+</div>
+
+
+
+<MudDrawer @bind-Open="@_open" Anchor="Anchor.Start" Elevation="1" Variant="@DrawerVariant.Temporary" OverlayAutoClose="true">
+    <MudDrawerHeader Style="border-bottom: 1px solid #ddd;">
+        <MudText Typo="Typo.h6">InVent</MudText>
+    </MudDrawerHeader>
+    <MudNavMenu>
+        <MudNavLink Href="/Tankers" Match="NavLinkMatch.All" Ripple>
+            <MudText Typo="Typo.body2">
+                لیست تانکرها
+            </MudText>
+        </MudNavLink>
+        <MudNavLink Href="/Tankers/AddNew" Match="NavLinkMatch.All" Ripple>
+            <MudText Typo="Typo.body2">اضافه کردن تانکر جدید</MudText>
+        </MudNavLink>
+        <MudNavLink Href="/Banks" Match="NavLinkMatch.All" Ripple>
+            <MudText Typo="Typo.body2">
+                بانک‌ها
+            </MudText>
+        </MudNavLink>
+        <AuthorizeView>
+            <Authorized>
+                <form action="Account/Logout" method="post">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <MudNavLink Match="NavLinkMatch.All" Ripple>
+                        <button type="submit" class="nav-link">
+                            <MudText Typo="Typo.body2">
+                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> خروج
+                            </MudText>
+                        </button>
+                    </MudNavLink>
+                </form>
+            </Authorized>
+        </AuthorizeView>
+    </MudNavMenu>
+</MudDrawer>
+
+@code {
+    private string? currentUrl;
+    private bool _open = false;
+
+
+    private void OpenDrawer()
+    {
+        _open = !_open;
+    }
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        this.StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
+

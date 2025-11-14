@@ -1,0 +1,14 @@
+﻿.banks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.add-bank-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.add-bank-fields-container {
+    display: flex;
+    gap:0.5rem;
+}

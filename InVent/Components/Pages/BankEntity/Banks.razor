@@ -1,0 +1,67 @@
+﻿@page "/Banks"
+@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseBankComponent
+
+<div class="banks-container">
+    <div class="add-bank-container">
+        <MudText Typo="Typo.body2">اضافه کردن بانک جدید</MudText>
+        <div class="add-bank-fields-container">
+            <MudTextField T="string"
+                          @ref=fieldref
+                          @bind-Value="this.NewBankName"
+                          Adornment="Adornment.Start"
+                          AdornmentText="بانک "
+                          OnKeyUp="e=>this.DetectEnter(e)"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudButton OnClick="this.Save"
+                       Size="Size.Small"
+                       DropShadow="false"
+                       Color="Color.Info"
+                       Variant="Variant.Filled">
+                ذخیره
+            </MudButton>
+        </div>
+    </div>
+    <div>
+        <MudTable T="Bank"
+                  Items="@this.BanksList"
+                  Hover="true"
+                  Loading="@this.Loading"
+                  Breakpoint="Breakpoint.None"
+                  @ref="this.Table"
+                  GroupHeaderStyle="background-color: #eee;"
+                  Outlined
+                  Striped
+                  LoadingProgressColor="Color.Info">
+            <NoRecordsContent>
+                <MudText>اینجا هیچ بانکی نیست.</MudText>
+                
+            </NoRecordsContent>
+            <HeaderContent>
+
+                <MudTh>
+                    <MudText Typo="Typo.body2">
+                        نام بانک
+                    </MudText>
+                </MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="نام بانک">@context.Name</MudTd>
+                <MudTd Style="width:30%;text-align:end">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                   OnClick="(e)=>this.OpenEditDialog(e,context)"
+                                   Color="Color.Info">
+                    </MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                   OnClick="(e)=>this.OpenDeleteDialog(e,context)"
+                                   Color="Color.Error">
+                    </MudIconButton>
+                </MudTd>
+
+            </RowTemplate>
+        </MudTable>
+    </div>
+</div>

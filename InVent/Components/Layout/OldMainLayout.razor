@@ -1,0 +1,66 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudRTLProvider RightToLeft>
+
+    <div class="page">
+        @* <div class="sidebar">
+            <NavMenu />
+        </div> *@
+
+            <MudDrawer @bind-Open="@this.IsOpen" Anchor="Anchor.Start" Elevation="1" Variant="@DrawerVariant.Temporary" OverlayAutoClose>
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">InVent</MudText>
+                </MudDrawerHeader>
+                <MudNavMenu>
+                    <MudNavLink Href="Tankers/AddNew">Add New Tanker</MudNavLink>
+                    <MudNavLink Href="Tankers">Tankers</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
+                    <AuthorizeView>
+                        <Authorized>
+                            <form action="Account/Logout" method="post">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                                <button type="submit" class="nav-link">
+                                    <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                                </button>
+                            </form>
+                        </Authorized>
+                    </AuthorizeView>
+                    @* <MudNavLink Href="Account/logout" Match="NavLinkMatch.All">Logout2</MudNavLink> *@
+                </MudNavMenu>
+            </MudDrawer>
+        <main>
+            <div class="top-row px-4">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="this.ToggleOpen"></MudIconButton>
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+
+    <div id="blazor-error-ui" data-nosnippet>
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+</MudRTLProvider>
+@code {
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+    }
+
+    private bool IsOpen = false;
+    private void ToggleOpen()
+    {
+        this.IsOpen = !this.IsOpen;
+    }
+}

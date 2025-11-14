@@ -1,0 +1,201 @@
+﻿@page "/Tankers/AddNew"
+@using InVent.Components.Pages.Internals;
+@using InVent.Data.Models
+@inherits BaseTankerComponent
+
+
+<MudForm @ref="this.form" @bind-IsValid="@this.success" @bind-Errors="@errors">
+    <div class="form">
+        @* Validation=@(new Func<string, string>(this.ValidateNumberPlate))
+        Pattern="\\d\\d[A-Za-z]\\d\\d\\d\\d\\d" *@
+        <div class="number-plate">
+            <MudText>پلاک ماشین</MudText>
+            <div class="number-plate-field">
+                <MudTextField T="string"
+                              @ref="this.TextFieldRefs[0]"
+                              InputId="1"
+                              Mask="Mask1"
+                              Value=this.First
+                              ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[1])"
+                              Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
+                              AutoFocus
+                              Required
+                              RequiredError="اجباری"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @ref="this.TextFieldRefs[1]"
+                              InputId="2"
+                              Mask="Mask2"
+                              Value=this.Second
+                              ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[1],this.TextFieldRefs[2])"
+                              Validation=@(new Func<string,string>(this.ValidateSecondPartofNumberPlate))
+                              Required
+                              RequiredError="اجباری"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @ref="this.TextFieldRefs[2]"
+                              InputId="3"
+                              Mask="Mask3"
+                              Value=this.Third
+                              ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[2],this.TextFieldRefs[3])"
+                              Validation=@(new Func<string,string>(this.ValidateThirdPartofNumberPlate))
+                              Required
+                              RequiredError="اجباری"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @ref="this.TextFieldRefs[3]"
+                              InputId="4"
+                              Mask="Mask1"
+                              Value=this.fourth
+                              ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])"
+                              Validation=@(new Func<string,string>(this.ValidateForthPartofNumberPlate))
+                              Adornment="Adornment.End"
+                              AdornmentText="-ایران"
+                              AdornmentColor="Color.Info"
+                              Required
+                              RequiredError="اجباری"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </div>
+        </div>
+        @* Validation=@(new Func<string, string>(this.ValidateNumberPlate)) *@
+        @* <MudTextField T="string"
+                      @bind-Value=this.TankerNumber
+                      Mask="NumberPlateMask"
+                      Required
+                      RequiredError="پلاک ماشین اجباری است."
+                      Label="پلاک ماشین"
+                      Variant="Variant.Outlined">
+        </MudTextField> *@
+        <MudTextField T="string"
+                      InputId="5"
+                      @ref=this.TextFieldRefs[4]
+                      @bind-Value=this.DriverName
+                      Required
+                      RequiredError="نام راننده اجباری است."
+                      Clearable
+                      ClearIcon="@Icons.Material.Filled.Clear"
+                      OnClearButtonClick="()=>this.DriverName=null"
+                      Label="نام راننده"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <MudTextField T="string"
+                      InputId="6"
+                      @ref=this.TextFieldRefs[5]
+                      Mask="MobileMask"
+                      Value=this.DriverPhone
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[5],this.TextFieldRefs[6])"
+                      Validation="@(new Func<string, string>(this.ValidateMobilePhone))"
+                      Required
+                      RequiredError="تلفن راننده اجباری است."
+                      Immediate="false"
+                      OnlyValidateIfDirty
+                      Clearable
+                      ClearIcon="@Icons.Material.Filled.Clear"
+                      OnClearButtonClick="()=>this.DriverPhone=null"
+                      Label="تلفن راننده"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <div class="bank-container">
+            <MudTextField T="string"
+                          InputId="7"
+                          @ref=this.TextFieldRefs[6]
+                          @bind-Value=this.DriverBankNumber
+                          Label="شماره حساب راننده"
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.DriverBankNumber=null"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudAutocomplete T="Bank"
+                             @bind-Value="this.DriverBank"
+                             ToStringFunc="(e)=> BankToString(e)"
+                             SearchFunc="this.SearchBanks"
+                             Label="بانک راننده"
+                             Clearable
+                             ClearIcon="@Icons.Material.Filled.Clear"
+                             OnClearButtonClick="()=>this.DriverBank=null"
+                             Variant="Variant.Outlined">
+            </MudAutocomplete>
+        </div>
+        <MudTextField T="string"
+                      InputId="8"
+                      @ref=this.TextFieldRefs[7]
+                      @bind-Value=this.OwnerName
+                      Label="نام مالک"
+                      Clearable
+                      ClearIcon="@Icons.Material.Filled.Clear"
+                      OnClearButtonClick="()=>this.OwnerName=null"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <MudTextField T="string"
+                      InputId="9"
+                      @ref=this.TextFieldRefs[8]
+                      Value=this.OwnerPhone
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[8],this.TextFieldRefs[9])"
+                      Mask="MobileMask"
+                      Validation="@(new Func<string, string>(this.ValidateMobilePhone))"
+                      Label="تلفن مالک"
+                      Immediate="false"
+                      Clearable
+                      OnlyValidateIfDirty
+                      ClearIcon="@Icons.Material.Filled.Clear"
+                      OnClearButtonClick="()=>{this.OwnerBankNumber=null;this.TextFieldRefs[8].Validate();}"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <div class="bank-container">
+            <MudTextField T="string"
+                          InputId="10"
+                          @ref=this.TextFieldRefs[9]
+                          @bind-Value=this.OwnerBankNumber
+                          Label="شماره حساب مالک"
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>{this.OwnerBankNumber=null;this.form.Validate();}"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudAutocomplete T="Bank"
+                             @bind-Value="this.OwnerBank"
+                             ToStringFunc="(e)=> BankToString(e)"
+                             SearchFunc="this.SearchBanks"
+                             Label="بانک مالک"
+                             Clearable
+                             ClearIcon="@Icons.Material.Filled.Clear"
+                             OnClearButtonClick="()=>this.OwnerBank=null"
+                             Variant="Variant.Outlined">
+            </MudAutocomplete>
+        </div>
+        <MudSelect T="string"
+                   InputId="11"
+                   @bind-Value=this.CargoType
+                   Required
+                   RequiredError="نوع بار اجباری است."
+                   Label="نوع بار"
+                   Clearable
+                   ClearIcon="@Icons.Material.Filled.Clear"
+                   OnClearButtonClick="()=>this.CargoType=null"
+                   Variant="Variant.Outlined">
+            <MudSelectItem Value="RPO"></MudSelectItem>
+            <MudSelectItem Value="SlackWax"></MudSelectItem>
+            <MudSelectItem Value="RPOSlack"></MudSelectItem>
+            <MudSelectItem Value="Bitumen"></MudSelectItem>
+        </MudSelect>
+        @if (this.Loading)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled>
+                <MudProgressCircular Size="Size.Small" Color="Color.Primary" Indeterminate="true"></MudProgressCircular>
+            </MudButton>
+
+        }
+        else
+        {
+            <MudButton Variant="Variant.Filled" OnClick="this.Save" Color="Color.Primary" Disabled=@this.ButtonDisabled>ذخیره</MudButton>
+        }
+    </div>
+</MudForm>
+
+
+

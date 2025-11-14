@@ -1,0 +1,90 @@
+﻿@page "/Tankers"
+@using InVent.Components.Pages.Internals;
+@using InVent.Data.Models;
+@inherits BaseTankerComponent
+
+<MudTable T="TankerViewModel"
+          Items="@this.Tankers"
+          OnRowClick="(e)=>HandleClick(e)"
+          Hover="true"
+          Breakpoint="Breakpoint.Sm"
+          Loading="@this.Loading"
+          RowClass="cursor-pointer"
+          Outlined
+          HorizontalScrollbar
+          Striped
+          @ref="this.Table"
+          LoadingProgressColor="Color.Info">
+    <NoRecordsContent>
+        <MudText Style="margin-bottom:1rem">اینجا هیچ تانکری نیست.</MudText>
+        <MudButton OnClick="()=>this.GoToNewTanker()"
+                   Color="Color.Info"
+                   Variant="Variant.Filled"
+                   Size="Size.Large">اضافه کردن تانکر جدید</MudButton>
+        @* <MudText Typo="Typo.h2">¯/_(ツ)_\¯</MudText> *@
+    </NoRecordsContent>
+    <HeaderContent>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                پلاک
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                نام راننده
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                تلفن راننده
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                شماره حساب راننده
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                بانک راننده
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                نام مالک
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                تلفن مالک
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                شماره حساب مالک
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                بانک مالک
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.body2">
+                نوع بار
+            </MudText>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="پلاک">@context.Number</MudTd>
+        <MudTd DataLabel="نام راننده">@context.DriverName</MudTd>
+        <MudTd DataLabel="تلفن راننده">@context.DriverPhone</MudTd>
+        <MudTd DataLabel="شماره حساب راننده">@context.DriverBankNumber</MudTd>
+        <MudTd DataLabel="بانک راننده">@context.DriverBankName</MudTd>
+        <MudTd DataLabel="نام مالک">@context.OwnerName</MudTd>
+        <MudTd DataLabel="تلفن مالک">@context.OwnerPhone</MudTd>
+        <MudTd DataLabel="شماره حساب مالک">@context.OwnerBankNumber</MudTd>
+        <MudTd DataLabel="بانک مالک">@context.OwnerBankName</MudTd>
+        <MudTd DataLabel="نوع بار">@context.CargoType</MudTd>
+    </RowTemplate>
+</MudTable>

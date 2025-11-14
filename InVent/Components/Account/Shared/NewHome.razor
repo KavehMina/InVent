@@ -1,0 +1,13 @@
+﻿@page "/"
+@using InVent.Components.Pages.TankerEntity
+@using InVent.Components.Account.Shared
+
+<AuthorizeView>
+    <Authorized>
+       <TankersList></TankersList>      
+    </Authorized>
+    <NotAuthorized>        
+        <RedirectToLogin></RedirectToLogin>
+    </NotAuthorized>
+</AuthorizeView>
+

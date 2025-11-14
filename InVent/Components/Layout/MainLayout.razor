@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+
+
+<MudRTLProvider RightToLeft>
+    <MudThemeProvider Theme="InVentTheme" />
+    <MudPopoverProvider />
+    <MudDialogProvider FullWidth="true"
+                       MaxWidth="MaxWidth.ExtraSmall"
+                       CloseButton="false"
+                       BackdropClick="false"
+                       Position="DialogPosition.Center"
+                       CloseOnEscapeKey="true" />
+    <MudSnackbarProvider />
+    <MudLayout>
+        <NavMenu></NavMenu>
+        <div class="body-container">
+            @Body
+        </div>
+        <div id="blazor-error-ui" data-nosnippet>
+            An unhandled error has occurred.
+            <a href="." class="reload">Reload</a>
+            <span class="dismiss">🗙</span>
+        </div>
+    </MudLayout>
+</MudRTLProvider>
+
+
+
