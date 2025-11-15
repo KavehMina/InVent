@@ -94,8 +94,9 @@
                           OnClearButtonClick="()=>this.Tanker.DriverBankNumber=null"
                           Variant="Variant.Outlined">
             </MudTextField>
+                             @* @bind-Value="this.DriverBank" *@
             <MudAutocomplete T="Bank"
-                             @bind-Value="this.DriverBank"
+                             @bind-Value="this.Tanker.DriverBank"
                              ToStringFunc="(e)=> BankToString(e)"
                              SearchFunc="this.SearchBanks"
                              Label="بانک راننده"
@@ -137,8 +138,9 @@
                           OnClearButtonClick="()=>{this.Tanker.OwnerBankNumber=null;this.form.Validate();}"
                           Variant="Variant.Outlined">
             </MudTextField>
+                             @* @bind-Value="this.OwnerBank" *@
             <MudAutocomplete T="Bank"
-                             @bind-Value="this.OwnerBank"
+                             @bind-Value="this.Tanker.OwnerBank"
                              ToStringFunc="(e)=> BankToString(e)"
                              SearchFunc="this.SearchBanks"
                              Label="بانک مالک"

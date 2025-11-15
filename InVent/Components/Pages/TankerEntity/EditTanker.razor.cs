@@ -55,13 +55,13 @@ namespace InVent.Components.Pages.TankerEntity
                     SplitTankerNumber();
                 }
                 else this.HandleMessage(res.Message, res.Success);
-                if (Tanker != null)
-                {
-                    if (Tanker.DriverBankId != null)
-                        DriverBank = (await BankService.GetBankById((Guid)Tanker.DriverBankId)).Entities?.FirstOrDefault();
-                    if (Tanker.OwnerBankId != null)
-                        OwnerBank = (await BankService.GetBankById((Guid)Tanker.OwnerBankId))?.Entities?.FirstOrDefault();
-                }
+                //if (Tanker != null)
+                //{
+                //    if (Tanker.DriverBankId != null)
+                //        DriverBank = (await BankService.GetBankById((Guid)Tanker.DriverBankId)).Entities?.FirstOrDefault();
+                //    if (Tanker.OwnerBankId != null)
+                //        OwnerBank = (await BankService.GetBankById((Guid)Tanker.OwnerBankId))?.Entities?.FirstOrDefault();
+                //}
                 Banks = (await BankService.GetAllBanks()).Entities ?? [];
             }
             catch (Exception err)
@@ -106,8 +106,8 @@ namespace InVent.Components.Pages.TankerEntity
                 try
                 {
                     Tanker.Number = TankerNumber;
-                    Tanker.DriverBankId = DriverBank?.Id;
-                    Tanker.OwnerBankId = OwnerBank?.Id;
+                    this.Tanker.DriverBankId = this.Tanker.DriverBank?.Id;
+                    this.Tanker.OwnerBankId = this.Tanker.OwnerBank?.Id;
                     var res = await this.TankerService.EditTanker(Tanker);
                     this.HandleMessage(res.Message, res.Success);
                     if (res.Success)

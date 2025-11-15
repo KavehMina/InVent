@@ -29,13 +29,14 @@ namespace InVent.Data.Models
         [Column("CargoType"), Required]
         public required string CargoType { get; set; }
 
-
-
-        //[ForeignKey("DriverBankId")]
-        //public Bank? DriverBank { get; set; }
-
-        //[ForeignKey("OwnerBankId")]
-        //public Bank? OwnerBank { get; set; }
+        //CONSTRAINT [FK_Tankers_DriverBankId] FOREIGN KEY ([DriverBankId]) REFERENCES [dbo].[Banks] ([Id])
+        //needs this:
+        [ForeignKey("DriverBankId")]
+        public Bank? DriverBank { get; set; }
+        //CONSTRAINT [FK_Tankers_OwnerBankId] FOREIGN KEY ([OwnerBankId]) REFERENCES [dbo].[Banks] ([Id])
+        //needs this:
+        [ForeignKey("OwnerBankId")]
+        public Bank? OwnerBank { get; set; }
     }
 
     public class TankerResponseModel
