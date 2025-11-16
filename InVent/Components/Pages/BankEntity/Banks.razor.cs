@@ -9,12 +9,12 @@ namespace InVent.Components.Pages.BankEntity
 {
     public partial class Banks
     {
-        [Inject]
-        public required IDialogService DialogService { get; set; }
+        //[Inject]
+        //public required IDialogService DialogService { get; set; }
         public List<Bank> BanksList { get; set; } = [];
         public string? NewBankName { get; set; }
         public required MudTable<Bank> Table { get; set; }
-        public MudTextField<string> fieldref { get; set; }
+        public required MudTextField<string> Fieldref { get; set; }
         protected override async Task OnInitializedAsync()
         {
             await this.RefreshList();
@@ -63,7 +63,7 @@ namespace InVent.Components.Pages.BankEntity
                     if (res.Success)
                     {
                         this.NewBankName = string.Empty;
-                        await this.fieldref.BlurAsync();
+                        await this.Fieldref.BlurAsync();
                     }
 
                 }

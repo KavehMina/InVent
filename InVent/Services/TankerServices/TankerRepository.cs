@@ -47,7 +47,14 @@ namespace InVent.Services.TankerServices
         public async Task<ResponseModel<TankerViewModel>> GetAllWithBankNames()
         {
             using var context = contextFactory.CreateDbContext();
+            try
+            {
 
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
             var list = await context.Tankers
                 .Include(x => x.DriverBank)
                 .Include(x => x.OwnerBank)

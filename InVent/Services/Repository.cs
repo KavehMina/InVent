@@ -2,7 +2,6 @@
 using InVent.Data.Constants;
 using InVent.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using MudBlazor.Charts;
 
 namespace InVent.Services
 {
@@ -24,8 +23,11 @@ namespace InVent.Services
             using var context = this.contextFactory.CreateDbContext();
             try
             {
-                //var res = await context.AddAsync(entity);
                 var res = await context.Set<T>().AddAsync(entity);
+
+                //To check what's being added
+                //var entries = context.ChangeTracker.Entries();
+
                 await context.SaveChangesAsync();
                 var response = new ResponseModel<T>
                 {

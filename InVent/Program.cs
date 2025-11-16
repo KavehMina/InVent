@@ -4,6 +4,15 @@ using InVent.Data;
 using InVent.Data.Models;
 using InVent.Services;
 using InVent.Services.BankServices;
+using InVent.Services.CarrierServices;
+using InVent.Services.CustomerServices;
+using InVent.Services.CustomsServices;
+using InVent.Services.DeliveryOrderServices;
+using InVent.Services.EntryServices;
+using InVent.Services.PackageServices;
+using InVent.Services.ProductServices;
+using InVent.Services.ProjectServices;
+using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,13 +29,43 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-//096 starts
+///096 starts
+//Generic
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+//Tanker
 builder.Services.AddScoped<ITankerRepository, TankerRepository>();
 builder.Services.AddScoped<TankerService>();
+//Bank
 builder.Services.AddScoped<IBankRepository,BankRepository>();
 builder.Services.AddScoped<BankService>();
-//096 ends
+//Carrier
+builder.Services.AddScoped<ICarrierRepositpry, CarrierRepository>();
+builder.Services.AddScoped<CarrierService>();
+//Customer
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<CustomerService>();
+//Product
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ProductService>();
+//Refinery
+builder.Services.AddScoped<IRefineryRepository, RefineryRepository>();
+builder.Services.AddScoped<RefineryService>();
+//Customs
+builder.Services.AddScoped<ICustomsRepository, CustomsRepository>();
+builder.Services.AddScoped<CustomsService>();
+//Package
+builder.Services.AddScoped<IPackageRepository, PackageRepository>();
+builder.Services.AddScoped<PackageService>();
+//DeliveryOrder
+builder.Services.AddScoped<IDeliveryOrderRepository, DeliveryOrderRepository>();
+builder.Services.AddScoped<DeliveryOrderService>();
+//Project
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ProjectService>();
+//Entry
+builder.Services.AddScoped<IEntryRepository, EntryRepository>();
+builder.Services.AddScoped<EntryService>();
+///096 ends
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -37,10 +76,10 @@ builder.Services.AddAuthentication(options =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-//096 starts
+///096 starts
 builder.Services.AddDbContextFactory<EntityDBContext>(options =>
 options.UseSqlServer(connectionString));
-//096 ends
+///096 ends
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

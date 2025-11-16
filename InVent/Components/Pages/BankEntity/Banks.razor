@@ -8,7 +8,7 @@
         <MudText Typo="Typo.body2">اضافه کردن بانک جدید</MudText>
         <div class="add-bank-fields-container">
             <MudTextField T="string"
-                          @ref=fieldref
+                          @ref=Fieldref
                           @bind-Value="this.NewBankName"
                           Adornment="Adornment.Start"
                           AdornmentText="بانک "
@@ -37,10 +37,9 @@
                   LoadingProgressColor="Color.Info">
             <NoRecordsContent>
                 <MudText>اینجا هیچ بانکی نیست.</MudText>
-                
+
             </NoRecordsContent>
             <HeaderContent>
-
                 <MudTh>
                     <MudText Typo="Typo.body2">
                         نام بانک
@@ -60,7 +59,6 @@
                                    Color="Color.Error">
                     </MudIconButton>
                 </MudTd>
-
             </RowTemplate>
         </MudTable>
     </div>

@@ -8,24 +8,44 @@ namespace InVent.Data.Models
     {
         [Key]
         public Guid Id { get; set; }
+
+
         [Column("Number"), Required]
         public required string Number { get; set; }
+
+
         [Column("DriverName"), Required]
         public required string DriverName { get; set; }
+
+
         [Column("DriverPhone"), Required]
         public required string DriverPhone { get; set; }
+
+
         [Column("DriverBankNumber")]
         public string? DriverBankNumber { get; set; }
+
+
         [Column("DriverBankId"), ForeignKey("Bank_id")]
         public Guid? DriverBankId { get; set; }
+
+
         [Column("OwnerName")]
         public string? OwnerName { get; set; }
+
+
         [Column("OwnerPhone")]
         public string? OwnerPhone { get; set; }
-        [Column("OwnerBankNumber"), ForeignKey("Bank_id")]
+
+
+        [Column("OwnerBankNumber")]
         public string? OwnerBankNumber { get; set; }
-        [Column("OwnerBankId")]
+
+
+        [Column("OwnerBankId"), ForeignKey("Bank_id")]
         public Guid? OwnerBankId { get; set; }
+
+
         [Column("CargoType"), Required]
         public required string CargoType { get; set; }
 

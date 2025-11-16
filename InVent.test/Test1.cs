@@ -1,22 +1,43 @@
-﻿using System;
-//using System.Security.Cryptography.X509Certificates;
-
-using InVent.Data.Models;
+﻿using InVent.Data.Models;
 using InVent.Extensions;
 using InVent.Services;
 using InVent.Services.TankerServices;
 using Microsoft.Identity.Client;
 using System.Reflection;
+using InVent.Services.BankServices;
+using Microsoft.AspNetCore.Components;
+using InVent.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using InVent.Services.CarrierServices;
 
 namespace InVent.test
 {
     [TestClass]
-    public sealed class Test1(TankerRepository tankerRepository)//IRepository<Tanker> repository, IServiceProvider serviceProvider,)
+    public sealed class Test1
     {
-        public required TankerRepository TankerRepository = tankerRepository;
+        readonly string connectionString = "Server=(localdb)\\mssqllocaldb;Database=aspnet-InVent-b16ffdae-8176-460a-87c3-429d51321939;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        //public readonly IRepository<Tanker> Repository;
-        //public readonly IServiceProvider ServiceProvider;
+        private IHost GetHost() => new HostBuilder()
+            .UseDefaultServiceProvider(s => s.ValidateScopes = false)
+            .ConfigureAppConfiguration(a => a.AddJsonFile("appsettings.json"))
+            .ConfigureServices((c, s) =>
+              {
+                  s.AddScoped<BankRepository>();
+                  s.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+                  s.AddScoped<ITankerRepository, TankerRepository>();
+                  s.AddScoped<TankerService>();
+                  s.AddScoped<IBankRepository, BankRepository>();
+                  s.AddScoped<BankService>();
+                  s.AddScoped<ICarrierRepositpry, CarrierRepository>();
+                  s.AddScoped<CarrierService>();
+                  s.AddDbContextFactory<EntityDBContext>(options => options.UseSqlServer(connectionString));
+              }).Build();
+
+
+
         public class TestModel
         {
             public int Id { get; set; }
@@ -131,9 +152,16 @@ namespace InVent.test
         [TestMethod]
         public async Task GetAllTankerViewModels()
         {
-            var res = await TankerRepository.GetAllWithBankNames();
-            Console.WriteLine(res.Message);
+            await Task.CompletedTask;
+            var host = GetHost();
+            var service = host.Services.GetService<BankService>();
+            var repo = host.Services.GetService<IBankRepository>();
+            var bankRepo = host.Services.GetService<BankRepository>();
+            //var res = await service?.GetAll();
+            Console.WriteLine();
         }
+
+
     }
 
 

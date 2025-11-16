@@ -10,8 +10,7 @@ namespace InVent.Components.Pages.TankerEntity
 {
     public partial class EditTanker()
     {
-        [Inject]
-        public required IDialogService DialogService { get; set; }
+
         [Inject]
         public required BankService BankService { get; set; }
         [Parameter]
