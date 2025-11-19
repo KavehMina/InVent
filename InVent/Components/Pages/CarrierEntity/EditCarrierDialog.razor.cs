@@ -47,7 +47,7 @@ namespace InVent.Components.Pages.CarrierEntity
         private async Task Submit()
         {
             await this.BeginLoadingProcess();
-
+            await this.form.Validate();
             if (this.form.IsTouched && this.form.IsValid)
             {
                 try

@@ -1,0 +1,34 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BasePackageDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm ReadOnly>
+            <MudTextField T="string"
+                          Value="this.Package.Name"
+                          Required
+                          Label="نام بسته‌بندی"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int?"
+                          Value="this.Package.Volume"
+                          Label="حجم بارگیری"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int?"
+                          Value="this.Package.Weight"
+                          Label="وزن ظرف"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

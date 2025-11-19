@@ -103,6 +103,8 @@ namespace InVent.Services
             try
             {
                 var res = context.Set<T>().Remove(entity);
+                //to see what's being deleted
+                //var entries = context.ChangeTracker.Entries();
                 await context.SaveChangesAsync();
                 var response = new ResponseModel<T>
                 {

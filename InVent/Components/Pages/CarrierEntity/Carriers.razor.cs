@@ -39,7 +39,6 @@ namespace InVent.Components.Pages.CarrierEntity
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
-                //{ "Bank", item },
                 { "Header" , "شرکت حمل‌ونقل جدید" }
             };
 

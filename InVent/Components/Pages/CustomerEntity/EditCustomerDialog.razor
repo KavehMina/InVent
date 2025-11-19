@@ -1,0 +1,26 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseCustomerDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.Customer != null)
+        {
+            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                <MudTextField T="string"
+                              @bind-Value="this.Customer.Name"
+                              Required
+                              Label="نام مشتری"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ویرایش</MudButton>
+    </DialogActions>
+</MudDialog>

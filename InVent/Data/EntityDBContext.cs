@@ -15,7 +15,7 @@ namespace InVent.Data
         public DbSet<Port> Ports { get; set; }
         public DbSet<Customs> Customs { get; set; }
         public DbSet<DeliveryOrder> DeliveryOrders { get; set; }
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }             
         public DbSet<Entry> Entries { get; set; }
         
 

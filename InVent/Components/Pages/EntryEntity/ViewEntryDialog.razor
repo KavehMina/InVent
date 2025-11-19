@@ -1,0 +1,115 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@using InVent.Extensions
+@inherits BaseEntryDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.Entry != null)
+        {
+            <MudForm ReadOnly>
+                <div class="entry-top">
+                    <MudAutocomplete T="string"
+                                     Value="this.Entry.Refinery?.Name"
+                                     Label="پالایشگاه"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Label="بسته‌بندی"
+                                     Value="this.Entry.Package?.Name"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Value="this.Entry.DeliveryOrder?.DeliveryOrderId"
+                                     Label="حواله"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Value="this.Entry.Product?.Name"
+                                     Label="محصول"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                </div>
+                <div class="entry-mid">
+                <MudDatePicker Date=this.Date
+                               Culture="@DateExtension.GetPersianCulture()"
+                               TitleDateFormat="dddd, dd MMMM"
+                               DateFormat="yyyy/MM/dd"
+                               Variant="Variant.Outlined"
+                               Label="تاریخ">
+
+                </MudDatePicker>
+                    <MudAutocomplete T="string"
+                                 Value="this.Entry.Tanker?.DriverName"
+                                 Label="راننده"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+
+                <MudTextField T="int"
+                              Value="this.Entry.Filled"
+                              Label="تعداد بسته"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int"
+                              Value="this.Entry.Damaged"
+                              Label="معیوب"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                </div>
+                <div class="entry-ref">
+                    <MudTextField T="int"
+                                  Value="this.Entry.RefineryFilled"
+                                  Label="پر پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int"
+                                  Value="this.Entry.RefineryEmpty"
+                                  Label="خالی پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.RefineryNet"
+                                  Label="خالص پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="entry-war">
+                    <MudTextField T="int"
+                                  Value="this.Entry.WarehouseFilled"
+                                  Label="پر انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int"
+                                  Value="this.Entry.WarehouseEmpty"
+                                  Label="خالی انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.WarehouseNet"
+                                  Label="خالص انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="entry-bot">
+                    <MudTextField T="int?"
+                                  Value="this.Difference"
+                                  Style="background-color:limegreen"
+                                  Label="اختلاف"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="Double?"
+                                  Value="this.Average"
+                                  Label="متوسط بسته"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

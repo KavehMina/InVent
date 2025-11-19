@@ -1,0 +1,38 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseDeliveryOrderDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.DeliveryOrder != null)
+        {
+            <MudForm ReadOnly>
+                <MudSwitch T="bool"
+                           Value=this.DeliveryOrder.Status
+                           Label="@this.StatusText">
+                </MudSwitch>
+                <MudTextField T="string"
+                              Value="this.DeliveryOrder.DeliveryOrderId"                              
+                              Label="شماره حواله"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudAutocomplete T="string"
+                                 Value="this.DeliveryOrder.Project?.Number.ToString()"
+                                 Label="شماره پروژه"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+                <MudTextField T="int"
+                              Value="this.DeliveryOrder.Weight"
+                              Label="وزن حواله"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -61,6 +61,17 @@ input[type="text"] {
     background-color: #eee;
 }
 /*MUDBLAZOR OVERRIDES*/
+
+.entry-top, .entry-ref, .entry-war, .entry-mid, .entry-bot {
+    display: flex;
+    gap: 0.5rem
+}
+@media(max-width: 700px){
+    .entry-top, .entry-ref, .entry-war, .entry-mid, .entry-bot {
+        flex-wrap: wrap;
+    }
+}
+
 a, .btn-link {
     color: #006bb7;
 }

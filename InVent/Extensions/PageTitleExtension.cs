@@ -14,8 +14,13 @@ namespace InVent.Extensions
                 "Products" => "محصولات",
                 "Carriers" => "شرکت‌های حمل ونقل",
                 "Refineries" => "پالایشگاه‌ها",
-                "Packages" => "پکیج‌ها",
-                "Customers" => "مشتریان",
+                "Packages" => "بسته‌بندی‌ها",
+                "Customers" => "مشتری‌ها",
+                "Ports" => "بندرها",
+                "Customs" => "گمرک‌ها",
+                "Projects" => "پروژه‌ها",
+                "DeliveryOrders" => "حواله‌ها",
+                "Entries" => "ورودی‌ها",
                 _ => "InVent",
             };
 

@@ -1,0 +1,57 @@
+﻿@page "/Projects"
+@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseProjectComponent
+
+<div class="entity-container">
+    <MudIconButton OnClick="e=>this.OpenAddDialog(e)"
+                   Icon="@Icons.Material.Filled.Add"
+                   Variant="Variant.Filled"
+                   DropShadow="false"
+                   Size="Size.Small"
+                   Style="width:10%"
+                   Color="Color.Info"></MudIconButton>
+    <MudTable T="Project"
+              Items="@this.ProjectsList"
+              @ref="this.Table"
+              RowClass="cursor-pointer"
+              Hover="true"
+              Loading="@this.Loading"
+              OnRowClick="e=>this.OpenViewDialog(e)"
+              Breakpoint="Breakpoint.None"
+              GroupHeaderStyle="background-color: #eee;"
+              Outlined
+              Striped
+              LoadingProgressColor="Color.Info">
+        <NoRecordsContent>
+            <MudText>اینجا هیچی نیست.</MudText>
+        </NoRecordsContent>
+        <HeaderContent>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    شماره
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    مشتری
+                </MudText>
+            </MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="شماره">@context.Number</MudTd>
+            <MudTd DataLabel="نام">@context.Customer?.Name</MudTd>
+            <MudTd Style="width:30%;text-align:end">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               OnClick="(e)=>this.OpenEditDialog(e,context)"
+                               Color="Color.Info">
+                </MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               OnClick="(e)=>this.OpenDeleteDialog(e,context)"
+                               Color="Color.Error">
+                </MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</div>

@@ -1,0 +1,31 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseRefineryDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+            <MudTextField T="string"
+                          @bind-Value="this.Refinery.Name"
+                          Required
+                          Label="نام پالایشگاه"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="string"
+                          @bind-Value="this.Refinery.City"
+                          Required
+                          Label="شهر"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ذخیره</MudButton>
+    </DialogActions>
+</MudDialog>

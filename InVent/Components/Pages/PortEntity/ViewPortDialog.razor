@@ -1,0 +1,30 @@
+﻿@using InVent.Components.Pages.Internals
+@inherits BasePortDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm ReadOnly>
+            <MudTextField T="string"
+                          Value="this.Port.Name"
+                          Required
+                          Label="نام بندر"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int"
+                          Value="this.Port.Number"
+                          Required
+                          Label="شماره بندر"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

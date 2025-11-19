@@ -1,0 +1,33 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseProductDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.Product != null)
+        {
+            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                <MudTextField T="string"
+                              @bind-Value="this.Product.Name"
+                              Required
+                              Label="نام محصول"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @bind-Value="this.Product.Grade"
+                              Required
+                              Label="Grade"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ویرایش</MudButton>
+    </DialogActions>
+</MudDialog>

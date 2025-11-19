@@ -1,0 +1,53 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseDeliveryOrderDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+            <MudSwitch T="bool"
+                       @bind-Value=this.Status
+                       Label="@this.StatusText">
+            </MudSwitch>
+            <MudTextField T="string"
+                          @bind-Value="this.Number"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.Number = null"
+                          Label="شماره حواله"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudAutocomplete T="Project"
+                             @bind-Value="this.Project"
+                             Required
+                             ToStringFunc="(e)=> ProjectToString(e)"
+                             SearchFunc="this.SearchProjects"
+                             Label="شماره پروژه"
+                             Clearable
+                             ClearIcon="@Icons.Material.Filled.Clear"
+                             OnClearButtonClick="()=>this.Project = null"
+                             Variant="Variant.Outlined">
+            </MudAutocomplete>
+            <MudTextField T="int?"
+                          @bind-Value="this.Weight"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.Weight = null"
+                          Label="وزن حواله"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ذخیره</MudButton>
+    </DialogActions>
+</MudDialog>

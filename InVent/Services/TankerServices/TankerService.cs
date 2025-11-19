@@ -6,7 +6,7 @@ namespace InVent.Services.TankerServices
 
     public class TankerService(ITankerRepository repository)
     {
-        public async Task<ResponseModel<Tanker>> GetAllTankers() => await repository.GetAll();
+        public async Task<ResponseModel<Tanker>> GetAll() => await repository.GetAll();
         //public async Task<ResponseModel<Tanker>> GetTankerById(string id) => await repository.GetById(new Guid(id));
         public async Task<ResponseModel<TankerViewModel>> GetTankerById(string id)
         {

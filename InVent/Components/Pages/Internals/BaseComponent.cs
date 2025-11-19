@@ -1,5 +1,14 @@
 ﻿using InVent.Services.BankServices;
 using InVent.Services.CarrierServices;
+using InVent.Services.CustomerServices;
+using InVent.Services.CustomsServices;
+using InVent.Services.DeliveryOrderServices;
+using InVent.Services.EntryServices;
+using InVent.Services.PackageServices;
+using InVent.Services.PortServices;
+using InVent.Services.ProductServices;
+using InVent.Services.ProjectServices;
+using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -62,5 +71,50 @@ namespace InVent.Components.Pages.Internals
     {
         [Inject]
         public required CarrierService CarrierService { get; set; }
+    }
+    public class BaseProductComponent : BaseComponent
+    {
+        [Inject]
+        public required ProductService ProductService { get; set; }
+    }
+    public class BaseCustomerComponent : BaseComponent
+    {
+        [Inject]
+        public required CustomerService CustomerService { get; set; }
+    }
+    public class BaseCustomsComponent : BaseComponent
+    {
+        [Inject]
+        public required CustomsService CustomsService { get; set; }
+    }
+    public class BaseRefineryComponent : BaseComponent
+    {
+        [Inject]
+        public required RefineryService RefineryService { get; set; }
+    }
+    public class BasePortComponent : BaseComponent
+    {
+        [Inject]
+        public required PortService PortService { get; set; }
+    }
+    public class BasePackageComponent : BaseComponent
+    {
+        [Inject]
+        public required PackageService PackageService { get; set; }
+    }
+    public class BaseEntryComponent : BaseComponent
+    {
+        [Inject]
+        public required EntryService EntryService { get; set; }
+    }
+    public class BaseProjectComponent : BaseComponent
+    {
+        [Inject]
+        public required ProjectService ProjectService { get; set; }
+    }
+    public class BaseDeliveryOrderComponent : BaseComponent
+    {
+        [Inject]
+        public required DeliveryOrderService DeliveryOrderService { get; set; }
     }
 }

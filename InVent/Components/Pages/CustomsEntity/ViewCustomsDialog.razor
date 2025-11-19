@@ -1,0 +1,30 @@
+﻿@using InVent.Components.Pages.Internals
+@inherits BaseCustomsDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm ReadOnly>
+            <MudTextField T="string"
+                          Value="this.Customs.Name"
+                          Required
+                          Label="نام گمرک"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int"
+                          Value="this.Customs.Number"
+                          Required
+                          Label="شماره گمرک"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

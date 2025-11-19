@@ -10,6 +10,7 @@ using InVent.Services.CustomsServices;
 using InVent.Services.DeliveryOrderServices;
 using InVent.Services.EntryServices;
 using InVent.Services.PackageServices;
+using InVent.Services.PortServices;
 using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
@@ -53,6 +54,9 @@ builder.Services.AddScoped<RefineryService>();
 //Customs
 builder.Services.AddScoped<ICustomsRepository, CustomsRepository>();
 builder.Services.AddScoped<CustomsService>();
+//Ports
+builder.Services.AddScoped<IPortRepository, PortRepository>();
+builder.Services.AddScoped<PortService>();
 //Package
 builder.Services.AddScoped<IPackageRepository, PackageRepository>();
 builder.Services.AddScoped<PackageService>();
