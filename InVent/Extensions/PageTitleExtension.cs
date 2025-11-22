@@ -21,6 +21,8 @@ namespace InVent.Extensions
                 "Projects" => "پروژه‌ها",
                 "DeliveryOrders" => "حواله‌ها",
                 "Entries" => "ورودی‌ها",
+                "Bookings" => "بوکینگ‌ها",
+                "Dispatches" => "خروجی‌ها",
                 _ => "InVent",
             };
 

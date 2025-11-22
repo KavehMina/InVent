@@ -21,7 +21,7 @@ namespace InVent.Components.Pages.CarrierEntity
             await this.BeginLoadingProcess();
             try
             {
-                var res = await this.CarrierService.GetAllCarriers();
+                var res = await this.CarrierService.GetAll();
                 if (res.Success)
                     this.CarriersList = res.Entities ?? [];
                 else

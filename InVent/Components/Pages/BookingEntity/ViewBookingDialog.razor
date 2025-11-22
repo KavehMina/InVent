@@ -1,0 +1,64 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseBookingDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.Booking != null)
+        {
+            <MudForm ReadOnly>
+                @* <MudSwitch T="bool"
+                       @bind-Value=this.Status
+                       Label="@this.StatusText">
+            </MudSwitch> *@
+
+                <MudTextField T="int?"
+                              Value="this.Booking.Number"
+                              Label="شماره بوکینگ"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudAutocomplete T="int?"
+                                 Value="this.Booking.Project?.Number"
+                                 Label="شماره پروژه"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+                <MudTextField T="string"
+                              Value="this.Booking.ContainerType"
+                              Label="‌نوع بسته‌بندی"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int?"
+                              Value="this.Booking.ContainerCount"
+                              Label="تعداد کانتینر"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int?"
+                              Value="this.Booking.PackingCount"
+                              Label="تعداد بسته"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              Value="this.Booking.Destination"
+                              Label="‌مقصد"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              Value="this.Booking.ShippingLine"
+                              Label="‌کشتیرانی"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              Value="this.Booking.Forwarder"
+                              Label="‌forwarder"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

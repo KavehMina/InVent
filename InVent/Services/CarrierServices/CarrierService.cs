@@ -4,8 +4,8 @@ namespace InVent.Services.CarrierServices
 {
     public class CarrierService(ICarrierRepositpry repository)
     {
-        public async Task<ResponseModel<Carrier>> GetAllCarriers() => await repository.GetAllWithBanks();
-        public async Task<ResponseModel<Carrier>> GetCarrierById(string id) =>
+        public async Task<ResponseModel<Carrier>> GetAll() => await repository.GetAllWithBanks();
+        public async Task<ResponseModel<Carrier>> GetById(string id) =>
             Guid.TryParse(id, out var CarrierId) ?
                  await repository.GetWithBank(CarrierId) :
                  new ResponseModel<Carrier> { Message = "id اشتباه است.", Success = false };

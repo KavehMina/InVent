@@ -1,0 +1,233 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@using InVent.Extensions
+@inherits BaseDispatchDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+            <div class="entry-top">
+                <MudSwitch @bind-Value=this.IsExport
+                           Label="@this.ExportLabel">
+                </MudSwitch>
+                <MudDatePicker @bind-Date=this.Date
+                               Culture="@DateExtension.GetPersianCulture()"
+                               TitleDateFormat="dddd, dd MMMM"
+                               DateFormat="yyyy/MM/dd"
+                               ClosingDelay="500"
+                               @ref="_picker"
+                               Variant="Variant.Outlined"
+                               Label="تاریخ"
+                               AutoClose
+                               Editable>
+                    <PickerActions>
+                        <MudButton Class="mr-auto align-self-start" OnClick="SetToday">امروز</MudButton>
+                    </PickerActions>
+                </MudDatePicker>
+            </div>
+            <div class="entry-top">
+                <MudAutocomplete T="Booking"
+                                 @bind-Value="this.Booking"
+                                 Required
+                                 ToStringFunc="(e)=> BookingToString(e)"
+                                 SearchFunc="this.SearchBookings"
+                                 Label="شماره بوکینگ"
+                                 Clearable
+                                 ClearIcon="@Icons.Material.Filled.Clear"
+                                 OnClearButtonClick="()=>this.Booking = null"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+                <MudAutocomplete T="Carrier"
+                                 @bind-Value="this.Carrier"
+                                 Required
+                                 ToStringFunc="(e)=> CarrierToString(e)"
+                                 SearchFunc="this.SearchCarriers"
+                                 Label="شرکت حمل‌ونقل"
+                                 Clearable
+                                 ClearIcon="@Icons.Material.Filled.Clear"
+                                 OnClearButtonClick="()=>this.Carrier = null"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+                <MudAutocomplete T="Port"
+                                 @bind-Value="this.Port"
+                                 Required
+                                 ToStringFunc="(e)=> PortToString(e)"
+                                 SearchFunc="this.SearchPorts"
+                                 Label="بندر"
+                                 Clearable
+                                 ClearIcon="@Icons.Material.Filled.Clear"
+                                 OnClearButtonClick="()=>this.Port = null"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+                <MudAutocomplete T="Customs"
+                                 @bind-Value="this.Customs"
+                                 Required
+                                 ToStringFunc="(e)=> CustomsToString(e)"
+                                 SearchFunc="this.SearchCustoms"
+                                 Label="گمرک"
+                                 Clearable
+                                 ClearIcon="@Icons.Material.Filled.Clear"
+                                 OnClearButtonClick="()=>this.Customs = null"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
+            </div>
+            <div class="entry-mid">
+                <MudTextField T="string"
+                              @bind-Value="this.DriverName"
+                              Required
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.DriverName = string.Empty"
+                              Label="نام راننده"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @bind-Value="this.DriverNationalCode"
+                              Required
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.DriverNationalCode = null"
+                              Label="کدملی راننده"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @bind-Value="this.DriverPhone"
+                              Required
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.DriverPhone = null"
+                              Label="موبایل راننده"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="string"
+                              @bind-Value="this.NumberPlate"
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.NumberPlate = string.Empty"
+                              Label="‌شماره پلاک"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </div>
+            <div class="entry-mid">
+                <MudTextField T="int?"
+                              Value="this.FullWeight"
+                              ValueChanged="e=>this.SetFullWeight(e)"
+                              Immediate
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.FullWeight = null"
+                              Label="‌وزن پر"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int?"
+                              Value="this.EmptyWeight"
+                              ValueChanged="e=>this.SetEmptyWeight(e)"
+                              Immediate
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.EmptyWeight = null"
+                              Label="‌وزن خالی"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int?"
+                              Value="this.NetWeight"
+                              ReadOnly
+                              Label="‌وزن خالص"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </div>
+            <div class="entry-mid">
+                <MudTextField T="int?"
+                              @bind-Value="this.PackageCount"
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.PackageCount = null"
+                              Label="تعداد بسته"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int?"
+                              @bind-Value="this.Fare"
+                              Clearable
+                              ClearIcon="@Icons.Material.Filled.Clear"
+                              OnClearButtonClick="()=>this.Fare = null"
+                              Label="کرایه"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+            </div>
+
+            @if (this.IsExport)
+            {
+                <div class="entry-bot">
+                    <MudTextField T="string"
+                                  @bind-Value="this.InternationalNumber1"
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.InternationalNumber1 = string.Empty"
+                                  Label="‌پلاک بین‌المللی 1"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  @bind-Value="this.InternationalNumber2"
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.InternationalNumber2 = string.Empty"
+                                  Label="‌پلاک بین‌المللی 2"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+            }
+                       
+
+            @if (this.ExistingAttachments.Count > 0)
+            {
+                <div class="files-container">
+                    @foreach (var att in this.ExistingAttachments)
+                    {
+                        <div class="file" @onclick="()=>this.ViewAttachments(att)">
+                            <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
+                            <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileSize bytes</MudText>
+                            <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>this.DeleteAttachments(att.Id)"></MudIconButton>
+                        </div>
+                    }
+                </div>
+            }
+
+            <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                           FilesChanged="this.UploadFiles">
+                <ActivatorContent>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.CloudUpload">
+                        آپلود فایل
+                    </MudButton>
+                </ActivatorContent>
+            </MudFileUpload>
+            @if (this.files != null)
+            {
+                <div class="files-container">
+                    @foreach (var file in this.files)
+                    {
+                        <div class="file">
+                            <MudText Typo="Typo.caption" Style="direction:ltr">@file.Name</MudText>
+                            <MudText Typo="Typo.caption" Style="direction:ltr">@file.Size bytes</MudText>
+                            <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>RemoveFile(file)"></MudIconButton>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <MudText>فایلی آپلود نشده است.</MudText>
+            }
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ذخیره</MudButton>
+    </DialogActions>
+</MudDialog>

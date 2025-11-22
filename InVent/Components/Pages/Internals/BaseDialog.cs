@@ -1,9 +1,11 @@
 ﻿using InVent.Data.Models;
 using InVent.Services.BankServices;
+using InVent.Services.BookingServices;
 using InVent.Services.CarrierServices;
 using InVent.Services.CustomerServices;
 using InVent.Services.CustomsServices;
 using InVent.Services.DeliveryOrderServices;
+using InVent.Services.DispatchServices;
 using InVent.Services.EntryServices;
 using InVent.Services.PackageServices;
 using InVent.Services.PortServices;
@@ -11,7 +13,6 @@ using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
 namespace InVent.Components.Pages.Internals
@@ -134,5 +135,19 @@ namespace InVent.Components.Pages.Internals
         public required EntryService EntryService { get; set; }
         [Parameter]
         public required Entry Entry { get; set; }
+    }
+    public class BaseBookingDialog : BaseDialog
+    {
+        [Inject]
+        public required BookingService BookingService { get; set; }
+        [Parameter]
+        public required Booking Booking { get; set; }
+    }
+    public class BaseDispatchDialog : BaseDialog
+    {
+        [Inject]
+        public required DispatchService DispatchService { get; set; }
+        [Parameter]
+        public required Dispatch Dispatch { get; set; }
     }
 }

@@ -17,7 +17,9 @@ namespace InVent.Data
         public DbSet<DeliveryOrder> DeliveryOrders { get; set; }
         public DbSet<Project> Projects { get; set; }             
         public DbSet<Entry> Entries { get; set; }
-        
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Dispatch> Dispatches { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
     }
 }

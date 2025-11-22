@@ -13,6 +13,7 @@ namespace InVent.Services
         Task<ResponseModel<T>> Add(T entity);
         Task<ResponseModel<T>> Update(T entity);
         Task<ResponseModel<T>> Delete(T entity);
+        Task<ResponseModel<T>> DeleteById(Guid id);
     }
     public class Repository<T>(IDbContextFactory<EntityDBContext> contextFactory) : IRepository<T> where T : class, IEntity
     {
@@ -26,7 +27,7 @@ namespace InVent.Services
                 var res = await context.Set<T>().AddAsync(entity);
 
                 //To check what's being added
-                //var entries = context.ChangeTracker.Entries();
+                var entries = context.ChangeTracker.Entries();
 
                 await context.SaveChangesAsync();
                 var response = new ResponseModel<T>
@@ -125,17 +126,16 @@ namespace InVent.Services
 
         public async Task<ResponseModel<T>> Update(T entity)
         {
+
+            using var context = this.contextFactory.CreateDbContext();
+            try
             {
-                using var context = this.contextFactory.CreateDbContext();
-                try
+                var res = await context.Set<T>().FirstOrDefaultAsync(x => x.Id == entity.Id);
+                if (res != null)
                 {
-                    var res = await context.Set<T>().FirstOrDefaultAsync(x => x.Id == entity.Id);
-                    if (res != null)
-                    {
-                        context.Entry(res).CurrentValues.SetValues(entity);
-                        context.Entry(res).Property(x => x.Id).IsModified = false;
-                        await context.SaveChangesAsync();
-                    }
+                    context.Entry(res).CurrentValues.SetValues(entity);
+                    context.Entry(res).Property(x => x.Id).IsModified = false;
+                    await context.SaveChangesAsync();
                     var response = new ResponseModel<T>
                     {
                         Success = true,
@@ -143,18 +143,63 @@ namespace InVent.Services
                         Entities = [res]
                     };
                     return response;
-
                 }
-                catch (Exception err)
+                else
                 {
                     return new ResponseModel<T>
                     {
                         Success = false,
-                        Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                        Message = Messages.NotFound,
+                    };
+                }
+
+            }
+            catch (Exception err)
+            {
+                return new ResponseModel<T>
+                {
+                    Success = false,
+                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                };
+            }
+
+        }
+
+        public async Task<ResponseModel<T>> DeleteById(Guid id)
+        {
+            using var context = this.contextFactory.CreateDbContext();
+            try
+            {
+                var item = await context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+                if (item != null)
+                {
+
+                    context.Set<T>().Remove(item);
+                    await context.SaveChangesAsync();
+                    var response = new ResponseModel<T>
+                    {
+                        Success = true,
+                        Message = Messages.Delete
+                    };
+                    return response;
+                }
+                else
+                {
+                    return new ResponseModel<T>
+                    {
+                        Success = false,
+                        Message =Messages.NotFound,
                     };
                 }
             }
+            catch (Exception err)
+            {
+                return new ResponseModel<T>
+                {
+                    Success = false,
+                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                };
+            }
         }
-
     }
 }

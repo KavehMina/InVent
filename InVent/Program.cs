@@ -3,11 +3,14 @@ using InVent.Components.Account;
 using InVent.Data;
 using InVent.Data.Models;
 using InVent.Services;
+using InVent.Services.AttachmentServices;
 using InVent.Services.BankServices;
+using InVent.Services.BookingServices;
 using InVent.Services.CarrierServices;
 using InVent.Services.CustomerServices;
 using InVent.Services.CustomsServices;
 using InVent.Services.DeliveryOrderServices;
+using InVent.Services.DispatchServices;
 using InVent.Services.EntryServices;
 using InVent.Services.PackageServices;
 using InVent.Services.PortServices;
@@ -69,6 +72,15 @@ builder.Services.AddScoped<ProjectService>();
 //Entry
 builder.Services.AddScoped<IEntryRepository, EntryRepository>();
 builder.Services.AddScoped<EntryService>();
+//Booking
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<BookingService>();
+//Dispatch
+builder.Services.AddScoped<IDispatchRepository, DispatchRepository>();
+builder.Services.AddScoped<DispatchService>();
+//Attachment
+builder.Services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+builder.Services.AddScoped<AttachmentService>();
 ///096 ends
 builder.Services.AddAuthentication(options =>
     {

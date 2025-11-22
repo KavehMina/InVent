@@ -1,8 +1,10 @@
 ﻿using InVent.Services.BankServices;
+using InVent.Services.BookingServices;
 using InVent.Services.CarrierServices;
 using InVent.Services.CustomerServices;
 using InVent.Services.CustomsServices;
 using InVent.Services.DeliveryOrderServices;
+using InVent.Services.DispatchServices;
 using InVent.Services.EntryServices;
 using InVent.Services.PackageServices;
 using InVent.Services.PortServices;
@@ -116,5 +118,15 @@ namespace InVent.Components.Pages.Internals
     {
         [Inject]
         public required DeliveryOrderService DeliveryOrderService { get; set; }
+    }
+    public class BaseBookingComponent : BaseComponent
+    {
+        [Inject]
+        public required BookingService BookingService { get; set; }
+    }
+    public class BaseDispatchComponent : BaseComponent
+    {
+        [Inject]
+        public required DispatchService DispatchService { get; set; }
     }
 }

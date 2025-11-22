@@ -1,0 +1,95 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseBookingDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+
+        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+            @* <MudSwitch T="bool"
+                       @bind-Value=this.Status
+                       Label="@this.StatusText">
+            </MudSwitch> *@
+
+            <MudTextField T="int?"
+                          @bind-Value="this.Number"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.Number = null"
+                          Label="شماره بوکینگ"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudAutocomplete T="Project"
+                             @bind-Value="this.Project"
+                             Required
+                             ToStringFunc="(e)=> ProjectToString(e)"
+                             SearchFunc="this.SearchProjects"
+                             Label="شماره پروژه"
+                             Clearable
+                             ClearIcon="@Icons.Material.Filled.Clear"
+                             OnClearButtonClick="()=>this.Project = null"
+                             Variant="Variant.Outlined">
+            </MudAutocomplete>
+            <MudTextField T="string"
+                          @bind-Value="this.ContainerType"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.ContainerType = string.Empty"
+                          Label="‌نوع بسته‌بندی"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int?"
+                          @bind-Value="this.ContainerCount"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.ContainerCount = null"
+                          Label="تعداد کانتینر"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int?"
+                          @bind-Value="this.PackingCount"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.PackingCount = null"
+                          Label="تعداد بسته"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="string"
+                          @bind-Value="this.Destination"
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.Destination = string.Empty"
+                          Label="‌مقصد"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="string"
+                          @bind-Value="this.ShippingLine"
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.ShippingLine = string.Empty"
+                          Label="‌کشتیرانی"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="string"
+                          @bind-Value="this.Forwarder"
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.Forwarder = string.Empty"
+                          Label="‌forwarder"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+        </MudForm>
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="this.Cancel">انصراف</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ذخیره</MudButton>
+    </DialogActions>
+</MudDialog>

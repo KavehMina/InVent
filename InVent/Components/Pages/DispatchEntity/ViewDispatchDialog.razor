@@ -1,0 +1,130 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@using InVent.Extensions
+@inherits BaseDispatchDialog
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (this.Dispatch != null)
+        {
+            <MudForm ReadOnly>
+                <div class="entry-top">
+                    <MudSwitch @bind-Value=this.Dispatch.IsExport
+                               Label="@this.ExportLabel">
+                    </MudSwitch>
+                    <MudTextField T="string"
+                                  Value="DateExtension.DisplayPersianDate((DateTime)this.Dispatch.Date)"
+                                  Variant="Variant.Outlined">
+
+                    </MudTextField>                    
+                </div>
+                <div class="entry-top">
+                    <MudAutocomplete T="int?"
+                                     Value="this.Dispatch.Booking?.Number"
+                                     Label="شماره بوکینگ"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Value="this.Dispatch.Carrier?.Name"
+                                     Label="شرکت حمل‌ونقل"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Value="this.Dispatch.Port?.Name"
+                                     Label="بندر"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="string"
+                                     Value="this.Dispatch.Customs?.Name"
+                                     Label="گمرک"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                </div>
+                <div class="entry-mid">
+                    <MudTextField T="string"
+                                  Value="this.Dispatch.DriverName"
+                                  Label="نام راننده"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  Value="this.Dispatch.DriverNationalCode"
+                                  Label="کدملی راننده"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  Value="this.Dispatch.DriverPhone"
+                                  Label="موبایل راننده"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  Value="this.Dispatch.NumberPlate"
+                                  Label="‌شماره پلاک"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="entry-mid">
+                    <MudTextField T="int?"
+                                  Value="this.Dispatch.FullWeight"
+                                  Label="‌وزن پر"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Dispatch.EmptyWeight"
+                                  Label="‌وزن خالی"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Dispatch.FullWeight - this.Dispatch.EmptyWeight"
+                                  Label="‌وزن خالص"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="entry-mid">
+                    <MudTextField T="int?"
+                                  Value="this.Dispatch.PackageCount"
+                                  Label="تعداد بسته"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Dispatch.Fare"
+                                  Label="کرایه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="entry-bot">                    
+                    @if (this.Dispatch.IsExport)
+                    {
+                        <MudTextField T="string"
+                                      Value="this.Dispatch.InternationalNumber1"
+                                      Label="‌پلاک بین‌المللی 1"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      Value="this.Dispatch.InternationalNumber2"
+                                      Label="‌پلاک بین‌المللی 2"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    }
+                </div>
+                @if (this.ExistingAttachments.Count > 0)
+                {
+                    <div class="files-container">
+                        @foreach (var att in this.ExistingAttachments)
+                        {
+                            <div class="file" @onclick="()=>this.ViewAttachments(att)">
+                                <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
+                                <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileSize bytes</MudText>
+                            </div>
+                        }
+                    </div>
+                }
+            </MudForm>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -16,6 +16,7 @@ using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using InVent.Services.PortServices;
+using InVent.Services.BookingServices;
 
 
 namespace InVent.test.RepositoryTests;
@@ -67,6 +68,9 @@ public class BaseTest
             //Entry
             s.AddScoped<IEntryRepository, EntryRepository>();
             s.AddScoped<EntryService>();
+            //Booking
+            s.AddScoped<IBookingRepository, BookingRepository>();
+            s.AddScoped<BookingService>();
             s.AddDbContextFactory<EntityDBContext>(options => options.UseSqlServer(connectionString));
         }).Build();
     public IHost Host => GetHost();

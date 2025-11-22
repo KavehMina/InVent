@@ -1,0 +1,15 @@
+﻿@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseDispatchDialog
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.body2">@this.Header</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.body1">@this.Message</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">خیر</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">بله</MudButton>
+    </DialogActions>
+</MudDialog>

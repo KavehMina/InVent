@@ -25,6 +25,10 @@ input[type="text"] {
 }
 
 /*MUDBLAZOR OVERRIDES*/
+
+.mud-form {
+    height:-webkit-fill-available;
+}
 .mud-input-outlined {
     background-color: #e8f0fe;
 }
