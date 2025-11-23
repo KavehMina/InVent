@@ -20,6 +20,7 @@ using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
@@ -81,6 +82,8 @@ builder.Services.AddScoped<DispatchService>();
 //Attachment
 builder.Services.AddScoped<IAttachmentRepository, AttachmentRepository>();
 builder.Services.AddScoped<AttachmentService>();
+//User
+builder.Services.AddScoped<UserService>();
 ///096 ends
 builder.Services.AddAuthentication(options =>
     {
@@ -99,13 +102,49 @@ options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
+    //.AddRoleStore<IdentityRole>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 builder.Services.AddMudServices();
 var app = builder.Build();
+
+//096 starts
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string[] roles = new[] { "admin", "user" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    var adminEmail = "amin@dbgulf.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+    if (adminUser == null)
+    {
+        adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail };
+        await userManager.CreateAsync(adminUser, "123@Aa");
+        await userManager.AddToRoleAsync(adminUser, "admin");
+    }
+
+}
+
+
+//096 ends
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

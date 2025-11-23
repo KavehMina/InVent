@@ -1,5 +1,8 @@
-﻿@inject NavigationManager NavigationManager
-@using InVent.Extensions
+﻿@using InVent.Extensions
+@using InVent.Data
+@using InVent.Services
+@inject NavigationManager NavigationManager
+@inject UserService UserService
 
 
 <div class="appbar">
@@ -7,6 +10,16 @@
     <div>
         <MudText Typo="Typo.body2">@PageTitleExtension.GetPageTitle(this.NavigationManager.Uri)</MudText>
     </div>
+    @* <div @onclick="@this.GetUser">get</div> *@
+    @* <div>@this.user.Email</div>
+    <div>@this.user.UserRole</div> *@
+    <AuthorizeView>
+        <Authorized>
+            @* <div>@(context.User.IsInRole("admin") ? "admin" : "user")</div> *@
+            <div>@context.User.Identity?.Name</div>
+            @* <div>@context.User.Claims.FirstOrDefault()</div> *@
+        </Authorized>
+    </AuthorizeView>
 </div>
 
 
@@ -102,6 +115,11 @@
                         </button>
                     </MudNavLink>
                 </form>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Account/Register">
+                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
+                    </NavLink>
+                </div>
             </Authorized>
         </AuthorizeView>
     </MudNavMenu>
@@ -117,11 +135,28 @@
         _open = !_open;
     }
 
+
+    // private ApplicationUser user = new ApplicationUser() { UserRole = "user" };
+    // [CascadingParameter]
+    // private HttpContext HttpContext { get; set; } = default!;
+
+
     protected override void OnInitialized()
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }
+
+    // protected override void OnAfterRender(bool firstRender)
+    // {
+    //     this.user = this.UserService.GetUser() ?? new ApplicationUser() { UserRole = "user" };
+    //     base.OnAfterRender(firstRender);
+    // }
+
+    // private async Task GetUser()
+    // {
+
+    // }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {

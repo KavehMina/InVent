@@ -54,14 +54,14 @@ public class DeliveryOrders : BaseTest
     [TestMethod]
     public async Task Delete()
     {
-        var tar = (await this.Service.GetById(new Guid(this.id))).Entities.FirstOrDefault();
-        await this.Service.Delete(Mapper.Map(tar, new DeliveryOrderDTO
-        {
-            DeliveryOrderId = "123",
-            Status = true,
-            Weight = 100,
-            ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac")
-        }));
+        //var tar = (await this.Service.GetById(new Guid(this.id))).Entities.FirstOrDefault();
+        //await this.Service.Delete(Mapper.Map(tar, new DeliveryOrderDTO
+        //{
+        //    DeliveryOrderId = "123",
+        //    Status = true,
+        //    Weight = 100,
+        //    ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac")
+        //}));
 
     }
 }

@@ -16,34 +16,34 @@
 @* <div class="row">
     <div class="col-lg-6"> *@
 @* <div> *@
-    <div class="login-container">
-        @* <section> *@
-            <StatusMessage Message="@errorMessage" />
-            <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
-                <DataAnnotationsValidator />
-                @* <h2>Use a local account to log in.</h2>
+<div class="login-container">
+    @* <section> *@
+    <StatusMessage Message="@errorMessage" />
+    <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login">
+        <DataAnnotationsValidator />
+        @* <h2>Use a local account to log in.</h2>
                 <hr /> *@
-                <ValidationSummary class="text-danger" role="alert" />
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                    <label for="Input.Email" class="form-label">Email</label>
-                    <ValidationMessage For="() => Input.Email" class="text-danger" />
-                </div>
-                <div class="form-floating mb-3">
-                    <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label for="Input.Password" class="form-label">Password</label>
-                    <ValidationMessage For="() => Input.Password" class="text-danger" />
-                </div>
-                <div class="checkbox mb-3">
-                    <label class="form-label">
-                        <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input" />
-                        Remember me
-                    </label>
-                </div>
-                <div>
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-                </div>
-                @* <div>
+        <ValidationSummary class="text-danger" role="alert" />
+        <div class="form-floating mb-3">
+            <InputText @bind-Value="Input.Email" id="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+            <label for="Input.Email" class="form-label">Email</label>
+            <ValidationMessage For="() => Input.Email" class="text-danger" />
+        </div>
+        <div class="form-floating mb-3">
+            <InputText type="password" @bind-Value="Input.Password" id="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+            <label for="Input.Password" class="form-label">Password</label>
+            <ValidationMessage For="() => Input.Password" class="text-danger" />
+        </div>
+        <div class="checkbox mb-3">
+            <label class="form-label">
+                <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input" />
+                Remember me
+            </label>
+        </div>
+        <div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+        </div>
+        @* <div>
                     <p>
                         <a href="Account/ForgotPassword">Forgot your password?</a>
                     </p>
@@ -54,8 +54,8 @@
                         <a href="Account/ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div> *@
-            </EditForm>
-        @* </section> *@
+    </EditForm>
+    @* </section> *@
     @* </div> *@
     @* <div class="col-lg-4 col-lg-offset-2">
         <section>
@@ -86,6 +86,10 @@
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
         }
     }
+    // private ApplicationUser user = default!;
+    // @inject IdentityUserAccessor UserAccessor
+    // @using InVent.Services
+    // @inject UserService UserService
 
     public async Task LoginUser()
     {
@@ -94,6 +98,8 @@
         var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
         {
+            // user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+            // this.UserService.SetUser(user);
             Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
         }

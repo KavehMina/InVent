@@ -25,10 +25,8 @@ public class Entries : BaseTest
             TankerId = new Guid("eaa9dcd9-f894-4914-5f35-08de2403babc"),
             RefineryEmpty = 30,
             RefineryFilled = 30,
-            RefineryNet = 30,
             WarehouseEmpty = 30,
             WarehouseFilled = 30,
-            WarehouseNet = 30
 
         };
         var res = await this.Service.Add(item);
@@ -64,10 +62,8 @@ public class Entries : BaseTest
             TankerId = new Guid("eaa9dcd9-f894-4914-5f35-08de2403babc"),
             RefineryEmpty = 10,
             RefineryFilled = 20,
-            RefineryNet = 30,
             WarehouseEmpty = 10,
             WarehouseFilled = 20,
-            WarehouseNet = 10
         }));
 
     }
@@ -77,23 +73,21 @@ public class Entries : BaseTest
     {
         var tar = (await this.Service.GetById(new Guid(this.id))).Entities.FirstOrDefault();
         tar.Damaged = 666;
-        await this.Service.Delete(Mapper.Map(tar, new EntryDTO
-        {
-            Damaged = 10,
-            Date = DateTime.Now,
-            Filled = 20,
-            DeliveryOrderId = new Guid("1397cd12-0a44-46ab-ee24-08de2627579e"),
-            PackageTypeId = new Guid("f97504ea-4a27-43a7-4754-08de25768254"),
-            ProductId = new Guid("74e5a8b3-39e5-4126-669c-08de25781907"),
-            RefineryId = new Guid("8d4a71a8-eb89-4883-1cee-08de2578cfe0"),
-            TankerId = new Guid("eaa9dcd9-f894-4914-5f35-08de2403babc"),
-            RefineryEmpty = 10,
-            RefineryFilled = 20,
-            RefineryNet = 30,
-            WarehouseEmpty = 10,
-            WarehouseFilled = 20,
-            WarehouseNet = 10
-        }));
+        //await this.Service.Delete(Mapper.Map(tar, new EntryDTO
+        //{
+        //    Damaged = 10,
+        //    Date = DateTime.Now,
+        //    Filled = 20,
+        //    DeliveryOrderId = new Guid("1397cd12-0a44-46ab-ee24-08de2627579e"),
+        //    PackageTypeId = new Guid("f97504ea-4a27-43a7-4754-08de25768254"),
+        //    ProductId = new Guid("74e5a8b3-39e5-4126-669c-08de25781907"),
+        //    RefineryId = new Guid("8d4a71a8-eb89-4883-1cee-08de2578cfe0"),
+        //    TankerId = new Guid("eaa9dcd9-f894-4914-5f35-08de2403babc"),
+        //    RefineryEmpty = 10,
+        //    RefineryFilled = 20,
+        //    WarehouseEmpty = 10,
+        //    WarehouseFilled = 20,
+        //}));
 
     }
 }

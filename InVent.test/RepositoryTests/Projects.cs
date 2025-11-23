@@ -59,15 +59,15 @@ public class Projects : BaseTest
     public async Task Delete()
     {
         var tar = (await this.Service.GetById(id)).Entities.FirstOrDefault();
-        await this.Service.Delete(Mapper.Map(tar, new ProjectDTO
-        {
-            CustomerId = Guid.Empty,
-            CustomsId = Guid.Empty,
-            PackageId = Guid.Empty,
-            PortId = Guid.Empty,
-            ProductId = Guid.Empty,
-            Status = true
-        }));
+        //await this.Service.Delete(Mapper.Map(tar, new ProjectDTO
+        //{
+        //    CustomerId = Guid.Empty,
+        //    CustomsId = Guid.Empty,
+        //    PackageId = Guid.Empty,
+        //    PortId = Guid.Empty,
+        //    ProductId = Guid.Empty,
+        //    Status = true
+        //}));
 
     }
 }

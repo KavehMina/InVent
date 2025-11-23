@@ -1,4 +1,7 @@
-﻿using InVent.Data.Models;
+﻿
+using InVent.Data.Models;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
@@ -6,11 +9,15 @@ namespace InVent.Components.Pages.PortEntity
 {
     public partial class Ports
     {
+        //[CascadingParameter]
+        //private Task<AuthenticationState>? authenticationState { get; set; }
+        //[Inject]
+        //AuthenticationStateProvider AuthenticationStateProvider {  get; set; }
         public List<Port> PortsList { get; set; } = [];
         public required MudTable<Port> Table { get; set; }
 
         protected override async Task OnInitializedAsync()
-        {
+        {            
             await RefreshList();
             await base.OnInitializedAsync();
         }

@@ -41,6 +41,9 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();
 
