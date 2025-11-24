@@ -13,14 +13,15 @@ using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 
 namespace InVent.Components.Pages.Internals
 {
     public class BaseComponent : ComponentBase
     {
-        //[Inject]
-        //public required IServiceProvider ServiceProvider { get; set; }
+        [CascadingParameter]
+        public Task<AuthenticationState>? AuthenticationState { get; set; }
         [Inject]
         public required NavigationManager NavigationManager { get; set; }
         [Inject]
@@ -35,6 +36,12 @@ namespace InVent.Components.Pages.Internals
         public bool ButtonDisabled => !form.IsValid;
         public bool Loading = false;
 
+        protected override Task OnParametersSetAsync()
+        {
+            if (!this.AuthenticationState.Result.User.Identity.IsAuthenticated)
+                this.NavigationManager.NavigateTo("/");
+            return base.OnParametersSetAsync();
+        }
 
         public async Task BeginLoadingProcess()
         {

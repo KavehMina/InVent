@@ -10,16 +10,16 @@ namespace InVent.Data.Models
         public Guid Id { get; set; }
 
 
-        [Column("Number"), Required]
-        public required string Number { get; set; }
+        [Column("Number")]
+        public string Number { get; set; }
 
 
-        [Column("DriverName"), Required]
-        public required string DriverName { get; set; }
+        [Column("DriverName")]
+        public string DriverName { get; set; }
 
 
-        [Column("DriverPhone"), Required]
-        public required string DriverPhone { get; set; }
+        [Column("DriverPhone")]
+        public string DriverPhone { get; set; }
 
 
         [Column("DriverBankNumber")]
@@ -46,25 +46,39 @@ namespace InVent.Data.Models
         public Guid? OwnerBankId { get; set; }
 
 
-        [Column("CargoType"), Required]
-        public required string CargoType { get; set; }
+        [Column("CargoType")]
+        public string CargoType { get; set; }
 
-        //CONSTRAINT [FK_Tankers_DriverBankId] FOREIGN KEY ([DriverBankId]) REFERENCES [dbo].[Banks] ([Id])
-        //needs this:
+
         [ForeignKey("DriverBankId")]
         public Bank? DriverBank { get; set; }
-        //CONSTRAINT [FK_Tankers_OwnerBankId] FOREIGN KEY ([OwnerBankId]) REFERENCES [dbo].[Banks] ([Id])
-        //needs this:
+
+
         [ForeignKey("OwnerBankId")]
         public Bank? OwnerBank { get; set; }
     }
 
-    public class TankerResponseModel
+    public class TankerDTO : IEntity
     {
-        public required bool Success { get; set; }
-        public List<Tanker>? Tankers { get; set; }
-        public required string Message { get; set; }
+        public Guid Id { get; set; }
+        public required string Number { get; set; }
+        public required string DriverName { get; set; }
+        public required string DriverPhone { get; set; }
+        public string? DriverBankNumber { get; set; }
+        public Guid? DriverBankId { get; set; }
+        public string? OwnerName { get; set; }
+        public string? OwnerPhone { get; set; }
+        public string? OwnerBankNumber { get; set; }
+        public Guid? OwnerBankId { get; set; }
+        public required string CargoType { get; set; }
     }
+
+    //public class TankerResponseModel
+    //{
+    //    public required bool Success { get; set; }
+    //    public List<Tanker>? Tankers { get; set; }
+    //    public required string Message { get; set; }
+    //}
 
     public class TankerViewModel : Tanker
     {

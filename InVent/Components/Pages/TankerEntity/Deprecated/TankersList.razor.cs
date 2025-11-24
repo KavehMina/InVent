@@ -4,7 +4,7 @@ using InVent.Services.BankServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace InVent.Components.Pages.TankerEntity
+namespace InVent.Components.Pages.TankerEntity.Deprecated
 {
     public partial class TankersList()
     {
@@ -21,16 +21,16 @@ namespace InVent.Components.Pages.TankerEntity
             await this.BeginLoadingProcess();
             try
             {
-                var res = await this.TankerService.GetAllTankersWithBankNames();
+                //var res = await this.TankerService.GetAllTankersWithBankNames();
 
-                if (res.Success)
-                {
-                    Tankers = res.Entities ?? [];
-                }
-                else
-                {
-                    this.HandleMessage(res.Message, res.Success);
-                }
+                //if (res.Success)
+                //{
+                //    Tankers = res.Entities ?? [];
+                //}
+                //else
+                //{
+                //    this.HandleMessage(res.Message, res.Success);
+                //}
 
             }
             catch (Exception err)
@@ -40,7 +40,7 @@ namespace InVent.Components.Pages.TankerEntity
             await this.EndLoadingProcess();
             await base.OnInitializedAsync();
         }
-        
+
         //private async Task<string> GetBankName(Guid? bankId)
         //{
         //    if (bankId != null)
@@ -53,7 +53,7 @@ namespace InVent.Components.Pages.TankerEntity
         //    else return string.Empty;
         //}
 
-        private void GoToNewTanker()=> this.NavigationManager.NavigateTo($"/Tankers/AddNew");
+        private void GoToNewTanker() => this.NavigationManager.NavigateTo($"/Tankers/AddNew");
         private void HandleClick(TableRowClickEventArgs<TankerViewModel> e)
         {
             this.NavigationManager.NavigateTo($"/Tankers/Edit/{e.Item?.Id}");

@@ -1,0 +1,68 @@
+﻿.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem
+}
+
+.number-plate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.number-plate-field {
+    display: grid;
+    /*flex-direction: row-reverse;
+    gap: 0.2rem;*/
+    gap: 5%;
+    grid-template-columns: 20% 10% 30% 25%;
+    direction: ltr
+}
+
+.bank-container {
+    display: grid;
+    grid-template-columns: 60% 35%;
+    gap: 5%;
+}
+
+@media(max-width:700px) {
+    .bank-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem
+    }
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem
+}
+
+.number-plate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.number-plate-field {
+    display: grid;
+    /*flex-direction: row-reverse;
+    gap: 0.2rem;*/
+    gap: 5%;
+    grid-template-columns: 20% 10% 30% 25%;
+    direction: ltr
+}
+
+.bank-container {
+    display: grid;
+    grid-template-columns: 60% 35%;
+    gap: 5%;
+}
+
+@media(max-width:700px) {
+    .bank-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem
+    }
+}

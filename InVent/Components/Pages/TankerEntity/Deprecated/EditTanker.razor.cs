@@ -1,17 +1,28 @@
 ﻿using InVent.Data.Models;
 using InVent.Services;
 using InVent.Services.BankServices;
-using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting.Server;
 using MudBlazor;
 using System.Text.RegularExpressions;
 
-namespace InVent.Components.Pages.TankerEntity
+namespace InVent.Components.Pages.TankerEntity.Deprecated
 {
-    public partial class AddTanker()
+    public partial class EditTanker()
     {
+
         [Inject]
         public required BankService BankService { get; set; }
+        [Parameter]
+        public string TankerId { get; set; } = string.Empty;
+        private Tanker Tanker { get; set; } = new Tanker()
+        {
+            CargoType = string.Empty,
+            DriverName = string.Empty,
+            DriverPhone = string.Empty,
+            Number = string.Empty
+        };
+
         const string RPO = "RPO";
         const string SlackWax = "Slack Wax";
         const string RPOSlack = "RPO و Slack Wax";
@@ -20,37 +31,41 @@ namespace InVent.Components.Pages.TankerEntity
         public required string First { get; set; }
         public required string Second { get; set; }
         public required string Third { get; set; }
-        public required string fourth { get; set; }
+        public required string Fourth { get; set; }
 
         /// <NOTE START>
         /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
         /// results in incorrect text order caused by the persian letter in the middle of a text.
-        public string TankerNumber => Third + fourth + Second + First;
+        public string TankerNumber => Third + Fourth + Second + First;
         /// </NOTE END>
-        public required string DriverName { get; set; }
-        public required string DriverPhone { get; set; }
-        public string? DriverBankNumber { get; set; }
-        public string? OwnerName { get; set; }
-        public string? OwnerPhone { get; set; }
-        public string? OwnerBankNumber { get; set; }
-        public required string CargoType { get; set; }
 
+        public new bool ButtonDisabled => !form.IsValid || !form.IsTouched;
         public List<Bank> Banks { get; set; } = [];
         public Bank? DriverBank { get; set; }
         public Bank? OwnerBank { get; set; }
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                var res = await BankService.GetAllBanks();
-                if (res.Success)
-                    this.Banks = res.Entities?.ToList() ?? [];
-                else this.HandleMessage(res.Message, res.Success);
+                //var res = await this.TankerService.GetTankerById(TankerId);
+                //if (res.Success)
+                //{
+                //    Tanker = res.Entities?.FirstOrDefault() ?? Tanker;
+                //    SplitTankerNumber();
+                //}
+                //else this.HandleMessage(res.Message, res.Success);
+                //if (Tanker != null)
+                //{
+                //    if (Tanker.DriverBankId != null)
+                //        DriverBank = (await BankService.GetBankById((Guid)Tanker.DriverBankId)).Entities?.FirstOrDefault();
+                //    if (Tanker.OwnerBankId != null)
+                //        OwnerBank = (await BankService.GetBankById((Guid)Tanker.OwnerBankId))?.Entities?.FirstOrDefault();
+                //}
+                Banks = (await BankService.GetAllBanks()).Entities ?? [];
             }
             catch (Exception err)
             {
-                this.HandleMessage(err.Message, false);
+                this.HandleMessage(err.Message + Environment.NewLine + err.InnerException?.Message, false);
             }
             await base.OnInitializedAsync();
         }
@@ -69,33 +84,37 @@ namespace InVent.Components.Pages.TankerEntity
             return bank?.Name;
         }
 
-        public async Task Save()
+        private void SplitTankerNumber()
+        {
+            /// <NOTE START>
+            /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
+            /// results in incorrect text order caused by the persian letter in the middle of a text.
+            Third = Tanker.Number?.Substring(0, 3) ?? "";
+            Fourth = Tanker.Number?.Substring(3, 2) ?? "";
+            Second = Tanker.Number?.Substring(5, 1) ?? "";
+            First = Tanker.Number?.Substring(6, 2) ?? "";
+            /// </NOTE END>
+        }
+
+        private async Task Update()
         {
             await this.BeginLoadingProcess();
 
-            if (form.IsValid)
+            if (this.form.IsValid)
             {
-                var newTanker = new Tanker
-                {
-                    Number = TankerNumber,
-                    DriverName = DriverName,
-                    DriverPhone = DriverPhone,
-                    DriverBankNumber = DriverBankNumber,
-                    DriverBankId = DriverBank?.Id,
-                    OwnerName = OwnerName,
-                    OwnerPhone = OwnerPhone,
-                    OwnerBankNumber = OwnerBankNumber,
-                    OwnerBankId = OwnerBank?.Id,
-                    CargoType = CargoType,
-                };
-
                 try
                 {
-                    var res = await TankerService.AddTanker(newTanker);
-                    this.HandleMessage(res.Message, res.Success);
+                    Tanker.Number = TankerNumber;
+                    Tanker.DriverBankId = Tanker.DriverBank?.Id;
+                    Tanker.OwnerBankId = Tanker.OwnerBank?.Id;
+                    //var res = await this.TankerService.EditTanker(Tanker);
+                    //this.HandleMessage(res.Message, res.Success);
+                    //if (res.Success)
+                    //{
+                    //    await Task.Delay(100);
+                    //    this.NavigationManager.NavigateTo("/Tankers");
+                    //}
 
-                    if (res.Success)
-                        await form.ResetAsync();
                 }
                 catch (Exception err)
                 {
@@ -111,10 +130,30 @@ namespace InVent.Components.Pages.TankerEntity
             await this.EndLoadingProcess();
         }
 
+        private async Task OpenDeleteDialog()
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, NoHeader = true };
+            var parameters = new DialogParameters {
+                { "Tanker", Tanker },
+                { "Header" , "حذف تانکر" },
+                { "Message","آیا از حذف این تانکر اطمینان دارید؟" },
+            };
+
+            var dialog = await DialogService.ShowAsync<DeleteTankerDialog>("", parameters);
+            var result = await dialog.Result;
+
+            if (result != null && !result.Canceled)
+            {
+                this.NavigationManager.NavigateTo("/Tankers");
+            }
+
+
+        }
+
         private async Task MoveFocus(string value, MudTextField<string> thisField, MudTextField<string> nextField)
         {
 
-            if (thisField != null && nextField != null)
+            if (thisField != null)
             {
                 switch (thisField.InputId)
                 {
@@ -134,18 +173,8 @@ namespace InVent.Components.Pages.TankerEntity
                             await nextField.FocusAsync();
                         break;
                     case "4":
-                        fourth = value;
+                        Fourth = value;
                         if (thisField?.Value?.Length == 2)
-                            await nextField.FocusAsync();
-                        break;
-                    case "6":
-                        DriverPhone = value;
-                        if (thisField?.Value?.Length == 11)
-                            await nextField.FocusAsync();
-                        break;
-                    case "9":
-                        OwnerPhone = value;
-                        if (thisField?.Value?.Length == 11)
                             await nextField.FocusAsync();
                         break;
                     default:
@@ -154,20 +183,13 @@ namespace InVent.Components.Pages.TankerEntity
             }
 
         }
-
-
         private List<MudTextField<string>> TextFieldRefs = new(new MudTextField<string>[12]);
         //private MudTextField<string> firstref;
         //private MudTextField<string> secondref;
         //private MudTextField<string> thirdref;
         //private MudTextField<string> fourthref;
         //private MudTextField<string> fifthref;
-        //private MudTextField<string> sixthref;
-        //private MudTextField<string> seventhref;
-        //private MudTextField<string> eighthref;
-        //private MudTextField<string> ninthref;
-        //private MudTextField<string> tenthref;
-        //private MudTextField<string> elevenththref;
+        //private MudTextField<string> ownerphoneref;
 
 
         public PatternMask Mask1 = new("00");
@@ -175,7 +197,7 @@ namespace InVent.Components.Pages.TankerEntity
         public PatternMask Mask3 = new("000");
         public PatternMask MobileMask = new("00000000000");
 
-        private string ValidateMobilePhone(string arg)
+        private static string ValidateMobilePhone(string arg)
         {
             if (arg != null && arg != string.Empty)
             {
@@ -187,32 +209,27 @@ namespace InVent.Components.Pages.TankerEntity
         }
         private string ValidateFirstPartofNumberPlate(string arg)
         {
-            if (arg?.Length < 2)
+            if (arg.Length < 2)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateSecondPartofNumberPlate(string arg)
         {
-            if (arg?.Length < 1)
+            if (arg.Length < 1)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateThirdPartofNumberPlate(string arg)
         {
-            if (arg?.Length < 3)
+            if (arg.Length < 3)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateForthPartofNumberPlate(string arg)
         {
-            if (arg?.Length < 2)
+            if (arg.Length < 2)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
-
-
-
-
     }
-
 }

@@ -1,28 +1,16 @@
 ﻿using InVent.Data.Models;
-using InVent.Services;
 using InVent.Services.BankServices;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using System.Text.RegularExpressions;
 
 namespace InVent.Components.Pages.TankerEntity
 {
-    public partial class EditTanker()
+    public partial class AddTankerDialog
     {
-
         [Inject]
         public required BankService BankService { get; set; }
-        [Parameter]
-        public string TankerId { get; set; } = string.Empty;
-        private Tanker Tanker { get; set; } = new Tanker()
-        {
-            CargoType = string.Empty,
-            DriverName = string.Empty,
-            DriverPhone = string.Empty,
-            Number = string.Empty
-        };
-
         const string RPO = "RPO";
         const string SlackWax = "Slack Wax";
         const string RPOSlack = "RPO و Slack Wax";
@@ -38,34 +26,30 @@ namespace InVent.Components.Pages.TankerEntity
         /// results in incorrect text order caused by the persian letter in the middle of a text.
         public string TankerNumber => Third + Fourth + Second + First;
         /// </NOTE END>
+        public required string DriverName { get; set; }
+        public required string DriverPhone { get; set; }
+        public string? DriverBankNumber { get; set; }
+        public string? OwnerName { get; set; }
+        public string? OwnerPhone { get; set; }
+        public string? OwnerBankNumber { get; set; }
+        public required string CargoType { get; set; }
 
-        public new bool ButtonDisabled => !form.IsValid || !form.IsTouched;
         public List<Bank> Banks { get; set; } = [];
         public Bank? DriverBank { get; set; }
         public Bank? OwnerBank { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                var res = await this.TankerService.GetTankerById(TankerId);
+                var res = await BankService.GetAllBanks();
                 if (res.Success)
-                {
-                    Tanker = res.Entities?.FirstOrDefault() ?? Tanker;
-                    SplitTankerNumber();
-                }
+                    this.Banks = res.Entities?.ToList() ?? [];
                 else this.HandleMessage(res.Message, res.Success);
-                //if (Tanker != null)
-                //{
-                //    if (Tanker.DriverBankId != null)
-                //        DriverBank = (await BankService.GetBankById((Guid)Tanker.DriverBankId)).Entities?.FirstOrDefault();
-                //    if (Tanker.OwnerBankId != null)
-                //        OwnerBank = (await BankService.GetBankById((Guid)Tanker.OwnerBankId))?.Entities?.FirstOrDefault();
-                //}
-                Banks = (await BankService.GetAllBanks()).Entities ?? [];
             }
             catch (Exception err)
             {
-                this.HandleMessage(err.Message + Environment.NewLine + err.InnerException?.Message, false);
+                this.HandleMessage(err.Message, false);
             }
             await base.OnInitializedAsync();
         }
@@ -84,37 +68,39 @@ namespace InVent.Components.Pages.TankerEntity
             return bank?.Name;
         }
 
-        private void SplitTankerNumber()
+        private async Task DetectEnter(KeyboardEventArgs e)
         {
-            /// <NOTE START>
-            /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
-            /// results in incorrect text order caused by the persian letter in the middle of a text.
-            Third = Tanker.Number?.Substring(0, 3) ?? "";
-            Fourth = Tanker.Number?.Substring(3, 2) ?? "";
-            Second = Tanker.Number?.Substring(5, 1) ?? "";
-            First = Tanker.Number?.Substring(6, 2) ?? "";
-            /// </NOTE END>
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+                await Submit();
         }
 
-        private async Task Update()
+        public async Task Submit()
         {
+            await form.Validate();
             await this.BeginLoadingProcess();
-
-            if (this.form.IsValid)
+            if (form.IsValid)
             {
+                var newTanker = new TankerDTO
+                {
+                    Number = this.TankerNumber,
+                    DriverName = this.DriverName,
+                    DriverPhone = this.DriverPhone,
+                    DriverBankNumber = this.DriverBankNumber,
+                    DriverBankId = this.DriverBank?.Id,
+                    OwnerName = this.OwnerName,
+                    OwnerPhone = this.OwnerPhone,
+                    OwnerBankNumber = this.OwnerBankNumber,
+                    OwnerBankId = this.OwnerBank?.Id,
+                    CargoType = this.CargoType,
+                };
+
                 try
                 {
-                    Tanker.Number = TankerNumber;
-                    this.Tanker.DriverBankId = this.Tanker.DriverBank?.Id;
-                    this.Tanker.OwnerBankId = this.Tanker.OwnerBank?.Id;
-                    var res = await this.TankerService.EditTanker(Tanker);
+                    var res = await TankerService.Add(newTanker);
                     this.HandleMessage(res.Message, res.Success);
-                    if (res.Success)
-                    {
-                        await Task.Delay(100);
-                        this.NavigationManager.NavigateTo("/Tankers");
-                    }
 
+                    if (res.Success)
+                        await form.ResetAsync();
                 }
                 catch (Exception err)
                 {
@@ -130,30 +116,10 @@ namespace InVent.Components.Pages.TankerEntity
             await this.EndLoadingProcess();
         }
 
-        private async Task OpenDeleteDialog()
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true, NoHeader = true };
-            var parameters = new DialogParameters {
-                { "Tanker", Tanker },
-                { "Header" , "حذف تانکر" },
-                { "Message","آیا از حذف این تانکر اطمینان دارید؟" },
-            };
-
-            var dialog = await DialogService.ShowAsync<DeleteTankerDialog>("", parameters);
-            var result = await dialog.Result;
-
-            if (result != null && !result.Canceled)
-            {
-                this.NavigationManager.NavigateTo("/Tankers");
-            }
-
-
-        }
-
         private async Task MoveFocus(string value, MudTextField<string> thisField, MudTextField<string> nextField)
         {
 
-            if (thisField != null)
+            if (thisField != null && nextField != null)
             {
                 switch (thisField.InputId)
                 {
@@ -177,27 +143,32 @@ namespace InVent.Components.Pages.TankerEntity
                         if (thisField?.Value?.Length == 2)
                             await nextField.FocusAsync();
                         break;
+                    case "6":
+                        DriverPhone = value;
+                        if (thisField?.Value?.Length == 11)
+                            await nextField.FocusAsync();
+                        break;
+                    case "9":
+                        OwnerPhone = value;
+                        if (thisField?.Value?.Length == 11)
+                            await nextField.FocusAsync();
+                        break;
                     default:
                         break;
                 }
             }
 
         }
+
+
         private List<MudTextField<string>> TextFieldRefs = new(new MudTextField<string>[12]);
-        //private MudTextField<string> firstref;
-        //private MudTextField<string> secondref;
-        //private MudTextField<string> thirdref;
-        //private MudTextField<string> fourthref;
-        //private MudTextField<string> fifthref;
-        //private MudTextField<string> ownerphoneref;
-
-
+        
         public PatternMask Mask1 = new("00");
         public PatternMask Mask2 = new("a");
         public PatternMask Mask3 = new("000");
         public PatternMask MobileMask = new("00000000000");
 
-        private static string ValidateMobilePhone(string arg)
+        private string ValidateMobilePhone(string arg)
         {
             if (arg != null && arg != string.Empty)
             {
@@ -209,27 +180,29 @@ namespace InVent.Components.Pages.TankerEntity
         }
         private string ValidateFirstPartofNumberPlate(string arg)
         {
-            if (arg.Length < 2)
+            if (arg?.Length < 2)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateSecondPartofNumberPlate(string arg)
         {
-            if (arg.Length < 1)
+            if (arg?.Length < 1)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateThirdPartofNumberPlate(string arg)
         {
-            if (arg.Length < 3)
+            if (arg?.Length < 3)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
         private string ValidateForthPartofNumberPlate(string arg)
         {
-            if (arg.Length < 2)
+            if (arg?.Length < 2)
                 return "پلاک نامعتبر";
             return string.Empty;
         }
+
+        
     }
 }

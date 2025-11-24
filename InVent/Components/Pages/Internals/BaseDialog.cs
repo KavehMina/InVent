@@ -12,6 +12,7 @@ using InVent.Services.PortServices;
 using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
+using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -58,6 +59,14 @@ namespace InVent.Components.Pages.Internals
                 Snackbar.Add(Message, Success ? Severity.Success : Severity.Error, cfg => cfg.VisibleStateDuration = 3000);
             }
         }
+    }
+
+    public class BaseTankerDialog : BaseDialog
+    {
+        [Inject]
+        public required TankerService TankerService { get; set; }
+        [Parameter]
+        public required Tanker Tanker { get; set; }
     }
     public class BaseBankDialog : BaseDialog
     {

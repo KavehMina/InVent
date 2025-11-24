@@ -42,7 +42,7 @@ namespace InVent.Data.Models
 
 
 
-        [Column("ProductId"),] //FK
+        [Column("ProductId")] //FK
         public Guid ProductId { get; set; }
 
         [ForeignKey(nameof(ProductId))] //Navigation
@@ -50,14 +50,14 @@ namespace InVent.Data.Models
 
 
 
-        [Column("PortId"),] //FK
+        [Column("PortId")] //FK
         public Guid PortId { get; set; }
 
         [ForeignKey(nameof(PortId))] //Navigation
         public Port? Port { get; set; }
 
 
-        [Column("CustomsId"),] //FK
+        [Column("CustomsId")] //FK
         public Guid CustomsId { get; set; }
 
         [ForeignKey(nameof(CustomsId))] //Navigation
@@ -65,7 +65,7 @@ namespace InVent.Data.Models
 
     }
 
-    //save edit delete
+    //save edit
     public class ProjectDTO : IEntity
     {
         public Guid Id { get; set; }

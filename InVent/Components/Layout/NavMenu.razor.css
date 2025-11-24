@@ -5,9 +5,16 @@
     height: 3rem;
     background-color: #eee;
     border-bottom: 1px solid #ddd;
-    justify-content: start;
-    align-items:center;
-    gap:1rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-inline: 0 2rem;
+}
+
+.appbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem
 }
 
 
@@ -128,11 +135,11 @@
     }
 
     .nav-scrollable {*/
-        /* Never collapse the sidebar for wide screens */
-        /*display: block;*/
+/* Never collapse the sidebar for wide screens */
+/*display: block;*/
 
-        /* Allow sidebar to scroll for tall menus */
-        /*height: calc(100vh - 3.5rem);
+/* Allow sidebar to scroll for tall menus */
+/*height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
 }*/

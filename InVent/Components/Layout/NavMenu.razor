@@ -6,18 +6,16 @@
 
 
 <div class="appbar">
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="OpenDrawer"></MudIconButton>
-    <div>
-        <MudText Typo="Typo.body2">@PageTitleExtension.GetPageTitle(this.NavigationManager.Uri)</MudText>
+    <div class="appbar-right">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" OnClick="OpenDrawer"></MudIconButton>
+        <div>
+            <MudText Typo="Typo.body2">@PageTitleExtension.GetPageTitle(this.NavigationManager.Uri)</MudText>
+        </div>
     </div>
-    @* <div @onclick="@this.GetUser">get</div> *@
-    @* <div>@this.user.Email</div>
-    <div>@this.user.UserRole</div> *@
+
     <AuthorizeView>
         <Authorized>
-            @* <div>@(context.User.IsInRole("admin") ? "admin" : "user")</div> *@
             <div>@context.User.Identity?.Name</div>
-            @* <div>@context.User.Claims.FirstOrDefault()</div> *@
         </Authorized>
     </AuthorizeView>
 </div>
@@ -31,50 +29,52 @@
     <MudNavMenu>
         <MudNavLink Href="/Tankers" Match="NavLinkMatch.All" Ripple>
             <MudText Typo="Typo.body2">
-                لیست تانکرها
+               تانکرها
             </MudText>
         </MudNavLink>
-        <MudNavLink Href="/Tankers/AddNew" Match="NavLinkMatch.All" Ripple>
+        @* <MudNavLink Href="/Tankers/AddNew" Match="NavLinkMatch.All" Ripple>
             <MudText Typo="Typo.body2">اضافه کردن تانکر جدید</MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Banks" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                بانک‌ها
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Carriers" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                شرکت‌های حمل‌ونقل
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Products" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                محصولات
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Ports" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                بندرها
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Customs" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                گمرک‌ها
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Packages" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                بسته‌بندی‌ها
-            </MudText>
-        </MudNavLink>
+        </MudNavLink> *@
+        <AuthorizeView Roles="admin">
+            <MudNavLink Href="/Banks" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    بانک‌ها
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Carriers" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    شرکت‌های حمل‌ونقل
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Products" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    محصولات
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Ports" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    بندرها
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Customs" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    گمرک‌ها
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Packages" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    بسته‌بندی‌ها
+                </MudText>
+            </MudNavLink>
+            <MudNavLink Href="/Refineries" Match="NavLinkMatch.All" Ripple>
+                <MudText Typo="Typo.body2">
+                    پالایشگاه‌ها
+                </MudText>
+            </MudNavLink>
+        </AuthorizeView>
         <MudNavLink Href="/Customers" Match="NavLinkMatch.All" Ripple>
             <MudText Typo="Typo.body2">
                 مشتری‌ها
-            </MudText>
-        </MudNavLink>
-        <MudNavLink Href="/Refineries" Match="NavLinkMatch.All" Ripple>
-            <MudText Typo="Typo.body2">
-                پالایشگاه‌ها
             </MudText>
         </MudNavLink>
         <MudNavLink Href="/Projects" Match="NavLinkMatch.All" Ripple>
@@ -104,6 +104,17 @@
         </MudNavLink>
         <AuthorizeView>
             <Authorized>
+                <AuthorizeView Roles="admin" Context="innerContext">
+                    <MudNavLink Match="NavLinkMatch.All" Ripple class="nav-link" href="Account/Register">
+                        <MudText Typo="Typo.body2">
+                            <span class="bi bi-person-nav-menu" aria-hidden="true"></span> کاربر جدید
+                        </MudText>
+                    </MudNavLink>
+                </AuthorizeView>
+            </Authorized>
+        </AuthorizeView>
+        <AuthorizeView>
+            <Authorized>
                 <form action="Account/Logout" method="post">
                     <AntiforgeryToken />
                     <input type="hidden" name="ReturnUrl" value="@currentUrl" />
@@ -115,11 +126,7 @@
                         </button>
                     </MudNavLink>
                 </form>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
+
             </Authorized>
         </AuthorizeView>
     </MudNavMenu>
@@ -136,27 +143,12 @@
     }
 
 
-    // private ApplicationUser user = new ApplicationUser() { UserRole = "user" };
-    // [CascadingParameter]
-    // private HttpContext HttpContext { get; set; } = default!;
-
-
     protected override void OnInitialized()
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 
-    // protected override void OnAfterRender(bool firstRender)
-    // {
-    //     this.user = this.UserService.GetUser() ?? new ApplicationUser() { UserRole = "user" };
-    //     base.OnAfterRender(firstRender);
-    // }
-
-    // private async Task GetUser()
-    // {
-
-    // }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
