@@ -21,7 +21,7 @@
 
 .bank-container {
     display: grid;
-    grid-template-columns: 60% 35%;
+    grid-template-columns: 50% 50%;
     gap: 5%;
     align-items: baseline;
 }
@@ -35,7 +35,7 @@
 }
 
 .mud-input > input.mud-input-root-outlined [id="1"] {
-    text-align:center;
+    text-align: center;
 }
 
 #1.mud-input > input.mud-input-root-outlined {

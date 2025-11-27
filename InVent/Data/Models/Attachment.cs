@@ -18,11 +18,16 @@ namespace InVent.Data.Models
         [Column("FileSize")]
         public required long FileSize { get; set; }
 
-        [Column("FileData")]
-        public required byte[] FileData { get; set; }
+        //[Column("FileData")]
+        //public required byte[] FileData { get; set; }
+        [Column("FilePath")]
+        public required string FilePath { get; set; }
 
         [Column("ParentType")]
         public required string ParentType { get; set; }
+
+        [Column("Category")]
+        public required string Category { get; set; }
 
         [Column("ParentId")]
         public Guid ParentId { get; set; } 

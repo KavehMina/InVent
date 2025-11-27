@@ -1,6 +1,8 @@
 ﻿@using InVent.Components.Pages.Internals
+@using InVent.Components.Pages.Shared
 @using InVent.Data.Models
 @using InVent.Extensions
+@using InVent.Components.Pages.DispatchEntity
 @inherits BaseDispatchDialog
 
 <MudDialog>
@@ -180,9 +182,9 @@
                     </MudTextField>
                 </div>
             }
-                       
 
-            @if (this.ExistingAttachments.Count > 0)
+
+            @* @if (this.ExistingAttachments.Count > 0)
             {
                 <div class="files-container">
                     @foreach (var att in this.ExistingAttachments)
@@ -190,13 +192,43 @@
                         <div class="file" @onclick="()=>this.ViewAttachments(att)">
                             <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
                             <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileSize bytes</MudText>
-                            <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>this.DeleteAttachments(att.Id)"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>this.DeleteAttachments(att.Id,att.FilePath)"></MudIconButton>
                         </div>
                     }
                 </div>
-            }
+            } *@
 
-            <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+            <div class="attachments">
+                <FileUploadComponent Title="بارنامه"
+                                     IsMultiple="false"
+                                     Files="this.files"
+                                     Attachments="this.Attachments"
+                                     ExistingAttachments="this.ExistingAttachments"
+                                     Required="true">
+                </FileUploadComponent>
+                <FileUploadComponent Title="قبض باسکول"
+                                     IsMultiple="false"
+                                     Files="this.files"
+                                     Attachments="this.Attachments"
+                                     ExistingAttachments="this.ExistingAttachments"
+                                     Required="true">
+                </FileUploadComponent>
+                <FileUploadComponent Title="رسید راننده"
+                                     IsMultiple="false"
+                                     Files="this.files"
+                                     Attachments="this.Attachments"
+                                     ExistingAttachments="this.ExistingAttachments"
+                                     Required="true">
+                </FileUploadComponent>
+                <FileUploadComponent Title="سایر"
+                                     IsMultiple="true"
+                                     Files="this.files"
+                                     ExistingAttachments="this.ExistingAttachments"
+                                     Attachments="this.Attachments">
+                </FileUploadComponent>
+            </div>
+
+            @* <MudFileUpload T="IReadOnlyList<IBrowserFile>"
                            FilesChanged="this.UploadFiles">
                 <ActivatorContent>
                     <MudButton Variant="Variant.Filled"
@@ -222,7 +254,7 @@
             else
             {
                 <MudText>فایلی آپلود نشده است.</MudText>
-            }
+            } *@
         </MudForm>
 
     </DialogContent>

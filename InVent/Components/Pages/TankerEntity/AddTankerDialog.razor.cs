@@ -17,7 +17,7 @@ namespace InVent.Components.Pages.TankerEntity
         const string Bitumen = "قیر";
 
         public required string First { get; set; }
-        public required string Second { get; set; }
+        public required string Second { get; set; } = "ع";
         public required string Third { get; set; }
         public required string Fourth { get; set; }
 

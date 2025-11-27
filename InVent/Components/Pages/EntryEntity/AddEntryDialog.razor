@@ -11,7 +11,7 @@
 
         <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
 
-            <div class="entry-top">
+            <div class="field-group">
                 <MudAutocomplete T="Refinery"
                                  @bind-Value="this.Refinery"
                                  Required
@@ -57,7 +57,7 @@
                                  Variant="Variant.Outlined">
                 </MudAutocomplete>
             </div>
-            <div class="entry-mid">
+            <div class="field-group">
                 <MudDatePicker @bind-Date=this.Date
                                Culture="@DateExtension.GetPersianCulture()"
                                TitleDateFormat="dddd, dd MMMM"
@@ -107,7 +107,7 @@
                               Variant="Variant.Outlined">
                 </MudTextField>
             </div>
-            <div class="entry-ref">
+            <div class="field-group">
                 <MudTextField T="int?"
                               @ref=this.TextFieldRefs[2]
                               Value="this.RefineryFilled"
@@ -142,7 +142,7 @@
                               Variant="Variant.Outlined">
                 </MudTextField>
             </div>
-            <div class="entry-war">
+            <div class="field-group">
                 <MudTextField T="int?"
                               @ref=this.TextFieldRefs[4]
                               Value="this.WarehouseFilled"
@@ -177,7 +177,7 @@
                               Variant="Variant.Outlined">
                 </MudTextField>
             </div>
-            <div class="entry-bot">
+            <div class="field-group">
                 <MudTextField T="int?"
                               Value="this.Difference"
                               ReadOnly

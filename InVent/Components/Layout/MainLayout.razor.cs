@@ -10,11 +10,13 @@ namespace InVent.Components.Layout
         private static readonly string Light = "200";
         private readonly MudTheme InVentTheme = new MudTheme()
         {
+            
             PaletteLight = new PaletteLight()
             {
                 Primary = Colors.Blue.Default,
                 Secondary = Colors.Green.Accent4,
                 AppbarBackground = Colors.Red.Default,
+                
             },
             PaletteDark = new PaletteDark()
             {
@@ -24,7 +26,8 @@ namespace InVent.Components.Layout
             LayoutProperties = new LayoutProperties()
             {
                 DrawerWidthLeft = "260px",
-                DrawerWidthRight = "300px"
+                DrawerWidthRight = "300px",
+                DefaultBorderRadius = "4px"
             },            
 
             Typography = new Typography()

@@ -9,11 +9,32 @@ namespace InVent.Services.AttachmentServices
     public interface IAttachmentRepository : IRepository<Attachment>
     {
         Task<ResponseModel<Attachment>> GetEntitiesAttachments(Guid entityId,string entityType);
+        Task<ResponseModel<Attachment>> DeleteLocalFiles(string FilePath);
     }
 
-    public class AttachmentRepository(IDbContextFactory<EntityDBContext> contextFactory) : Repository<Attachment>(contextFactory), IAttachmentRepository
+    public class AttachmentRepository(IDbContextFactory<EntityDBContext> contextFactory, IWebHostEnvironment env) : Repository<Attachment>(contextFactory), IAttachmentRepository
     {
         private readonly IDbContextFactory<EntityDBContext> contextFactory = contextFactory;
+        private readonly IWebHostEnvironment env = env;
+
+        public async Task<ResponseModel<Attachment>> DeleteLocalFiles(string FilePath)
+        {
+            await Task.CompletedTask;
+            var fullPath = Path.Combine(env.WebRootPath + FilePath);
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+                return new ResponseModel<Attachment>
+                {
+                    Message = Messages.Delete,
+                    Success = true
+                };
+            }
+            else
+            {
+                return new ResponseModel<Attachment> { Message = Messages.NotFound, Success = false };
+            }
+        }
 
         public async Task<ResponseModel<Attachment>> GetEntitiesAttachments(Guid entityId, string entityType)
         {

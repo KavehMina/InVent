@@ -9,83 +9,96 @@
     <DialogContent>
 
         <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-            <MudSwitch T="bool"
-                       @bind-Value=this.Status
-                       Label="@this.StatusText">
-            </MudSwitch>
-            <MudTextField T="int?"
-                          @bind-Value="this.Number"
-                          Required
-                          Clearable
-                          ClearIcon="@Icons.Material.Filled.Clear"
-                          OnClearButtonClick="()=>this.Number = null"
-                          Label="شماره پروژه"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudAutocomplete T="Customer"
-                             @bind-Value="this.Customer"
-                             Required
-                             ToStringFunc="(e)=> CustomerToString(e)"
-                             SearchFunc="this.SearchCustomers"
-                             Label="مشتری"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Customer = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
-            <MudAutocomplete T="Package"
-                             @bind-Value="this.Package"
-                             Required
-                             ToStringFunc="(e)=> PackageToString(e)"
-                             SearchFunc="this.SearchPackages"
-                             Label="بسته‌بندی"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Package = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
-            <MudAutocomplete T="Product"
-                             @bind-Value="this.Product"
-                             Required
-                             ToStringFunc="(e)=> ProductToString(e)"
-                             SearchFunc="this.SearchProducts"
-                             Label="محصول"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Product = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
-            <MudTextField T="int?"
-                          @bind-Value="this.Weight"
-                          Required
-                          Clearable
-                          ClearIcon="@Icons.Material.Filled.Clear"
-                          OnClearButtonClick="()=>this.Weight = null"
-                          Label="وزن پر شده"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudAutocomplete T="Port"
-                             @bind-Value="this.Port"
-                             Required
-                             ToStringFunc="(e)=> PortToString(e)"
-                             SearchFunc="this.SearchPorts"
-                             Label="بندر"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Port = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
-            <MudAutocomplete T="Customs"
-                             @bind-Value="this.Customs"
-                             Required
-                             ToStringFunc="(e)=> CustomsToString(e)"
-                             SearchFunc="this.SearchCustoms"
-                             Label="گمرک"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Customs = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
+            <div class="form">
+                <div class="bank-container">
+                    <MudTextField T="int?"
+                                  @bind-Value="this.Number"
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.Number = null"
+                                  Label="شماره پروژه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudSwitch T="bool"
+                               @bind-Value=this.Status
+                               Label="@this.StatusText">
+                    </MudSwitch>
+                </div>
+                <div class="bank-container">
+                    <MudAutocomplete T="Customer"
+                                     @bind-Value="this.Customer"
+                                     Required
+                                     ToStringFunc="(e)=> CustomerToString(e)"
+                                     SearchFunc="this.SearchCustomers"
+                                     Label="مشتری"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Customer = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="Product"
+                                     @bind-Value="this.Product"
+                                     Required
+                                     ToStringFunc="(e)=> ProductToString(e)"
+                                     SearchFunc="this.SearchProducts"
+                                     Label="محصول"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Product = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    
+                </div>
+                <div class="bank-container">
+                    
+                    <MudAutocomplete T="Package"
+                                     @bind-Value="this.Package"
+                                     Required
+                                     ToStringFunc="(e)=> PackageToString(e)"
+                                     SearchFunc="this.SearchPackages"
+                                     Label="بسته‌بندی"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Package = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudTextField T="int?"
+                                  @bind-Value="this.Weight"
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.Weight = null"
+                                  Label="وزن پروژه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+               
+                <div class="bank-container">
+                    <MudAutocomplete T="Port"
+                                     @bind-Value="this.Port"
+                                     Required
+                                     ToStringFunc="(e)=> PortToString(e)"
+                                     SearchFunc="this.SearchPorts"
+                                     Label="بندر"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Port = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="Customs"
+                                     @bind-Value="this.Customs"
+                                     Required
+                                     ToStringFunc="(e)=> CustomsToString(e)"
+                                     SearchFunc="this.SearchCustoms"
+                                     Label="گمرک"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Customs = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                </div>
+            </div>
         </MudForm>
 
     </DialogContent>

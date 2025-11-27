@@ -1,0 +1,56 @@
+﻿@using InVent.Data.Models
+
+<div class="upload-container">
+    <MudText Style="height:24px!important">@this.Title</MudText>
+    @if (this.RelatedExistingAttachments?.Count > 0)
+    {
+        <div class="files-container">
+            @foreach (var att in this.RelatedExistingAttachments)
+            {
+                <div class="file" @onclick="()=>this.ViewAttachments(att)">
+                    <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>this.DeleteAttachments(att)"></MudIconButton>
+                </div>
+            }
+        </div>
+    }
+    <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                   MaximumFileCount="this.MaxNumber"
+                   Required="this.Required && (this.RelatedExistingAttachments==null || this.RelatedExistingAttachments?.Count == 0)"
+                   RequiredError="اجباری"
+                   FilesChanged="this.UploadFiles">
+        <ActivatorContent>
+            @if (this.IsMultiple)
+            {
+                <div class="activator">
+                    <MudIconButton Icon="@Icons.Material.Filled.Add" Style="padding:unset!important"></MudIconButton>
+                </div>
+            }
+            else if (this.InternalFiles.Count == 0)
+            {
+                @if (this.RelatedExistingAttachments == null || this.RelatedExistingAttachments?.Count == 0)
+                {
+                    <div class="activator">
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" Style="padding:unset!important"></MudIconButton>
+                    </div>
+                }
+            }
+        </ActivatorContent>
+    </MudFileUpload>
+    @if (this.InternalFiles.Count > 0)
+    {
+        <div class="files-container">
+            @foreach (var file in this.InternalFiles)
+            {
+                <div class="file">
+                    <MudText Typo="Typo.caption" Style="direction:ltr">@file.Name</MudText>
+                    @* <MudText Typo="Typo.caption" Style="direction:ltr">@file.Size bytes</MudText> *@
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>RemoveFile(file)"></MudIconButton>
+                </div>
+            }
+        </div>
+    }
+
+
+
+</div>

@@ -1,6 +1,7 @@
 ﻿using InVent.Data;
 using InVent.Data.Constants;
 using InVent.Data.Models;
+using InVent.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace InVent.Services
@@ -119,7 +120,8 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    //Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
         }
@@ -197,7 +199,8 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    //Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
         }

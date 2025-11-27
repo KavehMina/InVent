@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
-using static MudBlazor.CategoryTypes;
 
 namespace InVent.Components.Pages.DispatchEntity
 {
@@ -33,6 +32,7 @@ namespace InVent.Components.Pages.DispatchEntity
         private List<Port> Ports { get; set; } = [];
         private Customs Customs { get; set; }
         private List<Customs> CustomsList { get; set; } = [];
+        private int? ProjectNumber { get; set; }
 
         private string? DriverName { get; set; }
         private string? DriverNationalCode { get; set; }
@@ -89,6 +89,7 @@ namespace InVent.Components.Pages.DispatchEntity
 
         protected override Task OnParametersSetAsync()
         {
+            this.ProjectNumber = this.Bookings.Where(x => x.Id == this.Dispatch.Booking?.Id).FirstOrDefault()?.Project?.Number;
             this.Booking = this.Dispatch.Booking;
             this.Carrier = this.Dispatch.Carrier;
             this.Port = this.Dispatch.Port;
@@ -191,42 +192,44 @@ namespace InVent.Components.Pages.DispatchEntity
                 this.NetWeight = null;
         }
 
-        [Inject]
-        IDialogService DialogService { get; set; }
+        //[Inject]
+        //IDialogService DialogService { get; set; }
 
-        private async Task DeleteAttachments(Guid id)
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
-            var parameters = new DialogParameters
-            {
-                { "DispatchId", id },
-                { "Header" , "حذف ضمیمه" },
-                { "Message" , "آیا از حذف این ضمیمه اطمینان دارید؟" }
-            };
+        //private async Task DeleteAttachments(Guid id,string filePath)
+        //{
+        //    var options = new DialogOptions { CloseOnEscapeKey = true };
+        //    var parameters = new DialogParameters
+        //    {
+        //        { "DispatchId", id },
+        //        { "FilePath", filePath },
+        //        { "Header" , "حذف ضمیمه" },
+        //        { "Message" , "آیا از حذف این ضمیمه اطمینان دارید؟" }
+        //    };
 
-            var dialog = await DialogService.ShowAsync<DeleteDispatchAttachmentDialog>("", parameters, options);
-            var result = await dialog.Result;
-            if (result != null && !result.Canceled)
-            {
-                this.ExistingAttachments = (await AttachmentService.GetAll(this.Dispatch.Id, "dispatch")).Entities ?? [];
-            }
-        }
+        //    var dialog = await DialogService.ShowAsync<DeleteDispatchAttachmentDialog>("", parameters, options);
+        //    var result = await dialog.Result;
+        //    if (result != null && !result.Canceled)
+        //    {
+        //        this.ExistingAttachments = (await AttachmentService.GetAll(this.Dispatch.Id, "dispatch")).Entities ?? [];
+        //    }
+        //}
 
-        private async Task ViewAttachments(Attachment attachment)
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth=MaxWidth.False };
-            var parameters = new DialogParameters
-            {
-                { "Attachment", attachment },
-                 { "Header" , attachment.FileName }
-            };
+        //private async Task ViewAttachments(Attachment attachment)
+        //{
+        //    var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+        //    var parameters = new DialogParameters
+        //    {
+        //        { "Attachment", attachment },
+        //        { "Header" , attachment.FileName }
+        //    };
 
-            /*var dialog =*/ await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
-            //var result = await dialog.Result;
-            //if (result != null && !result.Canceled)
-            //{
-            //}
-        }
+        //    /*var dialog =*/
+        //    await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
+        //    //var result = await dialog.Result;
+        //    //if (result != null && !result.Canceled)
+        //    //{
+        //    //}
+        //}
 
 
         private readonly IList<IBrowserFile> files = [];
@@ -248,23 +251,60 @@ namespace InVent.Components.Pages.DispatchEntity
             this.StateHasChanged();
         }
 
-        private async Task PrepareAttachments()
+        private async Task _PrepareAttachments()
         {
             this.Attachments = [];
             foreach (var file in this.files)
             {
-                using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
-                using var ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, file.Name);
+
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+                //using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
+                //using var ms = new MemoryStream();
+                //await stream.CopyToAsync(ms);
                 this.Attachments.Add(new Attachment
                 {
                     ParentId = this.Dispatch.Id,
-                    ParentType = "Dispatch",
+                    ParentType = "dispatch",
                     FileName = file.Name,
                     ContentType = file.ContentType,
                     FileSize = file.Size,
-                    FileData = ms.ToArray()
+                    FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
+                    Category ="file.Category"
+                    //FileData = ms.ToArray()
                 });
+            }
+        }
+
+        private async Task PrepareAttachments()
+        {
+            foreach (var file in this.files)
+            {
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, file.Name);
+
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+
+                var t = this.Attachments.Where(x => x.Equals(file));
+
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
+                    .FirstOrDefault();
+                if (att != null)
+                {
+                    att.ParentId = this.Dispatch.Id;
+                    att.ParentType = "dispatch";
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}";
+
+                }
             }
         }
 
@@ -298,7 +338,7 @@ namespace InVent.Components.Pages.DispatchEntity
                         InternationalNumber2 = this.InternationalNumber2,
                     };
                     var res = await DispatchService.Update(tempDispatch);
-                    if (res.Success && res.Entities!=null)
+                    if (res.Success && res.Entities != null)
                     {
                         await this.PrepareAttachments();
                         foreach (var att in Attachments)
@@ -306,7 +346,6 @@ namespace InVent.Components.Pages.DispatchEntity
                             var attRes = await this.AttachmentService.Add(att);
                             this.HandleMessage(att.FileName, attRes.Success);
                         }
-                        //await form.ResetAsync();
                     }
                     this.HandleMessage(res.Message, res.Success);
 

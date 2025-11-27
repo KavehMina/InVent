@@ -10,11 +10,14 @@ namespace InVent.Components.Pages.DispatchEntity
         public required AttachmentService AttachmentService { get; set; }
         [Parameter]
         public required Guid DispatchId { get; set; }
+        [Parameter]
+        public required string FilePath { get; set; }
         private async Task Submit()
         {
             try
             {
 
+                var res2 = await this.AttachmentService.DeleteFile(this.FilePath);
                 var res = await this.AttachmentService.Delete(this.DispatchId);
                 HandleMessage(res.Message, res.Success);
                 if (res.Success)

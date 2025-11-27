@@ -1,4 +1,5 @@
 ﻿using InVent.Data.Models;
+using InVent.Data.Models.Miscellaneous;
 using InVent.Services.AttachmentServices;
 using InVent.Services.BookingServices;
 using InVent.Services.CarrierServices;
@@ -34,6 +35,7 @@ namespace InVent.Components.Pages.DispatchEntity
         private Customs Customs { get; set; }
         private Customs TempCustoms { get; set; }
         private List<Customs> CustomsList { get; set; } = [];
+        private int? ProjectNumber { get; set; }
 
         private string? DriverName { get; set; }
         private string? DriverNationalCode { get; set; }
@@ -149,46 +151,85 @@ namespace InVent.Components.Pages.DispatchEntity
                 this.NetWeight = this.FullWeight - this.EmptyWeight;
             else
                 this.NetWeight = null;
-        }        
+        }
 
-        
+
 
         private readonly IList<IBrowserFile> files = [];
 
-        private List<Attachment> Attachments = [];
-                
-        private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
-        {
-            foreach (var file in files ?? [])
-            {
-                this.files.Add(file);
-            }
-            
-        }
 
-        private void RemoveFile(IBrowserFile file)
+
+        private List<Attachment> Attachments = [];
+
+        
+
+        private async Task _PrepareAttachments(Guid parentId)
         {
-            this.files.Remove(file);
-            this.StateHasChanged();
+            this.ProjectNumber = this.Booking.Project?.Number;
+            this.Attachments = [];
+            foreach (var file in this.files)
+            {
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, file.Name);
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+
+                //using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
+                //using var ms = new MemoryStream();
+                //await stream.CopyToAsync(ms);
+                this.Attachments.Add(new Attachment
+                {
+                    ParentId = parentId,
+                    ParentType = "dispatch",
+                    FileName = file.Name,
+                    ContentType = file.ContentType,
+                    FileSize = file.Size,
+                    FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
+                    Category = "file.Category"
+                    //FileData = ms.ToArray()
+                });
+            }
         }
 
         private async Task PrepareAttachments(Guid parentId)
         {
-            this.Attachments = [];
+            this.ProjectNumber = this.Booking.Project?.Number;
             foreach (var file in this.files)
             {
-                using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
-                using var ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
-                this.Attachments.Add(new Attachment
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                Directory.CreateDirectory(folder);
+
+                var filePath = Path.Combine(folder, file.Name);
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+
+                var t = this.Attachments.Where(x => x.Equals(file));
+
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
+                    .FirstOrDefault();
+                if (att != null)
                 {
-                    ParentId = parentId,
-                    ParentType = "Dispatch",
-                    FileName = file.Name,
-                    ContentType = file.ContentType,
-                    FileSize = file.Size,
-                    FileData = ms.ToArray()
-                });
+                    att.ParentId = parentId;
+                    att.ParentType = "dispatch";
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}";
+
+                }
+
+
+                //this.Attachments.Add(new Attachment
+                //{
+                //    ParentId = parentId,
+                //    ParentType = "dispatch",
+                //    FileName = file.Name,
+                //    ContentType = file.ContentType,
+                //    FileSize = file.Size,
+                //    FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
+                //    Category = "file.Category"
+                //});
             }
         }
 
@@ -238,6 +279,8 @@ namespace InVent.Components.Pages.DispatchEntity
                         this.Customs = this.TempCustoms;
                         this.Date = DateTime.Today;
                         this.files.Clear();
+                        this.Attachments.Clear();
+                        this.StateHasChanged();
                         await EndLoadingProcess();
 
                     }
