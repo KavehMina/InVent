@@ -34,10 +34,3 @@
     }
 }
 
-.mud-input > input.mud-input-root-outlined [id="1"] {
-    text-align:center;
-}
-
-#1.mud-input > input.mud-input-root-outlined {
-    text-align: center;
-}

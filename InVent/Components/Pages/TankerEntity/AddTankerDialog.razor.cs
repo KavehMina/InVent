@@ -21,6 +21,7 @@ namespace InVent.Components.Pages.TankerEntity
         public required string Third { get; set; }
         public required string Fourth { get; set; }
 
+
         /// <NOTE START>
         /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
         /// results in incorrect text order caused by the persian letter in the middle of a text.
@@ -38,6 +39,7 @@ namespace InVent.Components.Pages.TankerEntity
         public Bank? DriverBank { get; set; }
         public Bank? OwnerBank { get; set; }
 
+        
         protected override async Task OnInitializedAsync()
         {
             try
@@ -162,7 +164,7 @@ namespace InVent.Components.Pages.TankerEntity
 
 
         private List<MudTextField<string>> TextFieldRefs = new(new MudTextField<string>[12]);
-        
+
         public PatternMask Mask1 = new("00");
         public PatternMask Mask2 = new("a");
         public PatternMask Mask3 = new("000");
@@ -203,6 +205,6 @@ namespace InVent.Components.Pages.TankerEntity
             return string.Empty;
         }
 
-        
+
     }
 }

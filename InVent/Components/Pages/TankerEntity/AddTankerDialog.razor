@@ -1,4 +1,5 @@
 ﻿@using InVent.Components.Pages.Internals
+@using InVent.Components.Pages.Shared
 @using InVent.Data.Models
 @inherits BaseTankerDialog
 
@@ -11,15 +12,21 @@
         <MudForm @ref="this.form" @bind-IsValid="@this.success" @bind-Errors="@errors" @onkeyup="this.DetectEnter">
             <div class="form">
                 <div class="bank-container">
+                    @* <MudText>پلاک ماشین</MudText> *@
+                    @* <NumberPlateComponent TextFieldRefs="this.TextFieldRefs"
+                                          First="@this.First"
+                                          Second="@this.Second"
+                                          Third="@this.Third"
+                                          Fourth="@this.Fourth">
+                    </NumberPlateComponent> *@
                     <div class="number-plate">
-                        @* <MudText>پلاک ماشین</MudText> *@
                         <div class="number-plate-field">
                             <MudTextField T="string"
                                           @ref="this.TextFieldRefs[0]"
                                           InputId="1"
                                           Mask="Mask1"
                                           Value=this.First
-                                          ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[1])"
+                                          ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[2])"
                                           Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
                                           Style="background-color:#fcfceb;"
                                           Placeholder="_ _"
@@ -71,21 +78,21 @@
                             </MudTextField>
                         </div>
                     </div>
-                        <MudSelect T="string"
-                                   InputId="11"
-                                   @bind-Value=this.CargoType
-                                   Required
-                                   RequiredError="نوع بار اجباری است."
-                                   Label="نوع بار"
-                                   Clearable
-                                   ClearIcon="@Icons.Material.Filled.Clear"
-                                   OnClearButtonClick="()=>this.CargoType=null"
-                                   Variant="Variant.Outlined">
-                            <MudSelectItem Value="RPO"></MudSelectItem>
-                            <MudSelectItem Value="SlackWax"></MudSelectItem>
-                            <MudSelectItem Value="RPOSlack"></MudSelectItem>
-                            <MudSelectItem Value="Bitumen"></MudSelectItem>
-                        </MudSelect>
+                    <MudSelect T="string"
+                               InputId="11"
+                               @bind-Value=this.CargoType
+                               Required
+                               RequiredError="نوع بار اجباری است."
+                               Label="نوع بار"
+                               Clearable
+                               ClearIcon="@Icons.Material.Filled.Clear"
+                               OnClearButtonClick="()=>this.CargoType=null"
+                               Variant="Variant.Outlined">
+                        <MudSelectItem Value="RPO"></MudSelectItem>
+                        <MudSelectItem Value="SlackWax"></MudSelectItem>
+                        <MudSelectItem Value="RPOSlack"></MudSelectItem>
+                        <MudSelectItem Value="Bitumen"></MudSelectItem>
+                    </MudSelect>
                 </div>
                 @* Validation=@(new Func<string, string>(this.ValidateNumberPlate)) *@
                 @* <MudTextField T="string"

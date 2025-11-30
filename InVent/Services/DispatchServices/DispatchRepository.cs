@@ -21,6 +21,7 @@ namespace InVent.Services.DispatchServices
             {
                 var res = await context.Dispatches
                     .Include(x => x.Booking)
+                    .Include(x => x.Booking.Project)
                     .Include(x => x.Carrier)
                     .Include(x => x.Port)
                     .Include(x => x.Customs)

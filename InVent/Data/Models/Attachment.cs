@@ -18,8 +18,9 @@ namespace InVent.Data.Models
         [Column("FileSize")]
         public required long FileSize { get; set; }
 
-        //[Column("FileData")]
-        //public required byte[] FileData { get; set; }
+        [Column("LastModified")]
+        public DateTimeOffset? LastModified { get; set; }
+
         [Column("FilePath")]
         public required string FilePath { get; set; }
 

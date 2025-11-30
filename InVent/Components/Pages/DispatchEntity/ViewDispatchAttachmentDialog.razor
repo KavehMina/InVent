@@ -5,7 +5,18 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
-        <MudImage Src="@this.Attachment.FilePath"></MudImage>
+        @if (this.Attachment.ContentType.StartsWith("image/"))
+        {
+            <div class="attachment-view-image">
+                <MudImage Src="@this.Attachment.FilePath" Fluid></MudImage>
+            </div>
+        }
+        else if (this.Attachment.ContentType == "application/pdf")
+        {
+            <div class="attachment-view-pdf">
+                <embed src="@this.Attachment.FilePath" type="application/pdf" style="width:100%;height:600px" />
+            </div>
+        }
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="this.Cancel">بستن</MudButton>

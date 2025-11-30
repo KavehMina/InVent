@@ -29,6 +29,11 @@
         <HeaderContent>
             <MudTh>
                 <MudText Typo="Typo.body2">
+                    شماره پروژه
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
                     شماره بوکینگ
                 </MudText>
             </MudTh>
@@ -40,6 +45,7 @@
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
+            <MudTd DataLabel="شماره پروژه">@context.Booking?.Project?.Number</MudTd>
             <MudTd DataLabel="شماره بوکینگ">@context.Booking?.Number</MudTd>
             <MudTd DataLabel="تعداد بسته">@context.PackageCount</MudTd>
             <MudTd Style="width:30%;text-align:end">

@@ -1,0 +1,7 @@
+﻿.attachment-view-image {
+    height: -webkit-fill-available;
+}
+.attachment-view-pdf {
+    width: 100%;
+    height: -webkit-fill-available;
+}

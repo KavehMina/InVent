@@ -9,8 +9,8 @@
                    Variant="Variant.Filled"
                    DropShadow="false"
                    Size="Size.Small"
-                   Style="width:10%"
-                   Color="Color.Info"></MudIconButton>
+                   Style="width:15%"
+                   Color="Color.Primary"></MudIconButton>
     <MudTable T="Tanker"
               Items="@this.TankersList"
               @ref="this.Table"
@@ -19,7 +19,7 @@
               Loading="@this.Loading"
               OnRowClick="e=>this.OpenViewDialog(e)"
               Breakpoint="Breakpoint.None"
-              GroupHeaderStyle="background-color: #eee;"
+              GroupHeaderStyle=""
               Outlined
               Striped
               LoadingProgressColor="Color.Info">
@@ -42,10 +42,10 @@
         <RowTemplate>
             <MudTd DataLabel=" نام راننده">@context.DriverName</MudTd>
             <MudTd DataLabel="نوع بار">@context.CargoType</MudTd>
-            <MudTd Style="width:30%;text-align:end">
+            <MudTd Style="display:flex;justify-content:end">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                OnClick="(e)=>this.OpenEditDialog(e,context)"
-                               Color="Color.Info">
+                               Color="Color.Primary">
                 </MudIconButton>
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                OnClick="(e)=>this.OpenDeleteDialog(e,context)"

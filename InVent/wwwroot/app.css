@@ -21,16 +21,31 @@ html, body {
 }
 
 input[type="text"] {
-    background-color: #e8f0fe !important
+    /*background-color: #e8f0fe !important*/
+}
+.mud-input > input.mud-input-root-outlined[Id="1"],
+.mud-input > input.mud-input-root-outlined[Id="2"],
+.mud-input > input.mud-input-root-outlined[Id="3"],
+.mud-input > input.mud-input-root-outlined[Id="4"] {
+    text-align: center;
+}
+/*MUDBLAZOR OVERRIDES*/
+.mud-layout {
+    background-color: #f5f5f5;
 }
 
-/*MUDBLAZOR OVERRIDES*/
+.mud-table {
+    box-shadow: -2px 2px 10px -5px;
+    border-radius: 0.5rem !important;
+}
 
 .mud-form {
-    height:-webkit-fill-available;
+    height: -webkit-fill-available;
 }
+
 .mud-input-outlined {
-    background-color: #e8f0fe;
+    /*background-color: #e8f0fe;*/
+    background-color: #fff;
 }
 
 /*.mud-input-adornment-start.mud-input-root-filled-shrink {
@@ -39,42 +54,76 @@ input[type="text"] {
 /*.mud-list-item-text {
     text-align:right;
 }*/
-.mud-input > input.mud-input-root-outlined.mud-input-root-adorned-start{
-    padding-inline-start: 0.5rem!important;
+.mud-input > input.mud-input-root-outlined.mud-input-root-adorned-start {
+    padding-inline-start: 0.5rem !important;
     border-right: 1px solid #aaa;
 }
+
 .mud-input > input.mud-input-root-outlined.mud-input-root-adorned-end {
     padding-inline-start: 0.5rem;
-    border-right: 1px solid #aaa;
+    /*border-right: 1px solid #aaa;*/
 }
+
 .mud-dialog-title {
     border-bottom: 1px solid #ddd;
-    background-color: #eee;
+    /*background-color: #eee;*/
+    /*background-color: #aaa;*/
     direction: rtl;
 }
+
 .mud-dialog-content {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100px;
+    background-color: #f5f5f5;
 }
+
 .mud-dialog-actions {
     border-top: 1px solid #ddd;
 }
-.mud-table-root .mud-table-head {
-    background-color: #eee;
+/*.mud-table-root*/
+.mud-table-head {
+    /*background-color: #eee;*/
+    /*background-color: lime;*/
 }
 /*MUDBLAZOR OVERRIDES*/
 
-.entry-top, .entry-ref, .entry-war, .entry-mid, .entry-bot {
+.form-big {
+    height: -webkit-fill-available;
+}
+
+.form-small {
+    height: -webkit-fill-available;
+}
+
+.field-group {
     display: flex;
     gap: 0.5rem
 }
-@media(max-width: 700px){
-    .entry-top, .entry-ref, .entry-war, .entry-mid, .entry-bot {
-        flex-wrap: wrap;
+
+@media(max-width:1000px) {
+    .form-big{
+        width:700px;
     }
 }
+
+@media(max-width: 700px) {
+    .field-group {
+        flex-wrap: wrap;
+    }
+    .form-big {
+        width: 500px;
+    }
+}
+
+@media(max-width:500px) {
+    .form-big {
+        width: unset;
+    }
+}
+
+
 
 a, .btn-link {
     color: #006bb7;

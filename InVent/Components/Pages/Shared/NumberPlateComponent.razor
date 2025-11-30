@@ -1,0 +1,61 @@
+﻿
+
+<div class="number-plate">
+    <div class="number-plate-field">
+        <MudTextField T="string"
+                      @ref="this.TextFieldRefs[0]"
+                      InputId="1"
+                      Mask="Mask1"
+                      Value=this.First
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[2])"
+                      Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
+                      Style="background-color:#fcfceb;text-align:center;"
+                      Placeholder="_ _"
+                      AutoFocus
+                      Required
+                      RequiredError="اجباری"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <MudTextField T="string"
+                      @ref="this.TextFieldRefs[1]"
+                      InputId="2"
+                      Mask="Mask2"
+                      Value=this.Second
+                      Style="background-color:#fcfceb"
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[1],this.TextFieldRefs[2])"
+                      Validation=@(new Func<string,string>(this.ValidateSecondPartofNumberPlate))
+                      Required
+                      RequiredError="اجباری"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <MudTextField T="string"
+                      @ref="this.TextFieldRefs[2]"
+                      InputId="3"
+                      Mask="Mask3"
+                      Value=this.Third
+                      Style="background-color:#fcfceb"
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[2],this.TextFieldRefs[3])"
+                      Validation=@(new Func<string,string>(this.ValidateThirdPartofNumberPlate))
+                      Placeholder="_ _ _"
+                      Required
+                      RequiredError="اجباری"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+        <MudTextField T="string"
+                      @ref="this.TextFieldRefs[3]"
+                      InputId="4"
+                      Mask="Mask1"
+                      Value=this.Fourth
+                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])"
+                      Validation=@(new Func<string,string>(this.ValidateForthPartofNumberPlate))
+                      Placeholder="_ _"
+                      Style="background-color:#fcfceb"
+                      Adornment="Adornment.End"
+                      AdornmentText="ایران"
+                      AdornmentColor="Color.Info"
+                      Required
+                      RequiredError="اجباری"
+                      Variant="Variant.Outlined">
+        </MudTextField>
+    </div>
+</div>

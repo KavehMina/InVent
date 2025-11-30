@@ -1,8 +1,10 @@
 ﻿@using InVent.Data.Models
+@using InVent.Components.Pages.Internals
+@inherits BaseComponent
 
 <div class="upload-container">
     <MudText Style="height:24px!important">@this.Title</MudText>
-    @if (this.RelatedExistingAttachments?.Count > 0)
+    @* @if (this.RelatedExistingAttachments?.Count > 0)
     {
         <div class="files-container">
             @foreach (var att in this.RelatedExistingAttachments)
@@ -13,10 +15,13 @@
                 </div>
             }
         </div>
-    }
+    } *@
     <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                   @ref=this.FileUploadRef
+                   Validation="@(new Func<IReadOnlyList<IBrowserFile>,string>(this.ValidateFileUpload))"
+                   Accept=".jpg,.jpeg,.png,.pdf"
                    MaximumFileCount="this.MaxNumber"
-                   Required="this.Required && (this.RelatedExistingAttachments==null || this.RelatedExistingAttachments?.Count == 0)"
+                   Required="this.IsRequired()"
                    RequiredError="اجباری"
                    FilesChanged="this.UploadFiles">
         <ActivatorContent>
@@ -37,6 +42,21 @@
             }
         </ActivatorContent>
     </MudFileUpload>
+
+    @if (this.RelatedExistingAttachments?.Count > 0)
+    {
+        <div class="files-container">
+            @foreach (var att in this.RelatedExistingAttachments)
+            {
+                <div class="file" @onclick="()=>this.ViewAttachments(att)">
+                    <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" Color="Color.Error" OnClick="()=>this.DeleteAttachments(att)"></MudIconButton>
+                </div>
+            }
+        </div>
+        <MudDivider DividerType="DividerType.FullWidth"></MudDivider>
+    }
+
     @if (this.InternalFiles.Count > 0)
     {
         <div class="files-container">

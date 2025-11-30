@@ -3,12 +3,14 @@
     position: relative;
     top: 0;
     height: 3rem;
-    background-color: #eee;
+    /*background-color: #eee;*/
+    background-color: #fff;
     border-bottom: 1px solid #ddd;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
     padding-inline: 0 2rem;
+    box-shadow: 0 0px 10px -5px;
 }
 
 .appbar-right {
@@ -135,11 +137,10 @@
     }
 
     .nav-scrollable {*/
-/* Never collapse the sidebar for wide screens */
-/*display: block;*/
-
-/* Allow sidebar to scroll for tall menus */
-/*height: calc(100vh - 3.5rem);
+    /* Never collapse the sidebar for wide screens */
+    /*display: block;*/
+    /* Allow sidebar to scroll for tall menus */
+    /*height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
 }*/

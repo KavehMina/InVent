@@ -285,25 +285,28 @@ namespace InVent.Components.Pages.DispatchEntity
         {
             foreach (var file in this.files)
             {
-                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                //var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
+                //    .FirstOrDefault();
+                var att = this.Attachments.Where(x => x.LastModified?.Ticks == file.LastModified.Ticks)
+                    .FirstOrDefault();
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}/{att?.Category}");
                 Directory.CreateDirectory(folder);
 
-                var filePath = Path.Combine(folder, file.Name);
+                var ext = file.Name.Split('.');
+                var fileName = this.NumberPlate + "-" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() + "." + ext.LastOrDefault();
+                var filePath = Path.Combine(folder, fileName);
 
                 using var stream = File.Create(filePath);
                 await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
                     .CopyToAsync(stream);
 
-                var t = this.Attachments.Where(x => x.Equals(file));
 
-                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
-                    .FirstOrDefault();
                 if (att != null)
                 {
                     att.ParentId = this.Dispatch.Id;
                     att.ParentType = "dispatch";
-                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}";
-
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{att?.Category}/{fileName}";
+                    att.FileName = fileName;
                 }
             }
         }
@@ -334,6 +337,7 @@ namespace InVent.Components.Pages.DispatchEntity
                         NumberPlate = this.NumberPlate,
                         PackageCount = (int)this.PackageCount,
                         Date = this.Date,
+                        LastModifiedOn = DateTime.UtcNow,
                         InternationalNumber1 = this.InternationalNumber1,
                         InternationalNumber2 = this.InternationalNumber2,
                     };

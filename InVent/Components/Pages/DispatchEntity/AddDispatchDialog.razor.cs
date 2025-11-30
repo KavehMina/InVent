@@ -1,5 +1,4 @@
 ﻿using InVent.Data.Models;
-using InVent.Data.Models.Miscellaneous;
 using InVent.Services.AttachmentServices;
 using InVent.Services.BookingServices;
 using InVent.Services.CarrierServices;
@@ -26,8 +25,10 @@ namespace InVent.Components.Pages.DispatchEntity
         public required CustomsService CustomsService { get; set; }
 
         private Booking Booking { get; set; }
+        private Booking TempBooking { get; set; }
         private List<Booking> Bookings { get; set; } = [];
         private Carrier Carrier { get; set; }
+        private Carrier TempCarrier { get; set; }
         private List<Carrier> Carriers { get; set; } = [];
         private Port Port { get; set; }
         private Port TempPort { get; set; }
@@ -46,11 +47,12 @@ namespace InVent.Components.Pages.DispatchEntity
         private int? NetWeight { get; set; }
         private int? PackageCount { get; set; }
         private int? Fare { get; set; }
+        private int? TempFare { get; set; }
         private bool IsExport { get; set; }
         private bool TempIsExport { get; set; }
         private string? InternationalNumber1 { get; set; }
         private string? InternationalNumber2 { get; set; }
-        private DateTime? Date { get; set; } = DateTime.Today;
+        private DateTime? Date { get; set; } = DateTime.UtcNow;
         private MudDatePicker _picker;
         private string ExportLabel => this.IsExport ? "صادراتی" : "داخلی";
 
@@ -199,23 +201,27 @@ namespace InVent.Components.Pages.DispatchEntity
             this.ProjectNumber = this.Booking.Project?.Number;
             foreach (var file in this.files)
             {
-                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType && x.LastModified == file.LastModified)
+                    .FirstOrDefault();
+
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}/{att?.Category}");
                 Directory.CreateDirectory(folder);
 
-                var filePath = Path.Combine(folder, file.Name);
+                var ext = file.Name.Split('.');
+                var fileName = this.NumberPlate + "-" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() + "." + ext.LastOrDefault(); ;
+                var filePath = Path.Combine(folder, fileName);
                 using var stream = File.Create(filePath);
                 await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
                     .CopyToAsync(stream);
 
-                var t = this.Attachments.Where(x => x.Equals(file));
+                //var t = this.Attachments.Where(x => x.Equals(file));
 
-                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
-                    .FirstOrDefault();
                 if (att != null)
                 {
                     att.ParentId = parentId;
                     att.ParentType = "dispatch";
-                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}";
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{att?.Category}/{fileName}";
+                    att.FileName = fileName;
 
                 }
 
@@ -273,10 +279,16 @@ namespace InVent.Components.Pages.DispatchEntity
                         this.TempCustoms = this.Customs;
                         this.TempPort = this.Port;
                         this.TempIsExport = this.IsExport;
+                        this.TempBooking = this.Booking;
+                        this.TempCarrier = this.Carrier;
+                        this.TempFare = this.Fare;
                         await form.ResetAsync();
                         this.IsExport = this.TempIsExport;
                         this.Port = this.TempPort;
                         this.Customs = this.TempCustoms;
+                        this.Carrier = this.TempCarrier;
+                        this.Fare = this.TempFare;
+                        this.Booking = this.TempBooking;
                         this.Date = DateTime.Today;
                         this.files.Clear();
                         this.Attachments.Clear();

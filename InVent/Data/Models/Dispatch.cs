@@ -42,10 +42,11 @@ namespace InVent.Data.Models
         [Column("InternationalNumber1")]
         public string? InternationalNumber1 { get; set; }
 
-
         [Column("InternationalNumber2")]
         public string? InternationalNumber2 { get; set; }
-
+        
+        [Column("LastModifiedOn")]
+        public DateTime? LastModifiedOn { get; set; }
 
         [Column("BookingId")] //FK
         public Guid BookingId { get; set; }
@@ -92,6 +93,7 @@ namespace InVent.Data.Models
         public required bool IsExport { get; set; }
         public string? InternationalNumber1 { get; set; }
         public string? InternationalNumber2 { get; set; }
+        public DateTime? LastModifiedOn { get; set; }
         public required Guid BookingId { get; set; }//FK
         public required Guid CarrierId { get; set; }//FK
         public required Guid PortId { get; set; }//FK

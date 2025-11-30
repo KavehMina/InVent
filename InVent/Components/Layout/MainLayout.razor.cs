@@ -8,13 +8,16 @@ namespace InVent.Components.Layout
         private static readonly string Normal = "400";
         private static readonly string Bold = "600";
         private static readonly string Light = "200";
-        private readonly MudTheme InVentTheme = new MudTheme()
+        private readonly MudTheme InVentTheme = new()
         {
             
             PaletteLight = new PaletteLight()
             {
-                Primary = Colors.Blue.Default,
+                //Primary = Colors.Blue.Default,
+                Primary = Colors.Indigo.Darken1,
                 Secondary = Colors.Green.Accent4,
+                Tertiary = Colors.Amber.Darken3,
+                Error = Colors.Red.Darken1,
                 AppbarBackground = Colors.Red.Default,
                 
             },

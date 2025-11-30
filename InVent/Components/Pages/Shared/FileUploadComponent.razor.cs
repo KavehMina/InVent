@@ -1,10 +1,10 @@
 ﻿using InVent.Components.Pages.DispatchEntity;
 using InVent.Data.Models;
-using InVent.Data.Models.Miscellaneous;
 using InVent.Services.AttachmentServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using System.Linq;
 
 namespace InVent.Components.Pages.Shared
 {
@@ -26,7 +26,7 @@ namespace InVent.Components.Pages.Shared
         private int MaxNumber => this.IsMultiple ? 10 : 1;
 
         private List<Attachment>? RelatedExistingAttachments => this.ExistingAttachments?.Where(x => x.Category == this.MapFileCategory()).ToList();
-
+        private MudFileUpload<IReadOnlyList<IBrowserFile>> FileUploadRef { get; set; }
 
 
 
@@ -39,23 +39,32 @@ namespace InVent.Components.Pages.Shared
                 var f = InternalFiles[0];
                 this.InternalFiles.Remove(f);
                 this.Files.Remove(f);
-                var att = this.Attachments.Where(x => x.FileName == f.Name && x.FileSize == f.Size && x.ContentType == f.ContentType)
+                var att = this.Attachments.Where(x => x.FileName == f.Name && x.FileSize == f.Size && x.ContentType == f.ContentType && x.Category == this.MapFileCategory())
                     .FirstOrDefault();
+
                 if (att != null) this.Attachments.Remove(att);
             }
 
             foreach (var file in files ?? [])
             {
+                var ex = this.Files.Where(x => x.Name == file.Name && x.Size == file.Size && x.ContentType == file.ContentType && x.LastModified == file.LastModified);
+                if (ex.Any())
+                {
+                    this.HandleMessage("فایل تکراری", false);
+                    break;
+                }
+
                 this.InternalFiles.Add(file);
                 this.Files.Add(file);
                 this.Attachments.Add(new Attachment
                 {
+                    LastModified = file.LastModified,
                     ParentType = "",
                     ParentId = Guid.Empty,
                     FilePath = string.Empty,
-                    //the above are gonna be filled in parent component
-                    ContentType = file.ContentType,
                     FileName = file.Name,
+                    //the above are gonna be filled in parent component, filename will be overwritten
+                    ContentType = file.ContentType,
                     FileSize = file.Size,
                     Category = this.MapFileCategory()
                 });
@@ -68,15 +77,28 @@ namespace InVent.Components.Pages.Shared
         {
             this.InternalFiles.Remove(file);
             this.Files.Remove(file);
-            var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
+            var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType && x.Category == this.MapFileCategory())
                 .FirstOrDefault();
+
             if (att != null) this.Attachments.Remove(att);
-            this.StateHasChanged();
+            this.FileUploadRef.Validate();
+        }
+
+        private string ValidateFileUpload(IReadOnlyList<IBrowserFile> arg)
+        {
+            if (this.ExistingAttachments == null) // adding new dispatch
+            {
+                return this.Required && this.InternalFiles.Count == 0 ? "اجباری" : string.Empty;
+            }
+            else // editing existing dispatch
+            {
+                return this.Required && this.ExistingAttachments.Count == 0 ? "اجباری" : string.Empty;
+            }
         }
 
 
-        [Inject]
-        IDialogService DialogService { get; set; }
+        //[Inject]
+        //IDialogService DialogService { get; set; }
 
         private async Task DeleteAttachments(Attachment att)//Guid id, string filePath)
         {
@@ -107,12 +129,15 @@ namespace InVent.Components.Pages.Shared
                 { "Header" , attachment.FileName }
             };
 
-            /*var dialog =*/
             await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
-            //var result = await dialog.Result;
-            //if (result != null && !result.Canceled)
-            //{
-            //}
+
+        }
+
+        private bool IsRequired()
+        {
+            if (this.ExistingAttachments == null)
+                return this.Required;
+            return this.Required && (this.RelatedExistingAttachments == null || this.RelatedExistingAttachments?.Count == 0);
         }
 
         private string MapFileCategory()

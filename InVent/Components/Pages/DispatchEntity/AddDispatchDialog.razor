@@ -79,6 +79,15 @@
                 </div>
                 <div class="field-group">
                     <MudTextField T="string"
+                                  @bind-Value="this.NumberPlate"
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.NumberPlate = string.Empty"
+                                  Label="‌شماره پلاک"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
                                   @bind-Value="this.DriverName"
                                   Required
                                   Clearable
@@ -105,15 +114,7 @@
                                   Label="موبایل راننده"
                                   Variant="Variant.Outlined">
                     </MudTextField>
-                    <MudTextField T="string"
-                                  @bind-Value="this.NumberPlate"
-                                  Required
-                                  Clearable
-                                  ClearIcon="@Icons.Material.Filled.Clear"
-                                  OnClearButtonClick="()=>this.NumberPlate = string.Empty"
-                                  Label="‌شماره پلاک"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
+                    
                 </div>
                 <div class="field-group">
                     <MudTextField T="int?"
