@@ -9,10 +9,10 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
     public partial class EditDeliveryOrderDialog
     {
         [Inject]
-        public required ProjectService ProjectService { get; set; }        
+        public required ProjectService ProjectService { get; set; }
         private Project Project { get; set; }
         private List<Project> Projects { get; set; } = [];
-        private string StatusText => this.Project?.Status == true ? "بسته" : "باز";
+        private string StatusText => this.DeliveryOrder?.Status == true ? "بسته" : "باز";
 
         protected override async void OnInitialized()
         {
@@ -60,6 +60,7 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
                         DeliveryOrderId = this.DeliveryOrder.DeliveryOrderId,
                         ProjectId = this.DeliveryOrder.Project.Id,
                         Weight = (int)this.DeliveryOrder.Weight,
+                        TankerFare = (int)this.DeliveryOrder.TankerFare,
                         Status = this.DeliveryOrder.Status,
 
                     };

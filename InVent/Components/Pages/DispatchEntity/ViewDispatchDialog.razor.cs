@@ -2,6 +2,7 @@
 using InVent.Data.Models;
 using InVent.Services.AttachmentServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
 namespace InVent.Components.Pages.DispatchEntity
@@ -13,6 +14,9 @@ namespace InVent.Components.Pages.DispatchEntity
         [Inject]
         IDialogService DialogService { get; set; }
         private string ExportLabel => this.Dispatch.IsExport ? "صادراتی" : "داخلی";
+        private readonly IList<IBrowserFile> files = [];
+
+        private List<Attachment> Attachments = [];
         private List<Attachment> ExistingAttachments { get; set; } = [];
 
         protected override async Task OnInitializedAsync()

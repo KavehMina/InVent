@@ -12,6 +12,7 @@ using InVent.Services.PortServices;
 using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
+using InVent.Services.SupplierServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -151,6 +152,11 @@ namespace InVent.Components.Pages.Internals
         public required BookingService BookingService { get; set; }
         [Parameter]
         public required Booking Booking { get; set; }
+
+        public int? CalculateRemaining()
+        {
+            return null;
+        }
     }
     public class BaseDispatchDialog : BaseDialog
     {
@@ -158,5 +164,13 @@ namespace InVent.Components.Pages.Internals
         public required DispatchService DispatchService { get; set; }
         [Parameter]
         public required Dispatch Dispatch { get; set; }
+    }
+
+    public class BaseSupplierDialog : BaseDialog
+    {
+        [Inject]
+        public required SupplierService SupplierService { get; set; }
+        [Parameter]
+        public required Supplier Supplier { get; set; }
     }
 }

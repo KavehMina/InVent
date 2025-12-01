@@ -12,6 +12,8 @@
             <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
                 <MudSwitch T="bool"
                            @bind-Value=this.DeliveryOrder.Status
+                           Color="Color.Success"
+                           UncheckedColor="Color.Error"
                            Label="@this.StatusText">
                 </MudSwitch>
                 <MudTextField T="string"
@@ -36,11 +38,26 @@
                 </MudAutocomplete>
                 <MudTextField T="int"
                               @bind-Value="this.DeliveryOrder.Weight"
-                              Required                              
+                              Required
+                              Format="N0"
+                              Immediate
+                              TextUpdateSuppression="false"
+                              Adornment="Adornment.End"
+                              AdornmentText="کیلوگرم"
                               Label="وزن حواله"
                               Variant="Variant.Outlined">
                 </MudTextField>
-
+                <MudTextField T="int"
+                              @bind-Value="this.DeliveryOrder.TankerFare"
+                              Required
+                              Format="N0"
+                              Immediate
+                              TextUpdateSuppression="false"
+                              Adornment="Adornment.End"
+                              AdornmentText="تومان"
+                              Label="کرایه تانکر"
+                              Variant="Variant.Outlined">
+                </MudTextField>
             </MudForm>
         }
     </DialogContent>

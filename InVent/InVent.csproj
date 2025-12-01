@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Account\Pages\Manage\Register.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Components\Account\Pages\Manage\Register.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Components\Layout\OldMainLayout.razor" />
   </ItemGroup>
 

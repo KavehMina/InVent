@@ -9,6 +9,7 @@ namespace InVent.Services.DispatchServices
     {
         Task<ResponseModel<Dispatch>> GetAllDispatches();
         Task<ResponseModel<Dispatch>> GetDispatchById(Guid id);
+        Task<ResponseModel<Dispatch>> GetDriverInfoByNumberPlate(string numberPlate);
     }
     public class DispatchRepository(IDbContextFactory<EntityDBContext> contextFactory) : Repository<Dispatch>(contextFactory), IDispatchRepository
     {
@@ -55,6 +56,27 @@ namespace InVent.Services.DispatchServices
                 {
                     Message = Messages.Received,
                     Entities = res,
+                    Success = true
+                };
+            }
+            catch (Exception err)
+            {
+                return new ResponseModel<Dispatch> { Message = err.Message, Success = false };
+            }
+        }
+
+        public async Task<ResponseModel<Dispatch>> GetDriverInfoByNumberPlate(string numberPlate)
+        {
+            using var context = contextFactory.CreateDbContext();
+            try
+            {
+                var res = await context.Dispatches
+                    .Where(x => x.NumberPlate == numberPlate)
+                    .FirstOrDefaultAsync();
+                return new ResponseModel<Dispatch>
+                {
+                    Message = Messages.Received,
+                    Entities = [res],
                     Success = true
                 };
             }

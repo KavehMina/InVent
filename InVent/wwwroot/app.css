@@ -39,6 +39,10 @@ input[type="text"] {
     border-radius: 0.5rem !important;
 }
 
+.mud-table-empty-row{
+    border-radius:1rem
+}
+
 .mud-form {
     height: -webkit-fill-available;
 }
@@ -91,6 +95,7 @@ input[type="text"] {
 
 .form-big {
     height: -webkit-fill-available;
+    /*width: 700px;*/
 }
 
 .form-small {

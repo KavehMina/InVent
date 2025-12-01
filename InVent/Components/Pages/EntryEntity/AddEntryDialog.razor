@@ -8,192 +8,250 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
+        <div class="form-big">
+            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
 
-        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+                <div class="field-group">
+                    <MudAutocomplete T="DeliveryOrder"
+                                     @bind-Value="this.DeliveryOrder"
+                                     Required
+                                     ToStringFunc="(e)=> DeliveryOrderToString(e)"
+                                     SearchFunc="this.SearchDeliveryOrders"
+                                     Label="حواله"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.DeliveryOrder = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    @* <MudAutocomplete T="Refinery"
+                                     @bind-Value="this.Refinery"
+                                     Required
+                                     ToStringFunc="(e)=> RefineryToString(e)"
+                                     SearchFunc="this.SearchRefineries"
+                                     Label="پالایشگاه"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Refinery = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="Package"
+                                     @bind-Value="this.Package"
+                                     Required
+                                     ToStringFunc="(e)=> PackageToString(e)"
+                                     SearchFunc="this.SearchPackages"
+                                     Label="بسته‌بندی"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Package = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                    <MudAutocomplete T="Product"
+                                     @bind-Value="this.Product"
+                                     Required
+                                     ToStringFunc="(e)=> ProductToString(e)"
+                                     SearchFunc="this.SearchProducts"
+                                     Label="محصول"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Product = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete> *@
+                </div>
+                <div class="field-group">
+                    <MudTextField T="string"
+                                  Value="this.DeliveryOrder?.Project?.Product?.Refinery?.Name"
+                                  ReadOnly
+                                  Label="پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  Value="this.DeliveryOrder?.Project?.Package?.Name"
+                                  ReadOnly
+                                  Label="بسته‌بندی"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  Value="this.DeliveryOrder?.Project?.Product?.Name"
+                                  ReadOnly
+                                  Label="محصول"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.DeliveryOrder?.Project?.Number"
+                                  ReadOnly
+                                  Label="شماره پروژه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="field-group">
+                    <MudDatePicker @bind-Date=this.Date
+                                   Culture="@DateExtension.GetPersianCulture()"
+                                   TitleDateFormat="dddd, dd MMMM"
+                                   DateFormat="yyyy/MM/dd"
+                                   ClosingDelay="500"
+                                   @ref="_picker"
+                                   Variant="Variant.Outlined"
+                                   Label="تاریخ تخلیه"
+                                   AutoClose
+                                   Editable>
+                        <PickerActions>
+                            <MudButton Class="mr-auto align-self-start" OnClick="SetToday">امروز</MudButton>
+                        </PickerActions>
+                    </MudDatePicker>
+                    <MudAutocomplete T="Tanker"
+                                     @bind-Value="this.Tanker"
+                                     Required
+                                     ToStringFunc="(e)=> TankerToString(e)"
+                                     SearchFunc="this.SearchTankers"
+                                     Label="راننده"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Tanker = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
 
-            <div class="field-group">
-                <MudAutocomplete T="Refinery"
-                                 @bind-Value="this.Refinery"
-                                 Required
-                                 ToStringFunc="(e)=> RefineryToString(e)"
-                                 SearchFunc="this.SearchRefineries"
-                                 Label="پالایشگاه"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Refinery = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="Package"
-                                 @bind-Value="this.Package"
-                                 Required
-                                 ToStringFunc="(e)=> PackageToString(e)"
-                                 SearchFunc="this.SearchPackages"
-                                 Label="بسته‌بندی"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Package = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="DeliveryOrder"
-                                 @bind-Value="this.DeliveryOrder"
-                                 Required
-                                 ToStringFunc="(e)=> DeliveryOrderToString(e)"
-                                 SearchFunc="this.SearchDeliveryOrders"
-                                 Label="حواله"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.DeliveryOrder = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="Product"
-                                 @bind-Value="this.Product"
-                                 Required
-                                 ToStringFunc="(e)=> ProductToString(e)"
-                                 SearchFunc="this.SearchProducts"
-                                 Label="محصول"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Product = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-            </div>
-            <div class="field-group">
-                <MudDatePicker @bind-Date=this.Date
-                               Culture="@DateExtension.GetPersianCulture()"
-                               TitleDateFormat="dddd, dd MMMM"
-                               DateFormat="yyyy/MM/dd"
-                               ClosingDelay="500"
-                               @ref="_picker"
-                               Variant="Variant.Outlined"
-                               Label="تاریخ"
-                               AutoClose
-                               Editable>
-                    <PickerActions>
-                        <MudButton Class="mr-auto align-self-start" OnClick="SetToday">امروز</MudButton>
-                    </PickerActions>
-                </MudDatePicker>
-                <MudAutocomplete T="Tanker"
-                                 @bind-Value="this.Tanker"
-                                 Required
-                                 ToStringFunc="(e)=> TankerToString(e)"
-                                 SearchFunc="this.SearchTankers"
-                                 Label="راننده"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Tanker = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[0]
-                              Value="this.Filled"
-                              ValueChanged="(e)=>{this.SetFilled(e);this.SetAverage();}"
-                              Immediate
-                              Required
-                              Clearable
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.Filled = null"
-                              Label="تعداد بسته"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[1]
-                              @bind-Value="this.Damaged"
-                              Required
-                              Clearable
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.Damaged = null"
-                              Label="معیوب"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </div>
-            <div class="field-group">
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[2]
-                              Value="this.RefineryFilled"
-                              ValueChanged="e=>this.SetRefineryFilled(e)"
-                              Immediate
-                              Required
-                              Clearable
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.RefineryFilled = null"
-                              Label="پر پالایشگاه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[3]
-                              Value="this.RefineryEmpty"
-                              ValueChanged="e=>this.SetRefineryEmpty(e)"
-                              Required
-                              Clearable
-                              Immediate
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.RefineryEmpty = null"
-                              Label="خالی پالایشگاه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              Value="this.RefineryNet"
-                              TextChanged="this.SetDifference"
-                              Immediate
-                              ReadOnly
-                              Required
-                              Label="خالص پالایشگاه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </div>
-            <div class="field-group">
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[4]
-                              Value="this.WarehouseFilled"
-                              ValueChanged="e=>this.SetWarehouseFilled(e)"
-                              Immediate
-                              Required
-                              Clearable
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.WarehouseFilled = null"
-                              Label="پر انبار"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @ref=this.TextFieldRefs[5]
-                              Value="this.WarehouseEmpty"
-                              ValueChanged="e=>this.SetWarehouseEmpty(e)"
-                              Required
-                              Clearable
-                              Immediate
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.WarehouseEmpty = null"
-                              Label="خالی انبار"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              Value="this.WarehouseNet"
-                              TextChanged="(e)=>{this.SetDifference();this.SetAverage();}"
-                              Immediate
-                              ReadOnly
-                              Required
-                              Label="خالص انبار"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </div>
-            <div class="field-group">
-                <MudTextField T="int?"
-                              Value="this.Difference"
-                              ReadOnly
-                              Style="background-color:limegreen"
-                              Label="اختلاف"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="Double?"
-                              ReadOnly
-                              Value="this.Average"
-                              Label="متوسط بسته"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </div>
-        </MudForm>
-
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[0]
+                                  Value="this.Filled"
+                                  ValueChanged="(e)=>{this.SetFilled(e);this.SetAverage();}"
+                                  Immediate
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  OnClearButtonClick="()=>this.Filled = null"
+                                  Label="تعداد بسته"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[1]
+                                  @bind-Value="this.Damaged"
+                                  Required
+                                  Clearable
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.Damaged = null"
+                                  Label="معیوب"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="field-group">
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[2]
+                                  Value="this.RefineryFilled"
+                                  ValueChanged="e=>this.SetRefineryFilled(e)"
+                                  Immediate
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  OnClearButtonClick="()=>this.RefineryFilled = null"
+                                  Label="پر پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[3]
+                                  Value="this.RefineryEmpty"
+                                  ValueChanged="e=>this.SetRefineryEmpty(e)"
+                                  Required
+                                  Clearable
+                                  Immediate
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.RefineryEmpty = null"
+                                  Label="خالی پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.RefineryNet"
+                                  TextChanged="this.SetDifference"
+                                  Immediate
+                                  ReadOnly
+                                  Required
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  Label="خالص پالایشگاه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="field-group">
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[4]
+                                  Value="this.WarehouseFilled"
+                                  ValueChanged="e=>this.SetWarehouseFilled(e)"
+                                  Immediate
+                                  Required
+                                  Clearable
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.WarehouseFilled = null"
+                                  Label="پر انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  @ref=this.TextFieldRefs[5]
+                                  Value="this.WarehouseEmpty"
+                                  ValueChanged="e=>this.SetWarehouseEmpty(e)"
+                                  Required
+                                  Clearable
+                                  Immediate
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.WarehouseEmpty = null"
+                                  Label="خالی انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.WarehouseNet"
+                                  TextChanged="(e)=>{this.SetDifference();this.SetAverage();}"
+                                  Immediate
+                                  ReadOnly
+                                  Required
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  Label="خالص انبار"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+                <div class="field-group">
+                    <MudTextField T="int?"
+                                  Value="this.Difference"
+                                  ReadOnly
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  Style="background-color:limegreen"
+                                  Label="اختلاف"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="Double?"
+                                  ReadOnly
+                                  Value="this.Average"
+                                  Label="متوسط بسته"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+            </MudForm>
+        </div>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="this.Cancel">انصراف</MudButton>

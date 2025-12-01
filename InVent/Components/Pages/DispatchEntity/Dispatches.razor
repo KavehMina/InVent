@@ -9,8 +9,8 @@
                    Variant="Variant.Filled"
                    DropShadow="false"
                    Size="Size.Small"
-                   Style="width:10%"
-                   Color="Color.Info"></MudIconButton>
+                   Style="width:15%"
+                   Color="Color.Primary"></MudIconButton>
     <MudTable T="Dispatch"
               Items="@this.DispatchesList"
               @ref="this.Table"
@@ -19,7 +19,6 @@
               Loading="@this.Loading"
               OnRowClick="e=>this.OpenViewDialog(e)"
               Breakpoint="Breakpoint.None"
-              GroupHeaderStyle="background-color: #eee;"
               Outlined
               Striped
               LoadingProgressColor="Color.Info">
@@ -48,10 +47,10 @@
             <MudTd DataLabel="شماره پروژه">@context.Booking?.Project?.Number</MudTd>
             <MudTd DataLabel="شماره بوکینگ">@context.Booking?.Number</MudTd>
             <MudTd DataLabel="تعداد بسته">@context.PackageCount</MudTd>
-            <MudTd Style="width:30%;text-align:end">
+            <MudTd Style="display:flex;justify-content:end">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                OnClick="(e)=>this.OpenEditDialog(e,context)"
-                               Color="Color.Info">
+                               Color="Color.Primary">
                 </MudIconButton>
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                OnClick="(e)=>this.OpenDeleteDialog(e,context)"

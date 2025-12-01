@@ -40,10 +40,10 @@ namespace InVent.Components.Pages.CustomsEntity
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
-                { "Header" , "گمرک جدید" }
+                { "Header" , "گمرک اظهار جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddCustomsDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddCustomsDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -69,10 +69,10 @@ namespace InVent.Components.Pages.CustomsEntity
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
                 { "Customs", item },
-                { "Header" , "ویرایش گمرک" }
+                { "Header" , "ویرایش گمرک اظهار" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditCustomsDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditCustomsDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -85,8 +85,8 @@ namespace InVent.Components.Pages.CustomsEntity
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
                 { "Customs", item },
-                { "Header" , "حذف گمرک" },
-                { "Message" , "آیا از حذف این گمرک اطمینان دارید؟" }
+                { "Header" , "حذف گمرک اظهار" },
+                { "Message" , "آیا از حذف این گمرک اظهار اطمینان دارید؟" }
             };
 
             var dialog = await DialogService.ShowAsync<DeleteCustomsDialog>("", parameters, options);

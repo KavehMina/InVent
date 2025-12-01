@@ -9,8 +9,6 @@ namespace InVent.Components.Pages.BankEntity
 {
     public partial class Banks
     {
-        //[Inject]
-        //public required IDialogService DialogService { get; set; }
         public List<Bank> BanksList { get; set; } = [];
         public string? NewBankName { get; set; }
         public required MudTable<Bank> Table { get; set; }

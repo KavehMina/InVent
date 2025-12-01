@@ -17,6 +17,7 @@ using InVent.Services.PortServices;
 using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
+using InVent.Services.SupplierServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -82,6 +83,9 @@ builder.Services.AddScoped<DispatchService>();
 //Attachment
 builder.Services.AddScoped<IAttachmentRepository, AttachmentRepository>();
 builder.Services.AddScoped<AttachmentService>();
+//Attachment
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<SupplierService>();
 //User
 builder.Services.AddScoped<UserService>();
 ///096 ends
@@ -101,7 +105,7 @@ options.UseSqlServer(connectionString));
 ///096 ends
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()

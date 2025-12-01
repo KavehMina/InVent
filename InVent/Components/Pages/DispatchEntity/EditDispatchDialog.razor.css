@@ -24,3 +24,22 @@
     padding-block: 0.5rem;
 }
 
+.switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.number-plate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.number-plate-field {
+    display: grid;
+    gap: 5%;
+    grid-template-columns: 20% 10% 30% 25%;
+    direction: ltr
+}
+
+

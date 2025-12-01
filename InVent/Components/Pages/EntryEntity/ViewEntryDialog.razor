@@ -11,7 +11,7 @@
         @if (this.Entry != null)
         {
             <MudForm ReadOnly>
-                <div class="entry-top">
+                <div class="field-group">
                     <MudAutocomplete T="string"
                                      Value="this.Entry.Refinery?.Name"
                                      Label="پالایشگاه"
@@ -33,70 +33,102 @@
                                      Variant="Variant.Outlined">
                     </MudAutocomplete>
                 </div>
-                <div class="entry-mid">
-                <MudDatePicker Date=this.Date
-                               Culture="@DateExtension.GetPersianCulture()"
-                               TitleDateFormat="dddd, dd MMMM"
-                               DateFormat="yyyy/MM/dd"
-                               Variant="Variant.Outlined"
-                               Label="تاریخ">
+                <div class="field-group">
+                    <MudDatePicker Date=this.Date
+                                   Culture="@DateExtension.GetPersianCulture()"
+                                   TitleDateFormat="dddd, dd MMMM"
+                                   DateFormat="yyyy/MM/dd"
+                                   Variant="Variant.Outlined"
+                                   Label="تاریخ تخلیه">
 
-                </MudDatePicker>
+                    </MudDatePicker>
                     <MudAutocomplete T="string"
-                                 Value="this.Entry.Tanker?.DriverName"
-                                 Label="راننده"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
+                                     Value="this.Entry.Tanker?.DriverName"
+                                     Label="راننده"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
 
-                <MudTextField T="int"
-                              Value="this.Entry.Filled"
-                              Label="تعداد بسته"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int"
-                              Value="this.Entry.Damaged"
-                              Label="معیوب"
-                              Variant="Variant.Outlined">
-                </MudTextField>
+                    <MudTextField T="int"
+                                  Value="this.Entry.Filled"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Label="تعداد بسته"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int"
+                                  Value="this.Entry.Damaged"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Label="معیوب"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
                 </div>
-                <div class="entry-ref">
+                <div class="field-group">
                     <MudTextField T="int"
                                   Value="this.Entry.RefineryFilled"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="پر پالایشگاه"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                     <MudTextField T="int"
                                   Value="this.Entry.RefineryEmpty"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="خالی پالایشگاه"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                     <MudTextField T="int?"
                                   Value="this.RefineryNet"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="خالص پالایشگاه"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                 </div>
-                <div class="entry-war">
+                <div class="field-group">
                     <MudTextField T="int"
                                   Value="this.Entry.WarehouseFilled"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="پر انبار"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                     <MudTextField T="int"
                                   Value="this.Entry.WarehouseEmpty"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="خالی انبار"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                     <MudTextField T="int?"
                                   Value="this.WarehouseNet"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="خالص انبار"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                 </div>
-                <div class="entry-bot">
+                <div class="field-group">
                     <MudTextField T="int?"
                                   Value="this.Difference"
                                   Style="background-color:limegreen"
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="اختلاف"
                                   Variant="Variant.Outlined">
                     </MudTextField>

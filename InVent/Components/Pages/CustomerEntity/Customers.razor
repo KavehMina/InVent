@@ -4,20 +4,39 @@
 @inherits BaseCustomerComponent
 
 <div class="entity-container">
-    <MudIconButton OnClick="e=>this.OpenAddDialog(e)"
+    @* <MudIconButton OnClick="e=>this.OpenAddDialog(e)"
                    Icon="@Icons.Material.Filled.Add"
                    Variant="Variant.Filled"
                    DropShadow="false"
                    Size="Size.Small"
                    Style="width:10%"
-                   Color="Color.Info"></MudIconButton>
+                   Color="Color.Info">
+       </MudIconButton> *@
+    <div class="add-bank-container">
+        <MudText Typo="Typo.body2">اضافه کردن مشتری جدید</MudText>
+        <div class="add-bank-fields-container">
+            <MudTextField T="string"
+                          @ref=Fieldref
+                          @bind-Value="this.NewCustomerName"
+                          OnKeyUp="e=>this.DetectEnter(e)"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudButton OnClick="this.Save"
+                       Size="Size.Small"
+                       DropShadow="false"
+                       Color="Color.Primary"
+                       Variant="Variant.Filled">
+                ذخیره
+            </MudButton>
+        </div>
+    </div>
+              @* RowClass="cursor-pointer"
+              OnRowClick="e=>this.OpenViewDialog(e)" *@
     <MudTable T="Customer"
               Items="@this.CustomersList"
               @ref="this.Table"
-              RowClass="cursor-pointer"
               Hover="true"
               Loading="@this.Loading"
-              OnRowClick="e=>this.OpenViewDialog(e)"
               Breakpoint="Breakpoint.None"
               GroupHeaderStyle="background-color: #eee;"
               Outlined
@@ -32,15 +51,15 @@
                     نام
                 </MudText>
             </MudTh>
-           
+
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="نام">@context.Name</MudTd>
-            <MudTd Style="width:30%;text-align:end">
+            <MudTd Style="display:flex;justify-content:end">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                OnClick="(e)=>this.OpenEditDialog(e,context)"
-                               Color="Color.Info">
+                               Color="Color.Primary">
                 </MudIconButton>
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                OnClick="(e)=>this.OpenDeleteDialog(e,context)"

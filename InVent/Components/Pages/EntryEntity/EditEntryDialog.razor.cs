@@ -234,7 +234,7 @@ namespace InVent.Components.Pages.EntryEntity
         {
             if (this.Filled != null && this.WarehouseNet != null)
             {
-                this.Average = (double)this.WarehouseNet / this.Filled;
+                this.Average = (double)this.WarehouseNet / (this.Filled + this.Damaged);
             }
             else
             {

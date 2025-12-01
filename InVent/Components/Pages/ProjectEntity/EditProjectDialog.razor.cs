@@ -137,8 +137,8 @@ namespace InVent.Components.Pages.ProjectEntity
                         ProductId = this.Project.Product.Id,
                         Status = this.Project.Status,
                         Number = (int)this.Project.Number,
-                        ProjectWeight = (int)this.Project.ProjectWeight
-
+                        ProjectWeight = (int)this.Project.ProjectWeight,
+                        PackageCount = (int)this.Project.PackageCount,
                     };
                     var res = await this.ProjectService.Update(tempProject);
                     this.HandleMessage(res.Message, res.Success);

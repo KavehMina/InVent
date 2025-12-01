@@ -21,6 +21,9 @@ namespace InVent.Services.BookingServices
             {
                 var res = await context.Bookings
                     .Include(x => x.Project)
+                    .Include(x => x.Project.Product)
+                    .Include(x => x.Project.Customer)
+                    .Include(x => x.Project.Package)
                     .ToListAsync();
                 return new ResponseModel<Booking>
                 {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using System.Text.RegularExpressions;
 
 namespace InVent.Components.Pages.DispatchEntity
 {
@@ -41,7 +42,7 @@ namespace InVent.Components.Pages.DispatchEntity
         private string? DriverName { get; set; }
         private string? DriverNationalCode { get; set; }
         private string? DriverPhone { get; set; }
-        private string? NumberPlate { get; set; }
+        //private string? NumberPlate { get; set; }
         private int? FullWeight { get; set; }
         private int? EmptyWeight { get; set; }
         private int? NetWeight { get; set; }
@@ -54,7 +55,19 @@ namespace InVent.Components.Pages.DispatchEntity
         private string? InternationalNumber2 { get; set; }
         private DateTime? Date { get; set; } = DateTime.UtcNow;
         private MudDatePicker _picker;
-        private string ExportLabel => this.IsExport ? "صادراتی" : "داخلی";
+        private string ExportLabel => this.IsExport ? "حمل یک‌سره" : "حمل ترکیبی";
+
+        public required string First { get; set; }
+        public required string Second { get; set; } = "ع";
+        public required string Third { get; set; }
+        public required string Fourth { get; set; }
+
+
+        /// <NOTE START>
+        /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
+        /// results in incorrect text order caused by the persian letter in the middle of a text.
+        public string NumberPlate => Third + Fourth + Second + First;
+        /// </NOTE END>
 
         protected override async void OnInitialized()
         {
@@ -163,7 +176,7 @@ namespace InVent.Components.Pages.DispatchEntity
 
         private List<Attachment> Attachments = [];
 
-        
+
 
         private async Task _PrepareAttachments(Guid parentId)
         {
@@ -316,6 +329,100 @@ namespace InVent.Components.Pages.DispatchEntity
         {
             this.Date = DateTime.Today;
             this._picker?.CloseAsync();
+        }
+        private async Task MoveFocus(string value, MudTextField<string> thisField, MudTextField<string> nextField)
+        {
+
+            if (thisField != null && nextField != null)
+            {
+                switch (thisField.InputId)
+                {
+                    case "1":
+                        First = value;
+                        if (thisField?.Value?.Length == 2)
+                            await nextField.FocusAsync();
+                        break;
+                    case "2":
+                        Second = value;
+                        if (thisField?.Value?.Length == 1)
+                            await nextField.FocusAsync();
+                        break;
+                    case "3":
+                        Third = value;
+                        if (thisField?.Value?.Length == 3)
+                            await nextField.FocusAsync();
+                        break;
+                    case "4":
+                        //Fourth = value;
+                        //if (thisField?.Value?.Length == 2)
+                        //    await nextField.FocusAsync();
+                        break;
+                    case "6":
+                        DriverPhone = value;
+                        if (thisField?.Value?.Length == 11)
+                            await nextField.FocusAsync();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+        private async Task FillDriverInfo(string value)
+        {
+            this.Fourth = value;
+            if (value.Length == 2)
+            {
+                var res = await this.DispatchService.GetDriverInfoByNumberPlate(this.NumberPlate);
+                if (res.Entities != null)
+                {
+                    this.DriverName = res.Entities.FirstOrDefault()?.DriverName;
+                    this.DriverNationalCode = res.Entities.FirstOrDefault()?.DriverNationalCode;
+                    this.DriverPhone = res.Entities.FirstOrDefault()?.DriverPhone;
+                }
+            }
+        }
+
+        private List<MudTextField<string>> TextFieldRefs = new(new MudTextField<string>[12]);
+
+        public PatternMask Mask1 = new("00");
+        public PatternMask Mask2 = new("a");
+        public PatternMask Mask3 = new("000");
+        public PatternMask MobileMask = new("00000000000");
+
+        private string ValidateMobilePhone(string arg)
+        {
+            if (arg != null && arg != string.Empty)
+            {
+                Regex regex = new Regex("09\\d\\d\\d\\d\\d\\d\\d\\d\\d", RegexOptions.IgnoreCase);
+                if (!regex.IsMatch(arg))
+                    return "موبایل نامعتبر";
+            }
+            return string.Empty;
+        }
+        private string ValidateFirstPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 2)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateSecondPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 1)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateThirdPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 3)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateForthPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 2)
+                return "پلاک نامعتبر";
+            return string.Empty;
         }
     }
 }

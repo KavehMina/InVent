@@ -22,7 +22,16 @@
                               Label="Grade"
                               Variant="Variant.Outlined">
                 </MudTextField>
-                
+                <MudAutocomplete T="Refinery"
+                                 @bind-Value="this.Product.Refinery"
+                                 ToStringFunc="(e)=> RefineryToString(e)"
+                                 SearchFunc="this.SearchRefineries"
+                                 Label="پالایشگاه"
+                                 Clearable
+                                 ClearIcon="@Icons.Material.Filled.Clear"
+                                 OnClearButtonClick="()=>this.Product.Refinery = null"
+                                 Variant="Variant.Outlined">
+                </MudAutocomplete>
             </MudForm>
         }
     </DialogContent>

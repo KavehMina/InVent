@@ -42,7 +42,7 @@ namespace InVent.Components.Pages.CarrierEntity
                 { "Header" , "شرکت حمل‌ونقل جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddCarrierDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddCarrierDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -71,7 +71,7 @@ namespace InVent.Components.Pages.CarrierEntity
                 { "Header" , "ویرایش شرکت حمل‌ونقل" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditCarrierDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditCarrierDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

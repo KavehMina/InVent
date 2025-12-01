@@ -1,13 +1,14 @@
 ﻿using InVent.Data.Models;
+using InVent.Extensions;
 
 namespace InVent.Services.ProductServices
 {
     public class ProductService(IProductRepository repository)
     {
-        public async Task<ResponseModel<Product>> GetAll() => await repository.GetAll();
-        public async Task<ResponseModel<Product>> GetById(Guid id) => await repository.GetById(id);
-        public async Task<ResponseModel<Product>> Add(Product product) => await repository.Add(product);
-        public async Task<ResponseModel<Product>> Update(Product product) => await repository.Update(product);
-        public async Task<ResponseModel<Product>> Delete(Product product) => await repository.Delete(product);
+        public async Task<ResponseModel<Product>> GetAll() => await repository.GetAllProducts();
+        public async Task<ResponseModel<Product>> GetById(Guid id) => await repository.GetProductById(id);
+        public async Task<ResponseModel<Product>> Add(ProductDTO product) => await repository.Add(Mapper.Map(product, new Product()));
+        public async Task<ResponseModel<Product>> Update(ProductDTO product) => await repository.Update(Mapper.Map(product, new Product()));
+        public async Task<ResponseModel<Product>> Delete(Guid id) => await repository.DeleteById(id);
     }
 }

@@ -11,6 +11,8 @@
         {
             <MudForm ReadOnly>
                 <MudSwitch T="bool"
+                           Color="Color.Success"
+                           UncheckedColor="Color.Error"
                            Value=this.DeliveryOrder.Status
                            Label="@this.StatusText">
                 </MudSwitch>
@@ -26,7 +28,22 @@
                 </MudAutocomplete>
                 <MudTextField T="int"
                               Value="this.DeliveryOrder.Weight"
+                              Format="N0"
+                              Immediate
+                              TextUpdateSuppression="false"
+                              Adornment="Adornment.End"
+                              AdornmentText="کیلوگرم"
                               Label="وزن حواله"
+                              Variant="Variant.Outlined">
+                </MudTextField>
+                <MudTextField T="int"
+                              Value="this.DeliveryOrder.TankerFare"
+                              Format="N0"
+                              Immediate
+                              TextUpdateSuppression="false"
+                              Adornment="Adornment.End"
+                              AdornmentText="تومان"
+                              Label="کرایه تانکر"
                               Variant="Variant.Outlined">
                 </MudTextField>
             </MudForm>

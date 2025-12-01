@@ -10,6 +10,8 @@
 
         <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
             <MudSwitch T="bool"
+                       Color="Color.Success"
+                       UncheckedColor="Color.Error"
                        @bind-Value=this.Status
                        Label="@this.StatusText">
             </MudSwitch>
@@ -39,7 +41,26 @@
                           Clearable
                           ClearIcon="@Icons.Material.Filled.Clear"
                           OnClearButtonClick="()=>this.Weight = null"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="کیلوگرم"
                           Label="وزن حواله"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudTextField T="int?"
+                          @bind-Value="this.TankerFare"
+                          Required
+                          Clearable
+                          ClearIcon="@Icons.Material.Filled.Clear"
+                          OnClearButtonClick="()=>this.TankerFare = null"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="تومان"
+                          Label="کرایه تانکر"
                           Variant="Variant.Outlined">
             </MudTextField>
 

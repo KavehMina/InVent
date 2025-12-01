@@ -17,11 +17,21 @@
             </MudTextField>
             <MudTextField T="int?"
                           Value="this.Package.Volume"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="لیتر"
                           Label="حجم بارگیری"
                           Variant="Variant.Outlined">
             </MudTextField>
             <MudTextField T="int?"
                           Value="this.Package.Weight"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="کیلوگرم"
                           Label="وزن ظرف"
                           Variant="Variant.Outlined">
             </MudTextField>

@@ -9,8 +9,8 @@
     <DialogContent>
 
         <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-            <div class="form">
-                <div class="bank-container">
+            <div class="form-big">
+                <div class="field-group">
                     <MudTextField T="int?"
                                   @bind-Value="this.Number"
                                   Required
@@ -22,10 +22,12 @@
                     </MudTextField>
                     <MudSwitch T="bool"
                                @bind-Value=this.Status
+                               Color="Color.Success"
+                               UncheckedColor="Color.Error"
                                Label="@this.StatusText">
                     </MudSwitch>
                 </div>
-                <div class="bank-container">
+                <div class="field-group">
                     <MudAutocomplete T="Customer"
                                      @bind-Value="this.Customer"
                                      Required
@@ -50,7 +52,7 @@
                     </MudAutocomplete>
                     
                 </div>
-                <div class="bank-container">
+                <div class="field-group">
                     
                     <MudAutocomplete T="Package"
                                      @bind-Value="this.Package"
@@ -69,18 +71,35 @@
                                   Clearable
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.Weight = null"
+                                  Format="N0"
+                                  Immediate
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="وزن پروژه"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  @bind-Value="this.PackageCount"
+                                  Required
+                                  Clearable
+                                  ClearIcon="@Icons.Material.Filled.Clear"
+                                  OnClearButtonClick="()=>this.Weight = null"
+                                  Format="N0"
+                                  Immediate
+                                  TextUpdateSuppression="false"
+                                  Label="تعداد بسته"
                                   Variant="Variant.Outlined">
                     </MudTextField>
                 </div>
                
-                <div class="bank-container">
+                <div class="field-group">
                     <MudAutocomplete T="Port"
                                      @bind-Value="this.Port"
                                      Required
                                      ToStringFunc="(e)=> PortToString(e)"
                                      SearchFunc="this.SearchPorts"
-                                     Label="بندر"
+                                     Label="گمرک خروج"
                                      Clearable
                                      ClearIcon="@Icons.Material.Filled.Clear"
                                      OnClearButtonClick="()=>this.Port = null"
@@ -91,7 +110,7 @@
                                      Required
                                      ToStringFunc="(e)=> CustomsToString(e)"
                                      SearchFunc="this.SearchCustoms"
-                                     Label="گمرک"
+                                     Label="گمرک اظهار"
                                      Clearable
                                      ClearIcon="@Icons.Material.Filled.Clear"
                                      OnClearButtonClick="()=>this.Customs = null"

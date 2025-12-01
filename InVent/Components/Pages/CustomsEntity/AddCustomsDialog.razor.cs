@@ -8,7 +8,7 @@ namespace InVent.Components.Pages.CustomsEntity
     {
         protected override void OnInitialized()
         {
-            this.Customs = new Customs() { Number = 0, Name = "" };
+            this.Customs = new Customs() { Name = "" };
             base.OnInitialized();
         }
 

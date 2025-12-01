@@ -41,7 +41,7 @@ namespace InVent.Components.Pages.ProductEntity
                 { "Header" , "محصول جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddProductDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddProductDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -70,7 +70,7 @@ namespace InVent.Components.Pages.ProductEntity
                 { "Header" , "ویرایش محصول" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditProductDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditProductDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

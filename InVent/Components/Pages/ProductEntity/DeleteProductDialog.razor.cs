@@ -8,7 +8,7 @@ namespace InVent.Components.Pages.ProductEntity
         {
             try
             {
-                var res = await this.ProductService.Delete(this.Product);
+                var res = await this.ProductService.Delete(this.Product.Id);
                 HandleMessage(res.Message, res.Success);
                 if (res.Success)
                 {

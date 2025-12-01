@@ -137,7 +137,7 @@ namespace InVent.Components.Pages.EntryEntity
         private static string? TankerToString(Tanker tanker)
         {
             return tanker?.DriverName;
-        }
+        }        
 
         private async Task DetectEnter(KeyboardEventArgs e)
         {
@@ -212,7 +212,7 @@ namespace InVent.Components.Pages.EntryEntity
         {
             if (this.Filled != null && this.WarehouseNet != null)
             {
-                this.Average = (double)this.WarehouseNet / this.Filled;
+                this.Average = (double)this.WarehouseNet / (this.Filled + this.Damaged);
             }
             else
             {
@@ -256,7 +256,7 @@ namespace InVent.Components.Pages.EntryEntity
                     }
                     this.HandleMessage(res.Message, res.Success);
 
-                    
+
 
                     //MudDialog?.Close(DialogResult.Ok(true));
 

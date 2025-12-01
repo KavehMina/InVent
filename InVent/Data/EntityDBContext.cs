@@ -20,6 +20,7 @@ namespace InVent.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Dispatch> Dispatches { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
 
     }
 }

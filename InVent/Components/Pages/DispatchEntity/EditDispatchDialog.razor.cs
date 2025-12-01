@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using System.Text.RegularExpressions;
 
 namespace InVent.Components.Pages.DispatchEntity
 {
@@ -37,7 +38,7 @@ namespace InVent.Components.Pages.DispatchEntity
         private string? DriverName { get; set; }
         private string? DriverNationalCode { get; set; }
         private string? DriverPhone { get; set; }
-        private string? NumberPlate { get; set; }
+        //private string? NumberPlate { get; set; }
         private int? FullWeight { get; set; }
         private int? EmptyWeight { get; set; }
         private int? NetWeight { get; set; }
@@ -52,23 +53,17 @@ namespace InVent.Components.Pages.DispatchEntity
 
         private List<Attachment> ExistingAttachments { get; set; } = [];
 
-        //protected override async void OnInitialized()
-        //{
-        //    try
-        //    {
-        //        this.Bookings = (await BookingService.GetAll()).Entities ?? [];
-        //        this.Carriers = (await CarrierService.GetAll()).Entities ?? [];
-        //        this.Ports = (await PortService.GetAll()).Entities ?? [];
-        //        this.CustomsList = (await CustomsService.GetAll()).Entities ?? [];
-        //        this.ExistingAttachments = (await AttachmentService.GetAll(this.Dispatch.Id, "dispatch")).Entities ?? [];
-        //    }
-        //    catch (Exception err)
-        //    {
-        //        HandleMessage(err.Message, false);
-        //    }
+        public required string First { get; set; }
+        public required string Second { get; set; } = "ع";
+        public required string Third { get; set; }
+        public required string Fourth { get; set; }
 
-        //    base.OnInitialized();
-        //}
+
+        /// <NOTE START>
+        /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
+        /// results in incorrect text order caused by the persian letter in the middle of a text.
+        public string NumberPlate => Third + Fourth + Second + First;
+        /// </NOTE END>
 
         protected override async Task OnInitializedAsync()
         {
@@ -97,7 +92,7 @@ namespace InVent.Components.Pages.DispatchEntity
             this.DriverName = this.Dispatch.DriverName;
             this.DriverPhone = this.Dispatch.DriverPhone;
             this.DriverNationalCode = this.Dispatch.DriverNationalCode;
-            this.NumberPlate = this.Dispatch.NumberPlate;
+            //this.NumberPlate = this.Dispatch.NumberPlate;
             this.FullWeight = this.Dispatch.FullWeight;
             this.EmptyWeight = this.Dispatch.EmptyWeight;
             this.NetWeight = this.FullWeight - this.EmptyWeight;
@@ -107,7 +102,20 @@ namespace InVent.Components.Pages.DispatchEntity
             this.InternationalNumber1 = this.Dispatch.InternationalNumber1;
             this.InternationalNumber2 = this.Dispatch.InternationalNumber2;
             this.Date = this.Dispatch.Date;
+            this.SplitNumberPlate();
             return base.OnParametersSetAsync();
+        }
+
+        private void SplitNumberPlate()
+        {
+            /// <NOTE START>
+            /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
+            /// results in incorrect text order caused by the persian letter in the middle of a text.
+            Third = this.Dispatch.NumberPlate?.Substring(0, 3) ?? "";
+            Fourth = this.Dispatch.NumberPlate?.Substring(3, 2) ?? "";
+            Second = this.Dispatch.NumberPlate?.Substring(5, 1) ?? "";
+            First = this.Dispatch.NumberPlate?.Substring(6, 2) ?? "";
+            /// </NOTE END>
         }
 
         private async Task<IEnumerable<Booking>> SearchBookings(string value, CancellationToken token)
@@ -192,103 +200,18 @@ namespace InVent.Components.Pages.DispatchEntity
                 this.NetWeight = null;
         }
 
-        //[Inject]
-        //IDialogService DialogService { get; set; }
-
-        //private async Task DeleteAttachments(Guid id,string filePath)
-        //{
-        //    var options = new DialogOptions { CloseOnEscapeKey = true };
-        //    var parameters = new DialogParameters
-        //    {
-        //        { "DispatchId", id },
-        //        { "FilePath", filePath },
-        //        { "Header" , "حذف ضمیمه" },
-        //        { "Message" , "آیا از حذف این ضمیمه اطمینان دارید؟" }
-        //    };
-
-        //    var dialog = await DialogService.ShowAsync<DeleteDispatchAttachmentDialog>("", parameters, options);
-        //    var result = await dialog.Result;
-        //    if (result != null && !result.Canceled)
-        //    {
-        //        this.ExistingAttachments = (await AttachmentService.GetAll(this.Dispatch.Id, "dispatch")).Entities ?? [];
-        //    }
-        //}
-
-        //private async Task ViewAttachments(Attachment attachment)
-        //{
-        //    var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
-        //    var parameters = new DialogParameters
-        //    {
-        //        { "Attachment", attachment },
-        //        { "Header" , attachment.FileName }
-        //    };
-
-        //    /*var dialog =*/
-        //    await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
-        //    //var result = await dialog.Result;
-        //    //if (result != null && !result.Canceled)
-        //    //{
-        //    //}
-        //}
-
-
+        
         private readonly IList<IBrowserFile> files = [];
 
         private List<Attachment> Attachments = [];
-
-        private async Task UploadFiles(IReadOnlyList<IBrowserFile> files)
-        {
-            foreach (var file in files ?? [])
-            {
-                this.files.Add(file);
-            }
-
-        }
-
-        private void RemoveFile(IBrowserFile file)
-        {
-            this.files.Remove(file);
-            this.StateHasChanged();
-        }
-
-        private async Task _PrepareAttachments()
-        {
-            this.Attachments = [];
-            foreach (var file in this.files)
-            {
-                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
-                Directory.CreateDirectory(folder);
-
-                var filePath = Path.Combine(folder, file.Name);
-
-                using var stream = File.Create(filePath);
-                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
-                    .CopyToAsync(stream);
-                //using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
-                //using var ms = new MemoryStream();
-                //await stream.CopyToAsync(ms);
-                this.Attachments.Add(new Attachment
-                {
-                    ParentId = this.Dispatch.Id,
-                    ParentType = "dispatch",
-                    FileName = file.Name,
-                    ContentType = file.ContentType,
-                    FileSize = file.Size,
-                    FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
-                    Category ="file.Category"
-                    //FileData = ms.ToArray()
-                });
-            }
-        }
+        
 
         private async Task PrepareAttachments()
         {
             foreach (var file in this.files)
             {
-                //var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType)
-                //    .FirstOrDefault();
-                var att = this.Attachments.Where(x => x.LastModified?.Ticks == file.LastModified.Ticks)
-                    .FirstOrDefault();
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType && x.LastModified == file.LastModified)
+                   .FirstOrDefault();
                 var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}/{att?.Category}");
                 Directory.CreateDirectory(folder);
 
@@ -371,6 +294,88 @@ namespace InVent.Components.Pages.DispatchEntity
         {
             this.Date = DateTime.Today;
             this._picker?.CloseAsync();
+        }
+
+        private async Task MoveFocus(string value, MudTextField<string> thisField, MudTextField<string> nextField)
+        {
+
+            if (thisField != null && nextField != null)
+            {
+                switch (thisField.InputId)
+                {
+                    case "1":
+                        First = value;
+                        if (thisField?.Value?.Length == 2)
+                            await nextField.FocusAsync();
+                        break;
+                    case "2":
+                        Second = value;
+                        if (thisField?.Value?.Length == 1)
+                            await nextField.FocusAsync();
+                        break;
+                    case "3":
+                        Third = value;
+                        if (thisField?.Value?.Length == 3)
+                            await nextField.FocusAsync();
+                        break;
+                    case "4":
+                        //Fourth = value;
+                        //if (thisField?.Value?.Length == 2)
+                        //    await nextField.FocusAsync();
+                        break;
+                    case "6":
+                        DriverPhone = value;
+                        if (thisField?.Value?.Length == 11)
+                            await nextField.FocusAsync();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+        
+
+        private List<MudTextField<string>> TextFieldRefs = new(new MudTextField<string>[12]);
+
+        public PatternMask Mask1 = new("00");
+        public PatternMask Mask2 = new("a");
+        public PatternMask Mask3 = new("000");
+        public PatternMask MobileMask = new("00000000000");
+
+        private string ValidateMobilePhone(string arg)
+        {
+            if (arg != null && arg != string.Empty)
+            {
+                Regex regex = new Regex("09\\d\\d\\d\\d\\d\\d\\d\\d\\d", RegexOptions.IgnoreCase);
+                if (!regex.IsMatch(arg))
+                    return "موبایل نامعتبر";
+            }
+            return string.Empty;
+        }
+        private string ValidateFirstPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 2)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateSecondPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 1)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateThirdPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 3)
+                return "پلاک نامعتبر";
+            return string.Empty;
+        }
+        private string ValidateForthPartofNumberPlate(string arg)
+        {
+            if (arg?.Length < 2)
+                return "پلاک نامعتبر";
+            return string.Empty;
         }
     }
 }

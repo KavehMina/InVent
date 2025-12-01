@@ -18,6 +18,10 @@ namespace InVent.Data.Models
         public int Weight { get; set; }
 
 
+        [Column("TankerFare")]
+        public int TankerFare { get; set; }
+
+
         [Column("Status")]
         public bool Status { get; set; }
 
@@ -35,6 +39,7 @@ namespace InVent.Data.Models
         public Guid Id { get; set; }
         public required string DeliveryOrderId { get; set; }
         public required int Weight { get; set; }
+        public required int TankerFare { get; set; }
         public required bool Status { get; set; }
         public required Guid ProjectId { get; set; }//FK
 

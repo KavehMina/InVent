@@ -9,48 +9,73 @@
     <DialogContent>
         @if (this.Project != null)
         {
-            <MudForm ReadOnly>
-                <MudSwitch T="bool"
-                           Value=this.Project.Status
-                           Label="@this.StatusText">
-                </MudSwitch>
-                <MudTextField T="int"
-                              Value="this.Project.Number"
-                              Required
-                              Label="شماره پروژه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudAutocomplete T="string"
-                                 Value="this.Project.Customer?.Name"
-                                 Label="مشتری"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="string"
-                                 Value="this.Project.Package?.Name"
-                                 Label="بسته‌بندی"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="string"
-                                 Value="this.Project.Product?.Name"
-                                 Label="محصول"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudTextField T="int"
-                              Value="this.Project.ProjectWeight"
-                              Label="وزن پر شده"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudAutocomplete T="string"
-                                 Value="this.Project.Port?.Name"
-                                 Label="بندر"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudAutocomplete T="string"
-                                 Value="this.Project.Customs?.Name"
-                                 Label="گمرک"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-            </MudForm>
+            <div class="form-big">
+                <MudForm ReadOnly>
+                    <div class="field-group">
+                        <MudSwitch T="bool"
+                                   Value=this.Project.Status
+                                   Color="Color.Success"
+                                   UncheckedColor="Color.Error"
+                                   Label="@this.StatusText">
+                        </MudSwitch>
+                        <MudTextField T="int"
+                                      Value="this.Project.Number"
+                                      Required
+                                      Label="شماره پروژه"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                    <div class="field-group">
+                        <MudAutocomplete T="string"
+                                         Value="this.Project.Customer?.Name"
+                                         Label="مشتری"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                        <MudAutocomplete T="string"
+                                         Value="this.Project.Package?.Name"
+                                         Label="بسته‌بندی"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                    </div>
+                    <div class="field-group">
+                        <MudAutocomplete T="string"
+                                         Value="this.Project.Product?.Name"
+                                         Label="محصول"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                        <MudTextField T="int"
+                                      Value="this.Project.ProjectWeight"
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="کیلوگرم"
+                                      Label="وزن پروژه"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="int"
+                                      Value="this.Project.PackageCount"
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Label="تعداد بسته"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                    <div class="field-group">
+                        <MudAutocomplete T="string"
+                                         Value="this.Project.Port?.Name"
+                                         Label="گمرک خروج"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                        <MudAutocomplete T="string"
+                                         Value="this.Project.Customs?.Name"
+                                         Label="گمرک اظهار"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

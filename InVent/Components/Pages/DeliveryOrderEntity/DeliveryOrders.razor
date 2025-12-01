@@ -9,8 +9,8 @@
                    Variant="Variant.Filled"
                    DropShadow="false"
                    Size="Size.Small"
-                   Style="width:10%"
-                   Color="Color.Info"></MudIconButton>
+                   Style="width:15%"
+                   Color="Color.Primary"></MudIconButton>
     <MudTable T="DeliveryOrder"
               Items="@this.DeliveryOrdersList"
               @ref="this.Table"
@@ -48,10 +48,10 @@
             <MudTd DataLabel="شماره حواله">@context.DeliveryOrderId</MudTd>
             <MudTd DataLabel="شماره پروژه">@context.Project?.Number</MudTd>
             <MudTd DataLabel="وزن">@context.Weight</MudTd>
-            <MudTd Style="width:30%;text-align:end">
+            <MudTd Style="display:flex;justify-content:end">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                OnClick="(e)=>this.OpenEditDialog(e,context)"
-                               Color="Color.Info">
+                               Color="Color.Primary">
                 </MudIconButton>
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                OnClick="(e)=>this.OpenDeleteDialog(e,context)"

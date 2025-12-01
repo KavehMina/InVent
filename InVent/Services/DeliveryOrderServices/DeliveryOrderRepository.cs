@@ -21,6 +21,10 @@ namespace InVent.Services.DeliveryOrderServices
             {
                 var res = await context.DeliveryOrders
                     .Include(x => x.Project)
+                    .Include(x => x.Project.Customer)
+                    .Include(x => x.Project.Package)
+                    .Include(x => x.Project.Product)
+                    .Include(x => x.Project.Product.Refinery)
                     .ToListAsync();
                 return new ResponseModel<DeliveryOrder>
                 {

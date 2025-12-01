@@ -12,9 +12,14 @@
         <div class="form-big">
             <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
                 <div class="field-group">
-                    <MudSwitch @bind-Value=this.IsExport
-                               Label="@this.ExportLabel">
-                    </MudSwitch>
+                    <div class="switch-container">
+                        <MudText Style="font-size:16px">حمل ترکیبی</MudText>
+                        <MudSwitch @bind-Value=this.IsExport
+                                   Color="Color.Tertiary"
+                                   UncheckedColor="Color.Tertiary"
+                                   Label="حمل یک‌سره">
+                        </MudSwitch>
+                    </div>
                     <MudDatePicker @bind-Date=this.Date
                                    Culture="@DateExtension.GetPersianCulture()"
                                    TitleDateFormat="dddd, dd MMMM"
@@ -59,7 +64,7 @@
                                      Required
                                      ToStringFunc="(e)=> PortToString(e)"
                                      SearchFunc="this.SearchPorts"
-                                     Label="بندر"
+                                     Label="گمرک خروج"
                                      Clearable
                                      ClearIcon="@Icons.Material.Filled.Clear"
                                      OnClearButtonClick="()=>this.Port = null"
@@ -70,15 +75,74 @@
                                      Required
                                      ToStringFunc="(e)=> CustomsToString(e)"
                                      SearchFunc="this.SearchCustoms"
-                                     Label="گمرک"
+                                     Label="گمرک اظهار"
                                      Clearable
                                      ClearIcon="@Icons.Material.Filled.Clear"
                                      OnClearButtonClick="()=>this.Customs = null"
                                      Variant="Variant.Outlined">
                     </MudAutocomplete>
                 </div>
+                <div class="number-plate">
+                    <div class="number-plate-field">
+                        <MudTextField T="string"
+                                      @ref="this.TextFieldRefs[0]"
+                                      InputId="1"
+                                      Mask="Mask1"
+                                      Value=this.First
+                                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[2])"
+                                      Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
+                                      Style="background-color:#fcfceb;"
+                                      Placeholder="_ _"
+                                      Required
+                                      RequiredError="اجباری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @ref="this.TextFieldRefs[1]"
+                                      InputId="2"
+                                      Mask="Mask2"
+                                      Value=this.Second
+                                      Style="background-color:#fcfceb"
+                                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[1],this.TextFieldRefs[2])"
+                                      Validation=@(new Func<string,string>(this.ValidateSecondPartofNumberPlate))
+                                      Required
+                                      RequiredError="اجباری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @ref="this.TextFieldRefs[2]"
+                                      InputId="3"
+                                      Mask="Mask3"
+                                      Value=this.Third
+                                      Style="background-color:#fcfceb"
+                                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[2],this.TextFieldRefs[3])"
+                                      Validation=@(new Func<string,string>(this.ValidateThirdPartofNumberPlate))
+                                      Placeholder="_ _ _"
+                                      Required
+                                      RequiredError="اجباری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                                      @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])" *@
+                        <MudTextField T="string"
+                                      @ref="this.TextFieldRefs[3]"
+                                      InputId="4"
+                                      Mask="Mask1"
+                                      Value=this.Fourth
+                                      ValueChanged="e=>this.FillDriverInfo(e)"
+                                      Validation=@(new Func<string,string>(this.ValidateForthPartofNumberPlate))
+                                      Placeholder="_ _"
+                                      Style="background-color:#fcfceb"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="ایران"
+                                      AdornmentColor="Color.Info"
+                                      Required
+                                      RequiredError="اجباری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </div>
                 <div class="field-group">
-                    <MudTextField T="string"
+                    @* <MudTextField T="string"
                                   @bind-Value="this.NumberPlate"
                                   Required
                                   Clearable
@@ -86,7 +150,7 @@
                                   OnClearButtonClick="()=>this.NumberPlate = string.Empty"
                                   Label="‌شماره پلاک"
                                   Variant="Variant.Outlined">
-                    </MudTextField>
+                    </MudTextField> *@
                     <MudTextField T="string"
                                   @bind-Value="this.DriverName"
                                   Required
@@ -107,6 +171,7 @@
                     </MudTextField>
                     <MudTextField T="string"
                                   @bind-Value="this.DriverPhone"
+                                  Validation="@(new Func<string, string>(this.ValidateMobilePhone))"
                                   Required
                                   Clearable
                                   ClearIcon="@Icons.Material.Filled.Clear"
@@ -114,7 +179,7 @@
                                   Label="موبایل راننده"
                                   Variant="Variant.Outlined">
                     </MudTextField>
-                    
+
                 </div>
                 <div class="field-group">
                     <MudTextField T="int?"
@@ -123,6 +188,10 @@
                                   Required
                                   Immediate
                                   Clearable
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.FullWeight = null"
                                   Label="‌وزن پر"
@@ -134,6 +203,10 @@
                                   Required
                                   Immediate
                                   Clearable
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.EmptyWeight = null"
                                   Label="‌وزن خالی"
@@ -142,6 +215,10 @@
                     <MudTextField T="int?"
                                   Value="this.NetWeight"
                                   ReadOnly
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
                                   Label="‌وزن خالص"
                                   Variant="Variant.Outlined">
                     </MudTextField>
@@ -151,6 +228,9 @@
                                   @bind-Value="this.PackageCount"
                                   Required
                                   Clearable
+                                  Immediate
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.PackageCount = null"
                                   Label="تعداد بسته"
@@ -160,6 +240,11 @@
                                   @bind-Value="this.Fare"
                                   Required
                                   Clearable
+                                  Immediate
+                                  Format="N0"
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="تومان"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.Fare = null"
                                   Label="کرایه"
@@ -196,7 +281,7 @@
                     <FileUploadComponent Title="رسید راننده" IsMultiple="false" Files="this.files" Attachments="this.Attachments" Required="true"></FileUploadComponent>
                     <FileUploadComponent Title="سایر" IsMultiple="true" Files="this.files" Attachments="this.Attachments"></FileUploadComponent>
                 </div>
-                <div @onclick="()=>this.PrepareAttachments(Guid.NewGuid())">check</div>
+                @* <div @onclick="()=>this.PrepareAttachments(Guid.NewGuid())">check</div> *@
                 @* <MudFileUpload T="IReadOnlyList<IBrowserFile>"
                            FilesChanged="UploadFiles">
                 <ActivatorContent>

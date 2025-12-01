@@ -53,7 +53,7 @@ namespace InVent.Components.Pages.ProjectEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Project> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
             var parameters = new DialogParameters {
                 { "Project", e.Item },
                 { "Header" , e.Item?.Number.ToString() }
@@ -66,13 +66,13 @@ namespace InVent.Components.Pages.ProjectEntity
         public async Task OpenEditDialog(MouseEventArgs e, Project item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
             var parameters = new DialogParameters {
                 { "Project", item },
                 { "Header" , "ویرایش پروژه" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditProjectDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditProjectDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

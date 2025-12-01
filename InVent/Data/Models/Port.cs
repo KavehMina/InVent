@@ -10,8 +10,8 @@ namespace InVent.Data.Models
         public Guid Id { get; set; }
 
 
-        [Column("Number"), Required]
-        public required int Number { get; set; }
+        [Column("Number")]
+        public int? Number { get; set; }
 
 
         [Column("Name"), Required]

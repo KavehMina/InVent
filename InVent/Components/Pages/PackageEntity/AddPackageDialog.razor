@@ -14,14 +14,24 @@
                           Required
                           Label="نام بسته‌بندی"
                           Variant="Variant.Outlined">
-            </MudTextField>
+            </MudTextField>            
             <MudTextField T="int?"
                           @bind-Value="this.Package.Volume"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="لیتر"
                           Label="حجم بارگیری"
                           Variant="Variant.Outlined">
             </MudTextField>
             <MudTextField T="int?"
                           @bind-Value="this.Package.Weight"
+                          Format="N0"
+                          Immediate
+                          TextUpdateSuppression="false"
+                          Adornment="Adornment.End"
+                          AdornmentText="کیلوگرم"
                           Label="وزن ظرف"
                           Variant="Variant.Outlined">
             </MudTextField>

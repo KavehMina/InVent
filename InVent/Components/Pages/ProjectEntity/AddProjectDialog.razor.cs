@@ -25,6 +25,7 @@ namespace InVent.Components.Pages.ProjectEntity
 
         private int? Number { get; set; }
         private int? Weight { get; set; }
+        private int? PackageCount { get; set; }
         private Customer Customer { get; set; }
         private List<Customer> Customers { get; set; } = [];
         private Customs Customs { get; set; }
@@ -148,8 +149,8 @@ namespace InVent.Components.Pages.ProjectEntity
                         ProductId = this.Product.Id,
                         Status = this.Status,
                         Number = (int)this.Number,
-                        ProjectWeight = (int)this.Weight
-
+                        ProjectWeight = (int)this.Weight,
+                        PackageCount = (int)this.PackageCount,
                     };
                     var res = await this.ProjectService.Add(tempProject);
                     if (res.Success)

@@ -13,6 +13,7 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
 
         private string? Number { get; set; }
         private int? Weight { get; set; }
+        private int? TankerFare { get; set; }
         private Project Project { get; set; }
         private List<Project> Projects { get; set; } = [];
         private bool Status { get; set; }
@@ -66,6 +67,7 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
                         DeliveryOrderId = this.Number,
                         ProjectId = this.Project.Id,
                         Weight = (int)this.Weight,
+                        TankerFare = (int)this.TankerFare,
                         Status = this.Status,
 
                     };

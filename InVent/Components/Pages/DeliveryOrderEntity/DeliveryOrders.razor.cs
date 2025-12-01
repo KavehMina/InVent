@@ -73,7 +73,7 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
                 { "Header" , "ویرایش حواله" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditDeliveryOrderDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditDeliveryOrderDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

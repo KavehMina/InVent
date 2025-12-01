@@ -43,7 +43,7 @@ namespace InVent.Components.Pages.RefineryEntity
                 { "Header" , "پالایشگاه جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddRefineryDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddRefineryDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -72,7 +72,7 @@ namespace InVent.Components.Pages.RefineryEntity
                 { "Header" , "ویرایش پالایشگاه" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditRefineryDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditRefineryDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

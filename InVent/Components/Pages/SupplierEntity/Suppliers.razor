@@ -1,0 +1,63 @@
+﻿@page "/Suppliers"
+@using InVent.Components.Pages.Internals
+@using InVent.Data.Models
+@inherits BaseSupplierComponent
+
+<div class="entity-container">
+    <div class="add-bank-container">
+        <MudText Typo="Typo.body2">اضافه کردن تأمین‌کننده جدید</MudText>
+        <div class="add-bank-fields-container">
+            <MudTextField T="string"
+                          @ref=Fieldref
+                          @bind-Value="this.NewSupplierName"
+                          OnKeyUp="e=>this.DetectEnter(e)"
+                          Variant="Variant.Outlined">
+            </MudTextField>
+            <MudButton OnClick="this.Save"
+                       Size="Size.Small"
+                       DropShadow="false"
+                       Color="Color.Primary"
+                       Variant="Variant.Filled">
+                ذخیره
+            </MudButton>
+        </div>
+    </div>
+    
+    <MudTable T="Supplier"
+              Items="@this.SuppliersList"
+              @ref="this.Table"
+              Hover="true"
+              Loading="@this.Loading"
+              Breakpoint="Breakpoint.None"
+              Outlined
+              Striped
+              LoadingProgressColor="Color.Info">
+        <NoRecordsContent>
+            <MudText>اینجا هیچی نیست.</MudText>
+        </NoRecordsContent>
+        <HeaderContent>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    نام
+                </MudText>
+            </MudTh>
+
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="نام">@context.Name</MudTd>
+            <MudTd Style="display:flex;justify-content:end">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               OnClick="(e)=>this.OpenEditDialog(e,context)"
+                               Color="Color.Primary">
+                </MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               OnClick="(e)=>this.OpenDeleteDialog(e,context)"
+                               Color="Color.Error">
+                </MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+</div>
+
+

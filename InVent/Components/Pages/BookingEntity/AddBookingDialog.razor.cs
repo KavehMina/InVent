@@ -20,8 +20,10 @@ namespace InVent.Components.Pages.BookingEntity
         private string? Forwarder { get; set; }
         private int? ContainerCount { get; set; }
         private int? PackingCount { get; set; }
-        //private bool Status { get; set; }
-        //private string StatusText => Status == true ? "بسته" : "باز";
+        private string? Product {  get; set; }
+        private string? Customer { get; set; }
+        private int? Remaining { get; set; }
+
 
         protected override async void OnInitialized()
         {
@@ -49,6 +51,14 @@ namespace InVent.Components.Pages.BookingEntity
         private static string? ProjectToString(Project project)
         {
             return project?.Number.ToString();
+        }
+
+        private async Task SetProject(Project e)
+        {
+            this.Project = e;
+            this.Product = this.Project?.Product?.Name;
+            this.Customer = this.Project?.Customer?.Name;
+            this.ContainerType = this.Project?.Package?.Name ?? string.Empty;
         }
 
 

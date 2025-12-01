@@ -139,8 +139,10 @@
                                   InputId="7"
                                   @ref=this.TextFieldRefs[6]
                                   @bind-Value=this.DriverBankNumber
-                                  Label="شماره حساب راننده"
+                                  Label="شماره شبای راننده"
                                   Clearable
+                                  Adornment="Adornment.End"
+                                  AdornmentText="IR"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.DriverBankNumber=null"
                                   Variant="Variant.Outlined">
@@ -188,8 +190,10 @@
                                   InputId="10"
                                   @ref=this.TextFieldRefs[9]
                                   @bind-Value=this.OwnerBankNumber
-                                  Label="شماره حساب مالک"
+                                  Label="شماره شبای مالک"
                                   Clearable
+                                  Adornment="Adornment.End"
+                                  AdornmentText="IR"
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>{this.OwnerBankNumber=null;this.form.Validate();}"
                                   Variant="Variant.Outlined">

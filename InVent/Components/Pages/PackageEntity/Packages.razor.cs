@@ -42,7 +42,7 @@ namespace InVent.Components.Pages.PackageEntity
                 { "Header" , "بسته‌بندی جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddPackageDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddPackageDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -71,7 +71,7 @@ namespace InVent.Components.Pages.PackageEntity
                 { "Header" , "ویرایش بسته‌بندی" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditPackageDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditPackageDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

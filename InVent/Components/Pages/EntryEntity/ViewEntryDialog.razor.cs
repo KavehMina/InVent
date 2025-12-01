@@ -8,6 +8,6 @@ namespace InVent.Components.Pages.EntryEntity
         private int? WarehouseNet => this.Entry.WarehouseFilled - this.Entry.WarehouseEmpty;
         private DateTime? Date =>this.Entry.Date;
         private int? Difference => this.WarehouseNet - this.RefineryNet;
-        private Double? Average => (double)this.WarehouseNet / this.Entry.Filled;
+        private Double? Average => (double)this.WarehouseNet / (this.Entry.Filled + this.Entry.Damaged);
     }
 }

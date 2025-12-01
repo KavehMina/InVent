@@ -11,6 +11,7 @@ using InVent.Services.PortServices;
 using InVent.Services.ProductServices;
 using InVent.Services.ProjectServices;
 using InVent.Services.RefineryServices;
+using InVent.Services.SupplierServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -135,5 +136,10 @@ namespace InVent.Components.Pages.Internals
     {
         [Inject]
         public required DispatchService DispatchService { get; set; }
+    }
+    public class BaseSupplierComponent : BaseComponent
+    {
+        [Inject]
+        public required SupplierService SupplierService { get; set; }
     }
 }

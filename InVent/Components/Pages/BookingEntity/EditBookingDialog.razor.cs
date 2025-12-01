@@ -21,8 +21,10 @@ namespace InVent.Components.Pages.BookingEntity
         private string? Forwarder { get; set; }
         private int? ContainerCount { get; set; }
         private int? PackingCount { get; set; }
-        //private bool Status { get; set; }
-        //private string StatusText => Status == true ? "بسته" : "باز";
+        private string? Product { get; set; }
+        private string? Customer { get; set; }
+        private int? Remaining { get; set; }
+
 
         protected override async void OnInitialized()
         {
@@ -48,6 +50,9 @@ namespace InVent.Components.Pages.BookingEntity
             this.Destination = this.Booking.Destination;
             this.ShippingLine = this.Booking.ShippingLine;
             this.Forwarder = this.Booking.Forwarder;
+            this.Product = this.Booking.Project?.Product?.Name;
+            this.Customer = this.Booking.Project?.Customer?.Name;
+            this.ContainerType = this.Booking.Project?.Package?.Name ?? string.Empty;
             return base.OnParametersSetAsync();
         }
 
@@ -65,6 +70,13 @@ namespace InVent.Components.Pages.BookingEntity
             return project?.Number.ToString();
         }
 
+        private async Task SetProject(Project e)
+        {
+            this.Project = e;
+            this.Product = this.Project?.Product?.Name;
+            this.Customer = this.Project?.Customer?.Name;
+            this.ContainerType = this.Project?.Package?.Name ?? string.Empty;
+        }
 
         private async Task DetectEnter(KeyboardEventArgs e)
         {

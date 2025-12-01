@@ -1,6 +1,4 @@
-﻿using InVent.Components.Pages.DeliveryOrderEntity;
-using InVent.Data.Models;
-using InVent.Services.DeliveryOrderServices;
+﻿using InVent.Data.Models;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
@@ -54,7 +52,7 @@ namespace InVent.Components.Pages.BookingEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Booking> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
             var parameters = new DialogParameters
             {
                 { "Booking", e.Item },
@@ -68,14 +66,14 @@ namespace InVent.Components.Pages.BookingEntity
         public async Task OpenEditDialog(MouseEventArgs e, Booking item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth=MaxWidth.False};
             var parameters = new DialogParameters
             {
                 { "Booking", item },
                 { "Header" , "ویرایش بوکینگ" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditBookingDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditBookingDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {

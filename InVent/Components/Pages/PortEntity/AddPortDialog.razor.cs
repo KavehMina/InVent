@@ -8,7 +8,7 @@ namespace InVent.Components.Pages.PortEntity
     {
         protected override void OnInitialized()
         {
-            this.Port = new Port() { Number = 0, Name = "" };
+            this.Port = new Port() { Name = "" };
             base.OnInitialized();
         }
 

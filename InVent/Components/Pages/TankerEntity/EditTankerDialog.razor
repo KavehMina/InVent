@@ -94,8 +94,10 @@
                         <MudTextField T="string"
                                       @ref=this.TextFieldRefs[6]
                                       @bind-Value=this.Tanker.DriverBankNumber
-                                      Label="شماره حساب راننده"
+                                      Label="شماره شبای راننده"
                                       Clearable
+                                      Adornment="Adornment.End"
+                                      AdornmentText="IR"
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.Tanker.DriverBankNumber=null"
                                       Variant="Variant.Outlined">
@@ -138,7 +140,9 @@
                         <MudTextField T="string"
                                       @ref=this.TextFieldRefs[9]
                                       @bind-Value=this.Tanker.OwnerBankNumber
-                                      Label="شماره حساب مالک"
+                                      Label="شماره شبای مالک"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="IR"
                                       Clearable
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>{this.Tanker.OwnerBankNumber=null;this.form.Validate();}"

@@ -52,10 +52,10 @@ namespace InVent.Components.Pages.PortEntity
 
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
-                { "Header" , "بندر جدید" }
+                { "Header" , "گمرک خروج جدید" }
             };
 
-            var dialog = await DialogService.ShowAsync<AddPortDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<AddPortDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -81,10 +81,10 @@ namespace InVent.Components.Pages.PortEntity
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
                 { "Port", item },
-                { "Header" , "ویرایش بندر" }
+                { "Header" , "ویرایش گمرک خروج" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditPortDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditPortDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null)
             {
@@ -97,8 +97,8 @@ namespace InVent.Components.Pages.PortEntity
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters {
                 { "Port", item },
-                { "Header" , "حذف بندر" },
-                { "Message" , "آیا از حذف این بندر اطمینان دارید؟" }
+                { "Header" , "حذف گمرک خروج" },
+                { "Message" , "آیا از حذف این گمرک خروج اطمینان دارید؟" }
             };
 
             var dialog = await DialogService.ShowAsync<DeletePortDialog>("", parameters, options);

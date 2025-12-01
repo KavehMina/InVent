@@ -20,6 +20,9 @@ namespace InVent.Data.Models
         public int ProjectWeight { get; set; }
 
 
+        [Column("PackageCount")]
+        public int PackageCount { get; set; }
+
 
         [Column("Status")]
         public bool Status { get; set; }
@@ -71,6 +74,7 @@ namespace InVent.Data.Models
         public Guid Id { get; set; }
         public int Number { get; set; }
         public int ProjectWeight { get; set; }
+        public int PackageCount { get; set; }
         public required bool Status { get; set; }
         public required Guid CustomerId { get; set; }//FK
         public required Guid PackageId { get; set; }//FK
