@@ -45,6 +45,8 @@ namespace InVent.Components.Pages.DispatchEntity
         private int? PackageCount { get; set; }
         private int? Fare { get; set; }
         private bool IsExport { get; set; }
+        private bool IsDischarged { get; set; }
+        private bool IsPaid { get; set; }
         private string? InternationalNumber1 { get; set; }
         private string? InternationalNumber2 { get; set; }
         private DateTime? Date { get; set; }
@@ -257,6 +259,8 @@ namespace InVent.Components.Pages.DispatchEntity
                         FullWeight = (int)this.FullWeight,
                         Fare = (int)this.Fare,
                         IsExport = this.IsExport,
+                        IsDischarged = this.IsDischarged,
+                        IsPaid = this.IsPaid,
                         NumberPlate = this.NumberPlate,
                         PackageCount = (int)this.PackageCount,
                         Date = this.Date,

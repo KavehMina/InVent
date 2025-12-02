@@ -39,6 +39,12 @@ namespace InVent.Data.Models
         [Column("IsExport")]
         public bool IsExport { get; set; }
 
+        [Column("IsDischarged")]
+        public bool IsDischarged { get; set; }
+
+        [Column("IsPaid")]
+        public bool IsPaid { get; set; }
+
         [Column("InternationalNumber1")]
         public string? InternationalNumber1 { get; set; }
 
@@ -91,6 +97,8 @@ namespace InVent.Data.Models
         public required int PackageCount { get; set; }
         public required int Fare { get; set; }
         public required bool IsExport { get; set; }
+        public required bool IsDischarged { get; set; }
+        public required bool IsPaid { get; set; }
         public string? InternationalNumber1 { get; set; }
         public string? InternationalNumber2 { get; set; }
         public DateTime? LastModifiedOn { get; set; }

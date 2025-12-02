@@ -50,6 +50,8 @@ namespace InVent.Components.Pages.DispatchEntity
         private int? Fare { get; set; }
         private int? TempFare { get; set; }
         private bool IsExport { get; set; }
+        private bool IsDischarged { get; set; }
+        private bool IsPaid { get; set; }
         private bool TempIsExport { get; set; }
         private string? InternationalNumber1 { get; set; }
         private string? InternationalNumber2 { get; set; }
@@ -178,36 +180,36 @@ namespace InVent.Components.Pages.DispatchEntity
 
 
 
-        private async Task _PrepareAttachments(Guid parentId)
-        {
-            this.ProjectNumber = this.Booking.Project?.Number;
-            this.Attachments = [];
-            foreach (var file in this.files)
-            {
-                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
-                Directory.CreateDirectory(folder);
+        //private async Task _PrepareAttachments(Guid parentId)
+        //{
+        //    this.ProjectNumber = this.Booking.Project?.Number;
+        //    this.Attachments = [];
+        //    foreach (var file in this.files)
+        //    {
+        //        var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}");
+        //        Directory.CreateDirectory(folder);
 
-                var filePath = Path.Combine(folder, file.Name);
-                using var stream = File.Create(filePath);
-                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
-                    .CopyToAsync(stream);
+        //        var filePath = Path.Combine(folder, file.Name);
+        //        using var stream = File.Create(filePath);
+        //        await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+        //            .CopyToAsync(stream);
 
-                //using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
-                //using var ms = new MemoryStream();
-                //await stream.CopyToAsync(ms);
-                this.Attachments.Add(new Attachment
-                {
-                    ParentId = parentId,
-                    ParentType = "dispatch",
-                    FileName = file.Name,
-                    ContentType = file.ContentType,
-                    FileSize = file.Size,
-                    FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
-                    Category = "file.Category"
-                    //FileData = ms.ToArray()
-                });
-            }
-        }
+        //        //using var stream = file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024); // 5MB limit
+        //        //using var ms = new MemoryStream();
+        //        //await stream.CopyToAsync(ms);
+        //        this.Attachments.Add(new Attachment
+        //        {
+        //            ParentId = parentId,
+        //            ParentType = "dispatch",
+        //            FileName = file.Name,
+        //            ContentType = file.ContentType,
+        //            FileSize = file.Size,
+        //            FilePath = $"/Attachments/Project-{this.ProjectNumber}/{file.Name}",
+        //            Category = "file.Category"
+        //            //FileData = ms.ToArray()
+        //        });
+        //    }
+        //}
 
         private async Task PrepareAttachments(Guid parentId)
         {
@@ -273,6 +275,8 @@ namespace InVent.Components.Pages.DispatchEntity
                         FullWeight = (int)this.FullWeight,
                         Fare = (int)this.Fare,
                         IsExport = this.IsExport,
+                        IsDischarged = this.IsDischarged,
+                        IsPaid = this.IsPaid,
                         NumberPlate = this.NumberPlate,
                         PackageCount = (int)this.PackageCount,
                         Date = this.Date,

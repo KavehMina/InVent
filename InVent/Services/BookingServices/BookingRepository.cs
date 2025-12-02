@@ -8,6 +8,7 @@ namespace InVent.Services.BookingServices
     public interface IBookingRepository: IRepository<Booking>
     {
         Task<ResponseModel<Booking>> GetAllBookings();
+        Task<ResponseModel<Booking>> GetBookingsByProject(Guid projectId);
         Task<ResponseModel<Booking>> GetBookingById(Guid id);
     }
     public class BookingRepository(IDbContextFactory<EntityDBContext> contextFactory) : Repository<Booking>(contextFactory) ,IBookingRepository
@@ -46,6 +47,29 @@ namespace InVent.Services.BookingServices
             {
                 var res = await context.Bookings
                     .Where(x => x.Id == id)
+                    .Include(x => x.Project)
+                    .ToListAsync();
+                return new ResponseModel<Booking>
+                {
+                    Message = Messages.Received,
+                    Entities = res,
+                    Success = true
+                };
+            }
+            catch (Exception err)
+            {
+                return new ResponseModel<Booking> { Message = err.Message, Success = false };
+            }
+        }
+
+        public async Task<ResponseModel<Booking>> GetBookingsByProject(Guid projectId)
+        {
+            using var context = contextFactory.CreateDbContext();
+
+            try
+            {
+                var res = await context.Bookings
+                    .Where(x => x.ProjectId == projectId)
                     .Include(x => x.Project)
                     .ToListAsync();
                 return new ResponseModel<Booking>

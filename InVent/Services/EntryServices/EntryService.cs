@@ -10,7 +10,7 @@ namespace InVent.Services.EntryServices
         public async Task<ResponseModel<Entry>> GetById(Guid id) => await repository.GetEntryById(id);
         public async Task<ResponseModel<Entry>> Add(EntryDTO entry) => await repository.Add(Mapper.Map(entry, new Entry()));
         public async Task<ResponseModel<Entry>> Update(EntryDTO entry) => await repository.Update(Mapper.Map(entry, new Entry()));
-        public async Task<ResponseModel<Entry>> Delete(Entry entry) => await repository.Delete(entry);
+        public async Task<ResponseModel<Entry>> Delete(Guid id) => await repository.DeleteById(id);
 
     }
 }

@@ -1,10 +1,12 @@
 ﻿using InVent.Data.Models;
+using InVent.Services.AttachmentServices;
 using InVent.Services.DeliveryOrderServices;
 using InVent.Services.PackageServices;
 using InVent.Services.ProductServices;
 using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
@@ -22,6 +24,8 @@ namespace InVent.Components.Pages.EntryEntity
         public required ProductService ProductService { get; set; }
         [Inject]
         public required TankerService TankerService { get; set; }
+        [Inject]
+        public required AttachmentService AttachmentService { get; set; }
 
         private DateTime? Date { get; set; } = DateTime.Today;
         private MudDatePicker _picker;
@@ -40,6 +44,8 @@ namespace InVent.Components.Pages.EntryEntity
 
         private int? Difference { get; set; }
         private Double? Average { get; set; }
+
+        private int? ProjectNumber { get; set; }
 
         private Package Package { get; set; }
         private List<Package> Packages { get; set; } = [];
@@ -137,7 +143,7 @@ namespace InVent.Components.Pages.EntryEntity
         private static string? TankerToString(Tanker tanker)
         {
             return tanker?.DriverName;
-        }        
+        }
 
         private async Task DetectEnter(KeyboardEventArgs e)
         {
@@ -220,6 +226,43 @@ namespace InVent.Components.Pages.EntryEntity
             }
         }
 
+        private readonly IList<IBrowserFile> files = [];
+
+        private List<Attachment> Attachments = [];
+
+        private async Task PrepareAttachments(Guid parentId)
+        {
+            this.ProjectNumber = this.DeliveryOrder.Project?.Number;
+            foreach (var file in this.files)
+            {
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType && x.LastModified == file.LastModified)
+                    .FirstOrDefault();
+
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}/{att?.Category}");
+                Directory.CreateDirectory(folder);
+
+                var ext = file.Name.Split('.');
+                var fileName = this.Tanker.Number + "-" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() + "." + ext.LastOrDefault(); ;
+                var filePath = Path.Combine(folder, fileName);
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+
+
+                if (att != null)
+                {
+                    att.ParentId = parentId;
+                    att.ParentType = "entry";
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{att?.Category}/{fileName}";
+                    att.FileName = fileName;
+
+                }
+
+            }
+        }
+
+
+
         private async Task Submit()
         {
             await form.Validate();
@@ -234,9 +277,9 @@ namespace InVent.Components.Pages.EntryEntity
                         Date = (DateTime)this.Date,
                         DeliveryOrderId = this.DeliveryOrder.Id,
                         Filled = (int)this.Filled,
-                        PackageTypeId = this.Package.Id,
-                        ProductId = this.Product.Id,
-                        RefineryId = this.Refinery.Id,
+                        PackageTypeId = this.Package?.Id ?? this.DeliveryOrder.Project.Package.Id, //TEMPORARY
+                        ProductId = this.Product?.Id ?? this.DeliveryOrder.Project.Product.Id, //TEMPORARY
+                        RefineryId = this.Refinery?.Id ?? this.DeliveryOrder.Project.Product.Refinery.Id,   //TEMPORARY
                         TankerId = this.Tanker.Id,
                         RefineryEmpty = (int)this.RefineryEmpty,
                         RefineryFilled = (int)this.RefineryFilled,
@@ -244,21 +287,20 @@ namespace InVent.Components.Pages.EntryEntity
                         WarehouseFilled = (int)this.WarehouseFilled,
                     };
                     var res = await this.EntryService.Add(tempEntry);
-                    if (res.Success)
+                    if (res.Success && res.Entities != null)
                     {
-                        foreach (var field in this.TextFieldRefs)
+                        await this.PrepareAttachments(res.Entities.FirstOrDefault().Id);
+                        foreach (var att in this.Attachments)
                         {
-                            await field.ResetAsync();
-                            this.Tanker = null;
+                            var attRes = await this.AttachmentService.Add(att);
+                            this.HandleMessage(att.FileName, attRes.Success);
                         }
-                        //await form.ResetAsync();
-
+                        
+                        await form.ResetAsync();
+                        this.files.Clear();
+                        this.Attachments.Clear();
                     }
                     this.HandleMessage(res.Message, res.Success);
-
-
-
-                    //MudDialog?.Close(DialogResult.Ok(true));
 
                 }
                 catch (Exception err)
@@ -277,6 +319,19 @@ namespace InVent.Components.Pages.EntryEntity
         {
             this.Date = DateTime.Today;
             this._picker?.CloseAsync();
+        }
+
+        private string SetDifferenceColor()
+        {
+            switch (this.Difference)
+            {
+                case > 0:
+                    return "background-color:palegreen";
+                case < 0:
+                    return "background-color:mistyrose";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

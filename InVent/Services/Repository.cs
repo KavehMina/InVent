@@ -177,6 +177,7 @@ namespace InVent.Services
                 {
 
                     context.Set<T>().Remove(item);
+                    var entries = context.ChangeTracker.Entries();
                     await context.SaveChangesAsync();
                     var response = new ResponseModel<T>
                     {
@@ -199,7 +200,6 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    //Message = err.Message + Environment.NewLine + err.InnerException?.Message,
                     Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }

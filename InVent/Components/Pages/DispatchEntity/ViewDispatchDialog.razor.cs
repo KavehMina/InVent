@@ -1,4 +1,5 @@
 ﻿
+using InVent.Components.Pages.DispatchEntity.Deprecated;
 using InVent.Data.Models;
 using InVent.Services.AttachmentServices;
 using Microsoft.AspNetCore.Components;
@@ -11,8 +12,6 @@ namespace InVent.Components.Pages.DispatchEntity
     {
         [Inject]
         public required AttachmentService AttachmentService { get; set; }
-        [Inject]
-        IDialogService DialogService { get; set; }
         private string ExportLabel => this.Dispatch.IsExport ? "صادراتی" : "داخلی";
         private readonly IList<IBrowserFile> files = [];
 
@@ -32,17 +31,17 @@ namespace InVent.Components.Pages.DispatchEntity
             await base.OnInitializedAsync();
         }
 
-        private async Task ViewAttachments(Attachment attachment)
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
-            var parameters = new DialogParameters
-            {
-                { "Attachment", attachment },
-                 { "Header" , attachment.FileName }
-            };
+        //private async Task ViewAttachments(Attachment attachment)
+        //{
+        //    var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+        //    var parameters = new DialogParameters
+        //    {
+        //        { "Attachment", attachment },
+        //         { "Header" , attachment.FileName }
+        //    };
 
-            await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
+        //    await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
             
-        }
+        //}
     }
 }

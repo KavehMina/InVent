@@ -1,9 +1,9 @@
 ﻿using InVent.Data.Models;
 using Microsoft.AspNetCore.Components;
 
-namespace InVent.Components.Pages.DispatchEntity
+namespace InVent.Components.Pages.Shared
 {
-    public partial class ViewDispatchAttachmentDialog
+    public partial class ViewAttachmentDialog
     {
         [Parameter]
         public required Attachment Attachment { get; set; }

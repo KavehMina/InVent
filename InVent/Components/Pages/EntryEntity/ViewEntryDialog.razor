@@ -1,4 +1,5 @@
 ﻿@using InVent.Components.Pages.Internals
+@using InVent.Components.Pages.Shared
 @using InVent.Data.Models
 @using InVent.Extensions
 @inherits BaseEntryDialog
@@ -138,6 +139,28 @@
                                   Variant="Variant.Outlined">
                     </MudTextField>
                 </div>
+                <div class="attachments">
+                        <FileUploadComponent Title="بیجک"
+                                             IsMultiple="false"
+                                             Files="this.files"
+                                             Attachments="this.Attachments"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Required="true">
+                        </FileUploadComponent>
+                        <FileUploadComponent Title="قبض باسکول"
+                                             IsMultiple="false"
+                                             Files="this.files"
+                                             Attachments="this.Attachments"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Required="true">
+                        </FileUploadComponent>
+                        <FileUploadComponent Title="سایر"
+                                             IsMultiple="true"
+                                             Files="this.files"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Attachments="this.Attachments">
+                        </FileUploadComponent>
+                    </div>
             </MudForm>
         }
     </DialogContent>

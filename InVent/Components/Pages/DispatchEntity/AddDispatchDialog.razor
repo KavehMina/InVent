@@ -19,6 +19,19 @@
                                    UncheckedColor="Color.Tertiary"
                                    Label="حمل یک‌سره">
                         </MudSwitch>
+                    <MudCheckBox @bind-Value=this.IsDischarged
+                                 Label="تخلیه"
+                                 CheckedIcon="@Icons.Material.Filled.Check"
+                                 UncheckedIcon="@Icons.Material.Filled.Close"
+                                 Color="Color.Success"
+                                 UncheckedColor="Color.Error">
+                    </MudCheckBox>
+                    <MudCheckBox @bind-Value=this.IsPaid Label="پرداخت"
+                                 CheckedIcon="@Icons.Material.Filled.Check"
+                                 UncheckedIcon="@Icons.Material.Filled.Close"
+                                 Color="Color.Success"
+                                 UncheckedColor="Color.Error">
+                    </MudCheckBox>
                     </div>
                     <MudDatePicker @bind-Date=this.Date
                                    Culture="@DateExtension.GetPersianCulture()"
@@ -122,7 +135,7 @@
                                       RequiredError="اجباری"
                                       Variant="Variant.Outlined">
                         </MudTextField>
-                                      @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])" *@
+                        @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])" *@
                         <MudTextField T="string"
                                       @ref="this.TextFieldRefs[3]"
                                       InputId="4"

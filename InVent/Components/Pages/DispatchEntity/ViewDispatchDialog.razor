@@ -21,6 +21,19 @@
                                        UncheckedColor="Color.Tertiary"
                                        Label="حمل یک‌سره">
                             </MudSwitch>
+                            <MudCheckBox @bind-Value=this.Dispatch.IsDischarged
+                                         Label="تخلیه"
+                                         CheckedIcon="@Icons.Material.Filled.Check"
+                                         UncheckedIcon="@Icons.Material.Filled.Close"
+                                         Color="Color.Success"
+                                         UncheckedColor="Color.Error">
+                            </MudCheckBox>
+                            <MudCheckBox @bind-Value=this.Dispatch.IsPaid Label="پرداخت"
+                                         CheckedIcon="@Icons.Material.Filled.Check"
+                                         UncheckedIcon="@Icons.Material.Filled.Close"
+                                         Color="Color.Success"
+                                         UncheckedColor="Color.Error">
+                            </MudCheckBox>
                         </div>
                         <MudTextField T="string"
                                       Value="DateExtension.DisplayPersianDate((DateTime)this.Dispatch.Date)"
@@ -136,36 +149,36 @@
                     </div>
 
                     <div class="attachments">
-                    <FileUploadComponent Title="بارنامه"
-                                         IsMultiple="false"
-                                         Files="this.files"
-                                         Attachments="this.Attachments"
-                                         ExistingAttachments="this.ExistingAttachments"
-                                         Required="true">
-                    </FileUploadComponent>
-                    <FileUploadComponent Title="قبض باسکول"
-                                         IsMultiple="false"
-                                         Files="this.files"
-                                         Attachments="this.Attachments"
-                                         ExistingAttachments="this.ExistingAttachments"
-                                         Required="true">
-                    </FileUploadComponent>
-                    <FileUploadComponent Title="رسید راننده"
-                                         IsMultiple="false"
-                                         Files="this.files"
-                                         Attachments="this.Attachments"
-                                         ExistingAttachments="this.ExistingAttachments"
-                                         Required="true">
-                    </FileUploadComponent>
-                    <FileUploadComponent Title="سایر"
-                                         IsMultiple="true"
-                                         Files="this.files"
-                                         ExistingAttachments="this.ExistingAttachments"
-                                         Attachments="this.Attachments">
-                    </FileUploadComponent>
-                </div>
+                        <FileUploadComponent Title="بارنامه"
+                                             IsMultiple="false"
+                                             Files="this.files"
+                                             Attachments="this.Attachments"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Required="true">
+                        </FileUploadComponent>
+                        <FileUploadComponent Title="قبض باسکول"
+                                             IsMultiple="false"
+                                             Files="this.files"
+                                             Attachments="this.Attachments"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Required="true">
+                        </FileUploadComponent>
+                        <FileUploadComponent Title="رسید راننده"
+                                             IsMultiple="false"
+                                             Files="this.files"
+                                             Attachments="this.Attachments"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Required="true">
+                        </FileUploadComponent>
+                        <FileUploadComponent Title="سایر"
+                                             IsMultiple="true"
+                                             Files="this.files"
+                                             ExistingAttachments="this.ExistingAttachments"
+                                             Attachments="this.Attachments">
+                        </FileUploadComponent>
+                    </div>
 
-                   @*  @if (this.ExistingAttachments.Count > 0)
+                    @*  @if (this.ExistingAttachments.Count > 0)
                     {
                         <div class="files-container">
                             @foreach (var att in this.ExistingAttachments)

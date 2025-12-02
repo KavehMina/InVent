@@ -3,6 +3,9 @@
 @using InVent.Data.Models
 @inherits BaseDispatchComponent
 
+@* GroupHeaderStyle="background-color:var(--mud-palette-background-gray)"
+          GroupFooterClass="mb-4" *@
+
 <div class="entity-container">
     <MudIconButton OnClick="e=>this.OpenAddDialog(e)"
                    Icon="@Icons.Material.Filled.Add"
@@ -11,7 +14,91 @@
                    Size="Size.Small"
                    Style="width:15%"
                    Color="Color.Primary"></MudIconButton>
+
     <MudTable T="Dispatch"
+              Items="@this.DispatchesList"
+              GroupBy="@_groupDefinition"
+              @ref="this.Table"
+              RowClass="cursor-pointer"
+              Hover="true"
+              Loading="@this.Loading"
+              OnRowClick="e=>this.OpenViewDialog(e)"
+              Breakpoint="Breakpoint.None"
+              Outlined
+              Striped
+              LoadingProgressColor="Color.Primary"
+              Dense="false">
+        <HeaderContent>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    شماره پروژه
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    شماره بوکینگ
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    تعداد بسته
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    تخلیه
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    پرداخت
+                </MudText>
+            </MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <GroupHeaderTemplate>
+            <MudTh Class="mud-table-cell-custom-group" colspan="6">@($"{context.GroupName}: {context.Key}")</MudTh>
+        </GroupHeaderTemplate>
+        <RowTemplate>
+            <MudTd DataLabel="شماره پروژه">@context.Booking?.Project?.Number</MudTd>
+            <MudTd DataLabel="شماره بوکینگ">@context.Booking?.Number</MudTd>
+            <MudTd DataLabel="تعداد بسته">@context.PackageCount</MudTd>
+            <MudTd DataLabel="تخلیه">
+                <MudCheckBox T="bool"
+                             Value=context.IsDischarged
+                             ValueChanged="e=>this.SetIsDischarged(context, e)"
+                             CheckedIcon="@Icons.Material.Filled.Check"
+                             UncheckedIcon="@Icons.Material.Filled.Close"
+                             Color="Color.Success"
+                             UncheckedColor="Color.Error">
+                </MudCheckBox>
+
+            </MudTd>
+            <MudTd DataLabel="پرداخت">
+                <MudCheckBox T="bool"
+                             Value=context.IsPaid
+                             ValueChanged="e=>this.SetIsPaid(context, e)"
+                             CheckedIcon="@Icons.Material.Filled.Check"
+                             UncheckedIcon="@Icons.Material.Filled.Close"
+                             Color="Color.Success"
+                             UncheckedColor="Color.Error">
+                </MudCheckBox>
+            </MudTd>
+            <MudTd Style="display:flex;justify-content:end">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               OnClick="(e)=>this.OpenEditDialog(e,context)"
+                               Color="Color.Primary">
+                </MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               OnClick="(e)=>this.OpenDeleteDialog(e,context)"
+                               Color="Color.Error">
+                </MudIconButton>
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+
+
+    @* <MudTable T="Dispatch"
               Items="@this.DispatchesList"
               @ref="this.Table"
               RowClass="cursor-pointer"
@@ -40,7 +127,7 @@
                 <MudText Typo="Typo.body2">
                     تعداد بسته
                 </MudText>
-            </MudTh>            
+            </MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
@@ -58,5 +145,5 @@
                 </MudIconButton>
             </MudTd>
         </RowTemplate>
-    </MudTable>
+    </MudTable> *@
 </div>

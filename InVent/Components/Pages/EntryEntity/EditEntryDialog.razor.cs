@@ -1,14 +1,14 @@
 ﻿using InVent.Data.Models;
+using InVent.Services.AttachmentServices;
 using InVent.Services.DeliveryOrderServices;
 using InVent.Services.PackageServices;
 using InVent.Services.ProductServices;
 using InVent.Services.RefineryServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
-using System.Globalization;
-using System.Reflection;
 
 namespace InVent.Components.Pages.EntryEntity
 {
@@ -24,6 +24,8 @@ namespace InVent.Components.Pages.EntryEntity
         public required ProductService ProductService { get; set; }
         [Inject]
         public required TankerService TankerService { get; set; }
+        [Inject]
+        public required AttachmentService AttachmentService { get; set; }
 
         private DateTime? Date { get; set; } = DateTime.Today;
         private MudDatePicker _picker;
@@ -41,6 +43,8 @@ namespace InVent.Components.Pages.EntryEntity
         private int? Difference { get; set; }
         private Double? Average { get; set; }
 
+        private int? ProjectNumber { get; set; }
+
         private Package Package { get; set; }
         private List<Package> Packages { get; set; } = [];
         private Product Product { get; set; }
@@ -51,9 +55,11 @@ namespace InVent.Components.Pages.EntryEntity
         private List<Tanker> Tankers { get; set; } = [];
         private DeliveryOrder DeliveryOrder { get; set; }
         private List<DeliveryOrder> DeliveryOrders { get; set; } = [];
+        private List<Attachment> ExistingAttachments { get; set; } = [];
 
+        
 
-        protected override async void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
@@ -62,18 +68,20 @@ namespace InVent.Components.Pages.EntryEntity
                 Packages = (await PackageService.GetAll()).Entities ?? [];
                 Products = (await ProductService.GetAll()).Entities ?? [];
                 Tankers = (await TankerService.GetAll()).Entities ?? [];
+                this.ExistingAttachments = (await AttachmentService.GetAll(this.Entry.Id, "entry")).Entities ?? [];
             }
             catch (Exception err)
             {
                 HandleMessage(err.Message, false);
             }
 
-            base.OnInitialized();
+            await base.OnInitializedAsync();
         }
 
 
         protected override Task OnParametersSetAsync()
         {
+            this.ProjectNumber = this.Entry.DeliveryOrder?.Project?.Number;
             this.Refinery = this.Entry.Refinery;
             this.Package = this.Entry.Package;
             this.DeliveryOrder = this.Entry.DeliveryOrder;
@@ -242,6 +250,39 @@ namespace InVent.Components.Pages.EntryEntity
             }
         }
 
+
+        private readonly IList<IBrowserFile> files = [];
+
+        private List<Attachment> Attachments = [];
+
+        private async Task PrepareAttachments()
+        {
+            foreach (var file in this.files)
+            {
+                var att = this.Attachments.Where(x => x.FileName == file.Name && x.FileSize == file.Size && x.ContentType == file.ContentType && x.LastModified == file.LastModified)
+                   .FirstOrDefault();
+                var folder = Path.Combine($"wwwroot/Attachments/Project-{this.ProjectNumber}/{att?.Category}");
+                Directory.CreateDirectory(folder);
+
+                var ext = file.Name.Split('.');
+                var fileName = this.Tanker.Number + "-" + new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds() + "." + ext.LastOrDefault();
+                var filePath = Path.Combine(folder, fileName);
+
+                using var stream = File.Create(filePath);
+                await file.OpenReadStream(maxAllowedSize: 5 * 1024 * 1024)
+                    .CopyToAsync(stream);
+
+
+                if (att != null)
+                {
+                    att.ParentId = this.Entry.Id;
+                    att.ParentType = "entry";
+                    att.FilePath = $"/Attachments/Project-{this.ProjectNumber}/{att?.Category}/{fileName}";
+                    att.FileName = fileName;
+                }
+            }
+        }
+
         private async Task Submit()
         {
             await form.Validate();
@@ -267,8 +308,16 @@ namespace InVent.Components.Pages.EntryEntity
                         WarehouseFilled = (int)this.WarehouseFilled,
                     };
                     var res = await this.EntryService.Update(tempEntry);
-                    if (res.Success)
-                        await form.ResetAsync();
+                    if (res.Success && res.Entities != null)
+                    {
+                        await this.PrepareAttachments();
+                        foreach (var att in Attachments)
+                        {
+                            var attRes = await this.AttachmentService.Add(att);
+                            this.HandleMessage(att.FileName, attRes.Success);
+                        }
+                    }
+
                     this.HandleMessage(res.Message, res.Success);
 
                     MudDialog?.Close(DialogResult.Ok(true));

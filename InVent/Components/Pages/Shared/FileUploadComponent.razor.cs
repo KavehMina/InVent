@@ -1,10 +1,8 @@
 ﻿using InVent.Components.Pages.DispatchEntity;
 using InVent.Data.Models;
-using InVent.Services.AttachmentServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using System.Linq;
 
 namespace InVent.Components.Pages.Shared
 {
@@ -97,26 +95,22 @@ namespace InVent.Components.Pages.Shared
         }
 
 
-        //[Inject]
-        //IDialogService DialogService { get; set; }
-
-        private async Task DeleteAttachments(Attachment att)//Guid id, string filePath)
+        private async Task DeleteAttachments(Attachment att)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters
             {
-                { "DispatchId", att.Id },
+                { "ParentId", att.Id },
                 { "FilePath", att.FilePath },
                 { "Header" , "حذف ضمیمه" },
                 { "Message" , "آیا از حذف این ضمیمه اطمینان دارید؟" }
             };
 
-            var dialog = await DialogService.ShowAsync<DeleteDispatchAttachmentDialog>("", parameters, options);
+            var dialog = await DialogService.ShowAsync<DeleteAttachmentDialog>("", parameters, options);
             var result = await dialog.Result;
             if (result != null && !result.Canceled)
             {
                 this.ExistingAttachments?.Remove(att);
-                //this.ExistingAttachments = (await AttachmentService.GetAll(this.Dispatch.Id, "dispatch")).Entities ?? [];
             }
         }
 
@@ -129,7 +123,7 @@ namespace InVent.Components.Pages.Shared
                 { "Header" , attachment.FileName }
             };
 
-            await DialogService.ShowAsync<ViewDispatchAttachmentDialog>("", parameters, options);
+            await DialogService.ShowAsync<ViewAttachmentDialog>("", parameters, options);
 
         }
 

@@ -24,6 +24,7 @@ namespace InVent.Services.EntryServices
                     .Include(x => x.Package)
                     .Include(x => x.Refinery)
                     .Include(x => x.DeliveryOrder)
+                    .Include(x => x.DeliveryOrder.Project)
                     .Include(x => x.Tanker)
                     .ToListAsync();
                 return new ResponseModel<Entry> { Message = Messages.Received, Entities = res, Success = true };

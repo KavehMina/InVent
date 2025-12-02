@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace InVent.Components.Pages.DispatchEntity
+namespace InVent.Components.Pages.DispatchEntity.Deprecated
 {
     public partial class DeleteDispatchAttachmentDialog
     {
@@ -17,8 +17,8 @@ namespace InVent.Components.Pages.DispatchEntity
             try
             {
 
-                var res2 = await this.AttachmentService.DeleteFile(this.FilePath);
-                var res = await this.AttachmentService.Delete(this.DispatchId);
+                var res2 = await AttachmentService.DeleteFile(FilePath);
+                var res = await AttachmentService.Delete(DispatchId);
                 HandleMessage(res.Message, res.Success);
                 if (res.Success)
                 {
