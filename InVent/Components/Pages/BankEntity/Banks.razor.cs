@@ -82,13 +82,13 @@ namespace InVent.Components.Pages.BankEntity
         public async Task OpenEditDialog(MouseEventArgs e, Bank item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth = MaxWidth.Small};
             var parameters = new DialogParameters {
                 { "Bank", item },
                 { "Header" , "ویرایش بانک" }
             };
 
-            var dialog = await DialogService.ShowAsync<EditBankDialog>("", parameters);
+            var dialog = await DialogService.ShowAsync<EditBankDialog>("", parameters,options);
             var result = await dialog.Result;
             if (result != null)
             {

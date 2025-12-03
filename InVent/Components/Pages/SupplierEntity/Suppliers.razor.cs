@@ -75,7 +75,7 @@ namespace InVent.Components.Pages.SupplierEntity
         public async Task OpenEditDialog(MouseEventArgs e, Supplier item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Supplier", item },
                 { "Header" , "ویرایش تأمین‌کننده" }

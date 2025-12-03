@@ -9,14 +9,19 @@
     <DialogContent>
         @if (this.Customer != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
-                <MudTextField T="string"
-                              @bind-Value="this.Customer.Name"
-                              Required
-                              Label="نام مشتری"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </MudForm>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Customer.Name"
+                                      Required
+                                      RequiredError="اجباری"
+                                      Label="نام مشتری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

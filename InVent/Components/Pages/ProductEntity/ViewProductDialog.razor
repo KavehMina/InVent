@@ -8,26 +8,30 @@
     <DialogContent>
         @if (this.Product != null)
         {
-            <MudForm ReadOnly>
-                <MudTextField T="string"
-                              Value="this.Product.Name"
-                              Required
-                              Label="نام محصول"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="string"
-                              Value="this.Product.Grade"
-                              Required
-                              Label="Grade"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="string"
-                              Value="this.Product.Refinery?.Name"
-                              Required
-                              Label="پالایشگاه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </MudForm>
+            <div class="form-outer">
+                <MudForm ReadOnly>
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      Value="this.Product.Name"
+                                      Required
+                                      Label="نام محصول"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      Value="this.Product.Grade"
+                                      Required
+                                      Label="Grade"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      Value="this.Product.Refinery?.Name"
+                                      Required
+                                      Label="پالایشگاه"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

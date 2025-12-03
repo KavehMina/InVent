@@ -36,7 +36,7 @@ namespace InVent.Components.Pages.ProductEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Header" , "محصول جدید" }
             };
@@ -51,7 +51,7 @@ namespace InVent.Components.Pages.ProductEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Product> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Product", e.Item },
                 { "Header" , e.Item?.Name }
@@ -64,7 +64,7 @@ namespace InVent.Components.Pages.ProductEntity
         public async Task OpenEditDialog(MouseEventArgs e, Product item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Product", item },
                 { "Header" , "ویرایش محصول" }

@@ -9,34 +9,38 @@
     <DialogContent>
         @if (this.Package != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
-                <MudTextField T="string"
-                              @bind-Value="this.Package.Name"
-                              Required
-                              Label="نام بسته‌بندی"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @bind-Value="this.Package.Volume"
-                              Format="N0"
-                              Immediate
-                              TextUpdateSuppression="false"
-                              Adornment="Adornment.End"
-                              AdornmentText="لیتر"
-                              Label="حجم بارگیری"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @bind-Value="this.Package.Weight"
-                              Format="N0"
-                              Immediate
-                              TextUpdateSuppression="false"
-                              Adornment="Adornment.End"
-                              AdornmentText="کیلوگرم"
-                              Label="وزن ظرف"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </MudForm>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Package.Name"
+                                      Required
+                                      Label="نام بسته‌بندی"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="int?"
+                                      @bind-Value="this.Package.Volume"
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="لیتر"
+                                      Label="حجم بارگیری"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="int?"
+                                      @bind-Value="this.Package.Weight"
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="کیلوگرم"
+                                      Label="وزن ظرف"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

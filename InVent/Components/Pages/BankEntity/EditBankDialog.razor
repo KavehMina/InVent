@@ -1,5 +1,5 @@
 ﻿@using InVent.Components.Pages.Internals
-@inherits BaseBankComponent
+@inherits BaseBankDialog
 
 <MudDialog>
     <TitleContent>
@@ -8,12 +8,20 @@
     <DialogContent>
         @if (this.Bank != null)
         {
-            <MudTextField T="string"
-                          @bind-Value="this.TempBankName"
-                          Style="direction:rtl;text-align:right"
-                          Label="نام بانک"
-                          Variant="Variant.Outlined">
-            </MudTextField>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Bank.Name"
+                                      Style="direction:rtl;text-align:right"
+                                      Required
+                                      RequiredError="اجباری"
+                                      Label="نام بانک"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

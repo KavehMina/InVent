@@ -18,13 +18,61 @@
 
 .attachments {
     display: flex;
-    /*gap:1rem;*/
     flex-wrap: wrap;
     justify-content: space-between;
     padding-block: 0.5rem;
 }
 
+.field-group-2-custom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    align-items: baseline
+}
+
+.field-group-4-custom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+
 .switch-container {
     display: flex;
     align-items: center;
+}
+
+.switches-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem
+}
+
+@media(max-width:900px) {
+    .field-group-4-custom {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media(max-width: 700px) {
+    .field-group-2-custom {
+        display: flex;
+        flex-direction: column;
+        align-items: unset;
+    }
+}
+
+
+.number-plate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.number-plate-field {
+    display: grid;
+    gap: 1%;
+    grid-template-columns: 20% 15% 27% 35%;
+    direction: ltr
 }

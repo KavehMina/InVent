@@ -38,7 +38,7 @@ namespace InVent.Components.Pages.EntryEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Header" , "ورودی جدید" }
@@ -54,7 +54,7 @@ namespace InVent.Components.Pages.EntryEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Entry> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Entry", e.Item },
@@ -68,7 +68,7 @@ namespace InVent.Components.Pages.EntryEntity
         public async Task OpenEditDialog(MouseEventArgs e, Entry item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Entry", item },
@@ -79,7 +79,6 @@ namespace InVent.Components.Pages.EntryEntity
             var result = await dialog.Result;
             if (result != null)
             {
-                //StateHasChanged();
                 await RefreshList();
             }
         }

@@ -9,20 +9,24 @@
     <DialogContent>
         @if (this.Refinery != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
-                <MudTextField T="string"
-                              @bind-Value="this.Refinery.Name"
-                              Required
-                              Label="نام پالایشگاه"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="string"
-                              @bind-Value="this.Refinery.City"
-                              Required
-                              Label="شهر"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </MudForm>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Refinery.Name"
+                                      Required
+                                      Label="نام پالایشگاه"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @bind-Value="this.Refinery.City"
+                                      Required
+                                      Label="شهر"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

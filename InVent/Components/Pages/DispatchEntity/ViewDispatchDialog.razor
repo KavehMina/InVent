@@ -11,185 +11,183 @@
     <DialogContent>
         @if (this.Dispatch != null)
         {
-            <div class="form-big">
+            <div class="form-outer">
                 <MudForm ReadOnly>
-                    <div class="field-group">
-                        <div class="switch-container">
-                            <MudText Style="font-size:16px">حمل ترکیبی</MudText>
-                            <MudSwitch Value=this.Dispatch.IsExport
-                                       Color="Color.Tertiary"
-                                       UncheckedColor="Color.Tertiary"
-                                       Label="حمل یک‌سره">
-                            </MudSwitch>
-                            <MudCheckBox @bind-Value=this.Dispatch.IsDischarged
-                                         Label="تخلیه"
-                                         CheckedIcon="@Icons.Material.Filled.Check"
-                                         UncheckedIcon="@Icons.Material.Filled.Close"
-                                         Color="Color.Success"
-                                         UncheckedColor="Color.Error">
-                            </MudCheckBox>
-                            <MudCheckBox @bind-Value=this.Dispatch.IsPaid Label="پرداخت"
-                                         CheckedIcon="@Icons.Material.Filled.Check"
-                                         UncheckedIcon="@Icons.Material.Filled.Close"
-                                         Color="Color.Success"
-                                         UncheckedColor="Color.Error">
-                            </MudCheckBox>
-                        </div>
-                        <MudTextField T="string"
-                                      Value="DateExtension.DisplayPersianDate((DateTime)this.Dispatch.Date)"
-                                      Variant="Variant.Outlined">
+                    <div class="form-inner">
+                        <div class="field-group-2">
+                            <div class="switches-container">
+                                <MudCheckBox @bind-Value=this.Dispatch.IsExport
+                                             Label="حمل یک‌سره"
+                                             CheckedIcon="@Icons.Material.Filled.Check"
+                                             Color="Color.Success"
+                                             UncheckedColor="Color.Primary">
+                                </MudCheckBox>
+                                <MudCheckBox @bind-Value=this.Dispatch.IsDischarged
+                                             Label="تخلیه"
+                                             CheckedIcon="@Icons.Material.Filled.Check"
+                                             Color="Color.Success"
+                                             UncheckedColor="Color.Primary">
+                                </MudCheckBox>
+                                <MudCheckBox @bind-Value=this.Dispatch.IsPaid
+                                             Label="پرداخت"
+                                             CheckedIcon="@Icons.Material.Filled.Check"
+                                             Color="Color.Success"
+                                             UncheckedColor="Color.Primary">
+                                </MudCheckBox>
+                            </div>
+                            <MudTextField T="string"
+                                          Value="DateExtension.DisplayPersianDate((DateTime)this.Dispatch.Date)"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudAutocomplete T="int?"
-                                         Value="this.Dispatch.Booking?.Number"
-                                         Label="شماره بوکینگ"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                        <MudAutocomplete T="string"
-                                         Value="this.Dispatch.Carrier?.Name"
-                                         Label="شرکت حمل‌ونقل"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                        <MudAutocomplete T="string"
-                                         Value="this.Dispatch.Port?.Name"
-                                         Label="گمرک خروج"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                        <MudAutocomplete T="string"
-                                         Value="this.Dispatch.Customs?.Name"
-                                         Label="گمرک اظهار"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      Value="this.Dispatch.DriverName"
-                                      Label="نام راننده"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      Value="this.Dispatch.DriverNationalCode"
-                                      Label="کدملی راننده"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      Value="this.Dispatch.DriverPhone"
-                                      Label="موبایل راننده"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      Value="this.Dispatch.NumberPlate"
-                                      Label="‌شماره پلاک"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="int?"
-                                      Value="this.Dispatch.FullWeight"
-                                      Format="N0"
-                                      TextUpdateSuppression="false"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="کیلوگرم"
-                                      Label="‌وزن پر"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      Value="this.Dispatch.EmptyWeight"
-                                      Format="N0"
-                                      TextUpdateSuppression="false"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="کیلوگرم"
-                                      Label="‌وزن خالی"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      Value="this.Dispatch.FullWeight - this.Dispatch.EmptyWeight"
-                                      Format="N0"
-                                      TextUpdateSuppression="false"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="کیلوگرم"
-                                      Label="‌وزن خالص"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="int?"
-                                      Value="this.Dispatch.PackageCount"
-                                      Format="N0"
-                                      TextUpdateSuppression="false"
-                                      Label="تعداد بسته"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      Value="this.Dispatch.Fare"
-                                      Format="N0"
-                                      TextUpdateSuppression="false"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="تومان"
-                                      Label="کرایه"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-4">
+                            <MudAutocomplete T="int?"
+                                             Value="this.Dispatch.Booking?.Number"
+                                             Label="شماره بوکینگ"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                            <MudAutocomplete T="string"
+                                             Value="this.Dispatch.Carrier?.Name"
+                                             Label="شرکت حمل‌ونقل"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                            <MudAutocomplete T="string"
+                                             Value="this.Dispatch.Port?.Name"
+                                             Label="گمرک خروج"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                            <MudAutocomplete T="string"
+                                             Value="this.Dispatch.Customs?.Name"
+                                             Label="گمرک اظهار"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                        </div>
+                        <div class="field-group-2-custom">
+                            <MudTextField T="string"
+                                          Value="this.Dispatch.NumberPlate"
+                                          Label="‌شماره پلاک"
+                                          Adornment="Adornment.Start"
+                                          AdornmentText="ایران"
+                                          AdornmentColor="Color.Info"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Dispatch.DriverName"
+                                          Label="نام راننده"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-2">
+                            <MudTextField T="string"
+                                          Value="this.Dispatch.DriverNationalCode"
+                                          Label="کدملی راننده"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Dispatch.DriverPhone"
+                                          Label="موبایل راننده"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            @* <MudTextField T="string"
+                                          Value="this.Dispatch.NumberPlate"
+                                          Label="‌شماره پلاک"
+                                          Variant="Variant.Outlined">
+                            </MudTextField> *@
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="int?"
+                                          Value="this.Dispatch.FullWeight"
+                                          Format="N0"
+                                          TextUpdateSuppression="false"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="کیلوگرم"
+                                          Label="‌وزن پر"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          Value="this.Dispatch.EmptyWeight"
+                                          Format="N0"
+                                          TextUpdateSuppression="false"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="کیلوگرم"
+                                          Label="‌وزن خالی"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          Value="this.Dispatch.FullWeight - this.Dispatch.EmptyWeight"
+                                          Format="N0"
+                                          TextUpdateSuppression="false"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="کیلوگرم"
+                                          Label="‌وزن خالص"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-2">
+                            <MudTextField T="int?"
+                                          Value="this.Dispatch.PackageCount"
+                                          Format="N0"
+                                          TextUpdateSuppression="false"
+                                          Label="تعداد بسته"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          Value="this.Dispatch.Fare"
+                                          Format="N0"
+                                          TextUpdateSuppression="false"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="تومان"
+                                          Label="کرایه"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
                         @if (this.Dispatch.IsExport)
                         {
-                            <MudTextField T="string"
-                                          Value="this.Dispatch.InternationalNumber1"
-                                          Label="‌پلاک بین‌المللی 1"
-                                          Variant="Variant.Outlined">
-                            </MudTextField>
-                            <MudTextField T="string"
-                                          Value="this.Dispatch.InternationalNumber2"
-                                          Label="‌پلاک بین‌المللی 2"
-                                          Variant="Variant.Outlined">
-                            </MudTextField>
+                            <div class="field-group-2">
+                                <MudTextField T="string"
+                                              Value="this.Dispatch.InternationalNumber1"
+                                              Label="‌پلاک بین‌المللی 1"
+                                              Variant="Variant.Outlined">
+                                </MudTextField>
+                                <MudTextField T="string"
+                                              Value="this.Dispatch.InternationalNumber2"
+                                              Label="‌پلاک بین‌المللی 2"
+                                              Variant="Variant.Outlined">
+                                </MudTextField>
+                            </div>
                         }
-                    </div>
 
-                    <div class="attachments">
-                        <FileUploadComponent Title="بارنامه"
-                                             IsMultiple="false"
-                                             Files="this.files"
-                                             Attachments="this.Attachments"
-                                             ExistingAttachments="this.ExistingAttachments"
-                                             Required="true">
-                        </FileUploadComponent>
-                        <FileUploadComponent Title="قبض باسکول"
-                                             IsMultiple="false"
-                                             Files="this.files"
-                                             Attachments="this.Attachments"
-                                             ExistingAttachments="this.ExistingAttachments"
-                                             Required="true">
-                        </FileUploadComponent>
-                        <FileUploadComponent Title="رسید راننده"
-                                             IsMultiple="false"
-                                             Files="this.files"
-                                             Attachments="this.Attachments"
-                                             ExistingAttachments="this.ExistingAttachments"
-                                             Required="true">
-                        </FileUploadComponent>
-                        <FileUploadComponent Title="سایر"
-                                             IsMultiple="true"
-                                             Files="this.files"
-                                             ExistingAttachments="this.ExistingAttachments"
-                                             Attachments="this.Attachments">
-                        </FileUploadComponent>
-                    </div>
-
-                    @*  @if (this.ExistingAttachments.Count > 0)
-                    {
-                        <div class="files-container">
-                            @foreach (var att in this.ExistingAttachments)
-                            {
-                                <div class="file" @onclick="()=>this.ViewAttachments(att)">
-                                    <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileName</MudText>
-                                    <MudText Typo="Typo.caption" Style="direction:ltr">@att.FileSize bytes</MudText>
-                                </div>
-                            }
+                        <div class="attachments">
+                            <FileUploadComponent Title="بارنامه"
+                                                 IsMultiple="false"
+                                                 Files="this.files"
+                                                 Attachments="this.Attachments"
+                                                 ExistingAttachments="this.ExistingAttachments"
+                                                 Required="true">
+                            </FileUploadComponent>
+                            <FileUploadComponent Title="قبض باسکول"
+                                                 IsMultiple="false"
+                                                 Files="this.files"
+                                                 Attachments="this.Attachments"
+                                                 ExistingAttachments="this.ExistingAttachments"
+                                                 Required="true">
+                            </FileUploadComponent>
+                            <FileUploadComponent Title="رسید راننده"
+                                                 IsMultiple="false"
+                                                 Files="this.files"
+                                                 Attachments="this.Attachments"
+                                                 ExistingAttachments="this.ExistingAttachments"
+                                                 Required="true">
+                            </FileUploadComponent>
+                            <FileUploadComponent Title="سایر"
+                                                 IsMultiple="true"
+                                                 Files="this.files"
+                                                 ExistingAttachments="this.ExistingAttachments"
+                                                 Attachments="this.Attachments">
+                            </FileUploadComponent>
                         </div>
-                    } *@
+                    </div>
                 </MudForm>
             </div>
         }

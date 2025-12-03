@@ -1,9 +1,4 @@
-﻿.form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem
-}
-
+﻿
 .number-plate {
     display: flex;
     flex-direction: column;
@@ -12,57 +7,24 @@
 
 .number-plate-field {
     display: grid;
-    /*flex-direction: row-reverse;
-    gap: 0.2rem;*/
-    gap: 5%;
-    grid-template-columns: 20% 10% 30% 25%;
+    gap: 1%;
+    grid-template-columns: 20% 15% 27% 35%;
     direction: ltr
 }
 
-.bank-container {
+.field-group-2-custom {
     display: grid;
-    grid-template-columns: 60% 35%;
-    gap: 5%;
-}
-
-@media(max-width:700px) {
-    .bank-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem
-    }
-}
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem
-}
-
-.number-plate {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
+    align-items: baseline;
 }
 
-.number-plate-field {
-    display: grid;
-    /*flex-direction: row-reverse;
-    gap: 0.2rem;*/
-    gap: 5%;
-    grid-template-columns: 20% 10% 30% 25%;
-    direction: ltr
-}
-
-.bank-container {
-    display: grid;
-    grid-template-columns: 60% 35%;
-    gap: 5%;
-}
-
-@media(max-width:700px) {
-    .bank-container {
+@media(max-width: 700px) {
+    .field-group-2-custom {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem
+        align-items: unset;
     }
 }
+
+

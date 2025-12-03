@@ -3,14 +3,12 @@
     grid-template-columns: 15% 1fr 1fr;
     gap: 0.5rem;
 }
-
 @media(max-width: 800px) {
     .field-group-3-custom {
         display: flex;
         flex-direction: column;
     }
-
-    .switch-container {
-        justify-content: start;
+    .switch-container{
+        justify-content:start;
     }
 }

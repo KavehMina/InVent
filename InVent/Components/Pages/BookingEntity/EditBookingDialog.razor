@@ -9,118 +9,116 @@
     <DialogContent>
         @if (this.Booking != null)
         {
-            <div class="form-big">
+            <div class="form-outer">
                 <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-                    @* <MudSwitch T="bool"
-                       @bind-Value=this.Status
-                       Label="@this.StatusText">
-            </MudSwitch> *@
-                    <div class="field-group">
-                        <MudTextField T="int?"
-                                      @bind-Value="this.Number"
-                                      Required
-                                      Clearable
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.Number = null"
-                                      Label="شماره بوکینگ"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudAutocomplete T="Project"
-                                         Value="this.Project"
-                                         ValueChanged="e=>this.SetProject(e)"
-                                         Required
-                                         ToStringFunc="(e)=> ProjectToString(e)"
-                                         SearchFunc="this.SearchProjects"
-                                         Label="شماره پروژه"
-                                         Clearable
-                                         ClearIcon="@Icons.Material.Filled.Clear"
-                                         OnClearButtonClick="()=>this.Project = null"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      ReadOnly
-                                      Value="this.Product"
-                                      Label="محصول"
-                                      Variant="Variant.Outlined">
+                    <div class="form-inner">
+                        <div class="field-group-2">
+                            <MudTextField T="int?"
+                                          @bind-Value="this.Number"
+                                          Required
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.Number = null"
+                                          Label="شماره بوکینگ"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudAutocomplete T="Project"
+                                             Value="this.Project"
+                                             ValueChanged="e=>this.SetProject(e)"
+                                             Required
+                                             ToStringFunc="(e)=> ProjectToString(e)"
+                                             SearchFunc="this.SearchProjects"
+                                             Label="شماره پروژه"
+                                             Clearable
+                                             ClearIcon="@Icons.Material.Filled.Clear"
+                                             OnClearButtonClick="()=>this.Project = null"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          ReadOnly
+                                          Value="this.Product"
+                                          Label="محصول"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      ReadOnly
-                                      Value="this.Customer"
-                                      Label="مشتری"
-                                      Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          ReadOnly
+                                          Value="this.Customer"
+                                          Label="مشتری"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      ReadOnly
-                                      Value="this.CalculateRemaining()"
-                                      Label="مانده بسته‌های پروژه"
-                                      Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          ReadOnly
+                                          Value="this.CalculateRemaining()"
+                                          Label="مانده بسته‌های پروژه"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      @bind-Value="this.ContainerType"
-                                      Required
-                                      Clearable
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.ContainerType = string.Empty"
-                                      Label="‌نوع کانتینر"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      @bind-Value="this.ContainerCount"
-                                      Required
-                                      Clearable
-                                      Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.ContainerCount = null"
-                                      Label="تعداد کانتینر"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      @bind-Value="this.PackingCount"
-                                      Required
-                                      Clearable
-                                      Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.PackingCount = null"
-                                      Label="تعداد بسته"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      @bind-Value="this.Destination"
-                                      Clearable
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.Destination = string.Empty"
-                                      Label="‌مقصد"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      @bind-Value="this.ShippingLine"
-                                      Clearable
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.ShippingLine = string.Empty"
-                                      Label="خط ‌کشتیرانی"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      @bind-Value="this.Forwarder"
-                                      Clearable
-                                      ClearIcon="@Icons.Material.Filled.Clear"
-                                      OnClearButtonClick="()=>this.Forwarder = string.Empty"
-                                      Label="‌forwarder"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          @bind-Value="this.ContainerType"
+                                          Required
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.ContainerType = string.Empty"
+                                          Label="‌نوع کانتینر"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          @bind-Value="this.ContainerCount"
+                                          Required
+                                          Clearable
+                                          Format="N0"
+                                          Immediate
+                                          TextUpdateSuppression="false"
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.ContainerCount = null"
+                                          Label="تعداد کانتینر"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          @bind-Value="this.PackingCount"
+                                          Required
+                                          Clearable
+                                          Format="N0"
+                                          Immediate
+                                          TextUpdateSuppression="false"
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.PackingCount = null"
+                                          Label="تعداد بسته"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          @bind-Value="this.Destination"
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.Destination = string.Empty"
+                                          Label="‌مقصد"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          @bind-Value="this.ShippingLine"
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.ShippingLine = string.Empty"
+                                          Label="خط ‌کشتیرانی"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          @bind-Value="this.Forwarder"
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.Forwarder = string.Empty"
+                                          Label="‌forwarder"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
                     </div>
                 </MudForm>
             </div>

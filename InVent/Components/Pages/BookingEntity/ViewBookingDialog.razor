@@ -9,86 +9,84 @@
     <DialogContent>
         @if (this.Booking != null)
         {
-            <div class="form-big">
+            <div class="form-outer">
                 <MudForm ReadOnly>
-                    @* <MudSwitch T="bool"
-                       @bind-Value=this.Status
-                       Label="@this.StatusText">
-            </MudSwitch> *@
-                    <div class="field-group">
-                        <MudTextField T="int?"
-                                      Value="this.Booking.Number"
-                                      Label="شماره بوکینگ"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudAutocomplete T="int?"
-                                         Value="this.Booking.Project?.Number"
-                                         Label="شماره پروژه"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      ReadOnly
-                                      Value="this.Booking.Project?.Product?.Name"
-                                      Label="محصول"
-                                      Variant="Variant.Outlined">
+                    <div class="form-inner">
+                        <div class="field-group-2">
+                            <MudTextField T="int?"
+                                          Value="this.Booking.Number"
+                                          Label="شماره بوکینگ"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudAutocomplete T="int?"
+                                             Value="this.Booking.Project?.Number"
+                                             Label="شماره پروژه"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          ReadOnly
+                                          Value="this.Booking.Project?.Product?.Name"
+                                          Label="محصول"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      ReadOnly
-                                      Value="this.Booking.Project?.Customer?.Name"
-                                      Label="مشتری"
-                                      Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          ReadOnly
+                                          Value="this.Booking.Project?.Customer?.Name"
+                                          Label="مشتری"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      ReadOnly
-                                      Value="this.CalculateRemaining()"
-                                      Label="مانده بسته‌های پروژه"
-                                      Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          ReadOnly
+                                          Value="this.CalculateRemaining()"
+                                          Label="مانده بسته‌های پروژه"
+                                          Variant="Variant.Outlined">
 
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      Value="this.Booking.ContainerType"
-                                      Label="‌نوع کانتینر"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      Value="this.Booking.ContainerCount"
-                                      Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
-                                      Label="تعداد کانتینر"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="int?"
-                                      Value="this.Booking.PackingCount"
-                                      Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
-                                      Label="تعداد بسته"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                    </div>
-                    <div class="field-group">
-                        <MudTextField T="string"
-                                      Value="this.Booking.Destination"
-                                      Label="‌مقصد"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      Value="this.Booking.ShippingLine"
-                                      Label="خط ‌کشتیرانی"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudTextField T="string"
-                                      Value="this.Booking.Forwarder"
-                                      Label="‌forwarder"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          Value="this.Booking.ContainerType"
+                                          Label="‌نوع کانتینر"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          Value="this.Booking.ContainerCount"
+                                          Format="N0"
+                                          Immediate
+                                          TextUpdateSuppression="false"
+                                          Label="تعداد کانتینر"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="int?"
+                                          Value="this.Booking.PackingCount"
+                                          Format="N0"
+                                          Immediate
+                                          TextUpdateSuppression="false"
+                                          Label="تعداد بسته"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-3">
+                            <MudTextField T="string"
+                                          Value="this.Booking.Destination"
+                                          Label="‌مقصد"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Booking.ShippingLine"
+                                          Label="خط ‌کشتیرانی"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Booking.Forwarder"
+                                          Label="‌forwarder"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
                     </div>
                 </MudForm>
             </div>

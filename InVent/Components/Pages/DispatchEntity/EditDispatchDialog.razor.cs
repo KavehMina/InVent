@@ -101,6 +101,8 @@ namespace InVent.Components.Pages.DispatchEntity
             this.PackageCount = this.Dispatch.PackageCount;
             this.Fare = this.Dispatch.Fare;
             this.IsExport = this.Dispatch.IsExport;
+            this.IsDischarged = this.Dispatch.IsDischarged;
+            this.IsPaid = this.Dispatch.IsPaid;
             this.InternationalNumber1 = this.Dispatch.InternationalNumber1;
             this.InternationalNumber2 = this.Dispatch.InternationalNumber2;
             this.Date = this.Dispatch.Date;

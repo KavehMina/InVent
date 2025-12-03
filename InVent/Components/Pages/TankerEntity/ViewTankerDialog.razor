@@ -8,92 +8,98 @@
     <DialogContent>
         @if (this.Tanker != null)
         {
-            <MudForm ReadOnly>
-                <div class="form">
-                    <div class="number-plate">
-                        <MudText>پلاک ماشین</MudText>
-                        <div class="number-plate-field">
+            <div class="form-outer">
+                <MudForm ReadOnly>
+                    <div class="form-inner">
+                        <div class="field-group-2-custom">
+                            <div class="number-plate">
+                                <div class="number-plate-field">
+                                    <MudTextField T="string"
+                                                  InputId="1"
+                                                  Value=this.First
+                                                  Variant="Variant.Outlined">
+                                    </MudTextField>
+                                    <MudTextField T="string"
+                                                  InputId="2"
+                                                  Value=this.Second
+                                                  Variant="Variant.Outlined">
+                                    </MudTextField>
+                                    <MudTextField T="string"
+                                                  InputId="3"
+                                                  Value=this.Third
+                                                  Variant="Variant.Outlined">
+                                    </MudTextField>
+                                    <MudTextField T="string"
+                                                  InputId="3"
+                                                  Value=this.Fourth
+                                                  Adornment="Adornment.End"
+                                                  AdornmentText="-ایران"
+                                                  AdornmentColor="Color.Info"
+                                                  Variant="Variant.Outlined">
+                                    </MudTextField>
+                                </div>
+                            </div>
+                            <MudSelect T="string"
+                                       Value=this.Tanker.CargoType
+                                       Label="نوع بار"
+                                       Variant="Variant.Outlined">
+                            </MudSelect>
+                        </div>
+                        <div class="field-group-2">
                             <MudTextField T="string"
-                                          Value=this.First
+                                          Value=this.Tanker.DriverName
+                                          Label="نام راننده"
                                           Variant="Variant.Outlined">
                             </MudTextField>
                             <MudTextField T="string"
-                                          Value=this.Second
-                                          Variant="Variant.Outlined">
-                            </MudTextField>
-                            <MudTextField T="string"
-                                          Value=this.Third
-                                          Variant="Variant.Outlined">
-                            </MudTextField>
-                            <MudTextField T="string"
-                                          Value=this.Fourth
-                                          Adornment="Adornment.End"
-                                          AdornmentText="-ایران"
-                                          AdornmentColor="Color.Info"
+                                          Value=this.Tanker.DriverPhone
+                                          Label="تلفن راننده"
                                           Variant="Variant.Outlined">
                             </MudTextField>
                         </div>
+                        <div class="field-group-2">
+                            <MudTextField T="string"
+                                          Value=this.Tanker.DriverBankNumber
+                                          Label="شماره شبای راننده"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="IR"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudAutocomplete T="string"
+                                             Value="this.Tanker.DriverBank?.Name"
+                                             Label="بانک راننده"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                        </div>
+                        <div class="field-group-2">
+                            <MudTextField T="string"
+                                          Value=this.Tanker.OwnerName
+                                          Label="نام مالک"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value=this.Tanker.OwnerPhone
+                                          Label="تلفن مالک"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <div class="field-group-2">
+                            <MudTextField T="string"
+                                          Value=this.Tanker.OwnerBankNumber
+                                          Label="شماره شبای مالک"
+                                          Adornment="Adornment.End"
+                                          AdornmentText="IR"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudAutocomplete T="string"
+                                             Value="this.Tanker.OwnerBank?.Name"
+                                             Label="بانک مالک"
+                                             Variant="Variant.Outlined">
+                            </MudAutocomplete>
+                        </div>
                     </div>
-                    <MudTextField T="string"
-                                  Value=this.Tanker.DriverName
-                                  Label="نام راننده"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <MudTextField T="string"
-                                  Value=this.Tanker.DriverPhone
-                                  Label="تلفن راننده"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <div class="bank-container">
-                        <MudTextField T="string"
-                                      Value=this.Tanker.DriverBankNumber
-                                      Label="شماره شبای راننده"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="IR"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudAutocomplete T="string"
-                                         Value="this.Tanker.DriverBank?.Name"
-                                         Label="بانک راننده"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                    </div>
-                    <MudTextField T="string"
-                                  Value=this.Tanker.OwnerName
-                                  Label="نام مالک"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <MudTextField T="string"
-                                  Value=this.Tanker.OwnerPhone
-                                  Label="تلفن مالک"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <div class="bank-container">
-                        <MudTextField T="string"
-                                      Value=this.Tanker.OwnerBankNumber
-                                      Label="شماره شبای مالک"
-                                      Adornment="Adornment.End"
-                                      AdornmentText="IR"
-                                      Variant="Variant.Outlined">
-                        </MudTextField>
-                        <MudAutocomplete T="string"
-                                         Value="this.Tanker.OwnerBank?.Name"
-                                         Label="بانک مالک"
-                                         Variant="Variant.Outlined">
-                        </MudAutocomplete>
-                    </div>
-                    <MudSelect T="string"
-                               Value=this.Tanker.CargoType
-                               Label="نوع بار"
-                               Variant="Variant.Outlined">
-                        @* <MudSelectItem Value="RPO"></MudSelectItem>
-                        <MudSelectItem Value="SlackWax"></MudSelectItem>
-                        <MudSelectItem Value="RPOSlack"></MudSelectItem>
-                        <MudSelectItem Value="Bitumen"></MudSelectItem> *@
-                    </MudSelect>
-
-                </div>
-            </MudForm>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

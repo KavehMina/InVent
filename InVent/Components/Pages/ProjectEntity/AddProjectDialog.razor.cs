@@ -36,7 +36,7 @@ namespace InVent.Components.Pages.ProjectEntity
         private List<Product> Products { get; set; } = [];
         private Port Port { get; set; }
         private List<Port> Ports { get; set; } = [];
-        private bool Status { get; set; }
+        private bool Status { get; set; } = false;
         private string StatusText => this.Status == true ? "بسته" : "باز";
 
         protected override async void OnInitialized()

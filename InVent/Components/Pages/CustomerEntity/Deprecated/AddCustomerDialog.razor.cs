@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
-namespace InVent.Components.Pages.CustomerEntity
+namespace InVent.Components.Pages.CustomerEntity.Deprecated
 {
     public partial class AddCustomerDialog
     {

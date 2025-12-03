@@ -38,7 +38,7 @@ namespace InVent.Components.Pages.RefineryEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Header" , "پالایشگاه جدید" }
             };
@@ -53,7 +53,7 @@ namespace InVent.Components.Pages.RefineryEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Refinery> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Refinery", e.Item },
                 { "Header" , e.Item?.Name }
@@ -66,7 +66,7 @@ namespace InVent.Components.Pages.RefineryEntity
         public async Task OpenEditDialog(MouseEventArgs e, Refinery item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Refinery", item },
                 { "Header" , "ویرایش پالایشگاه" }

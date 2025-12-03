@@ -6,23 +6,24 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
-
-        <MudForm ReadOnly>
-            <MudTextField T="string"
-                          Value="this.Port.Name"
-                          Required
-                          Label="نام گمرک خروج"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudTextField T="int?"
-                          Value="this.Port.Number"
-                          Required
-                          Label="شماره گمرک خروج"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-
-        </MudForm>
-
+        <div class="form-outer">
+            <MudForm ReadOnly>
+                <div class="form-inner">
+                    <MudTextField T="string"
+                                  Value="this.Port.Name"
+                                  Required
+                                  Label="نام گمرک خروج"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Port.Number"
+                                  Required
+                                  Label="شماره گمرک خروج"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+            </MudForm>
+        </div>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>

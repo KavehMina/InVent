@@ -9,38 +9,39 @@
     <DialogContent>
         @if (this.Carrier != null)
         {
-            <div class="form-small">
+            <div class="form-outer">
                 <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-                    <MudTextField T="string"
-                                  @bind-Value="this.Carrier.Name"
-                                  Required
-                                  Label="نام شرکت"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <MudTextField T="string"
-                                  @bind-Value="this.Carrier.Phone"
-                                  Required
-                                  Label="تلفن شرکت"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <MudTextField T="string"
-                                  @bind-Value="this.Carrier.BankNumber"
-                                  Adornment="Adornment.End"
-                                  AdornmentText="IR"
-                                  Label="شماره شبای شرکت"
-                                  Variant="Variant.Outlined">
-                    </MudTextField>
-                    <MudAutocomplete T="Bank"
-                                     @bind-Value="this.Carrier.Bank"
-                                     ToStringFunc="(e)=> BankToString(e)"
-                                     SearchFunc="this.SearchBanks"
-                                     Label="بانک شرکت"
-                                     Clearable
-                                     ClearIcon="@Icons.Material.Filled.Clear"
-                                     OnClearButtonClick="()=>this.Carrier.Bank=null"
-                                     Variant="Variant.Outlined">
-                    </MudAutocomplete>
-
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.Name"
+                                      Required
+                                      Label="نام شرکت"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.Phone"
+                                      Required
+                                      Label="تلفن شرکت"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.BankNumber"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="IR"
+                                      Label="شماره شبای شرکت"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudAutocomplete T="Bank"
+                                         @bind-Value="this.Carrier.Bank"
+                                         ToStringFunc="(e)=> BankToString(e)"
+                                         SearchFunc="this.SearchBanks"
+                                         Label="بانک شرکت"
+                                         Clearable
+                                         ClearIcon="@Icons.Material.Filled.Clear"
+                                         OnClearButtonClick="()=>this.Carrier.Bank=null"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                    </div>
                 </MudForm>
             </div>
         }

@@ -37,7 +37,7 @@ namespace InVent.Components.Pages.PackageEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Header" , "بسته‌بندی جدید" }
             };
@@ -52,7 +52,7 @@ namespace InVent.Components.Pages.PackageEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Package> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Package", e.Item },
                 { "Header" , e.Item?.Name }
@@ -65,7 +65,7 @@ namespace InVent.Components.Pages.PackageEntity
         public async Task OpenEditDialog(MouseEventArgs e, Package item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true,  MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Package", item },
                 { "Header" , "ویرایش بسته‌بندی" }

@@ -9,38 +9,40 @@
     <DialogContent>
         @if (this.Carrier != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
-                <MudTextField T="string"
-                              @bind-Value="this.Carrier.Name"
-                              Required
-                              Label="نام شرکت"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="string"
-                              @bind-Value="this.Carrier.Phone"
-                              Required
-                              Label="تلفن شرکت"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="string"
-                              @bind-Value="this.Carrier.BankNumber"
-                              Label="شماره شبای شرکت"
-                              Adornment="Adornment.End"
-                              AdornmentText="IR"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudAutocomplete T="Bank"
-                                 @bind-Value="this.Carrier.Bank"
-                                 ToStringFunc="(e)=> BankToString(e)"
-                                 SearchFunc="this.SearchBanks"
-                                 Label="بانک شرکت"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Carrier.Bank=null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.Name"
+                                      Required
+                                      Label="نام شرکت"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.Phone"
+                                      Required
+                                      Label="تلفن شرکت"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="string"
+                                      @bind-Value="this.Carrier.BankNumber"
+                                      Label="شماره شبای شرکت"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="IR"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudAutocomplete T="Bank"
+                                         @bind-Value="this.Carrier.Bank"
+                                         ToStringFunc="(e)=> BankToString(e)"
+                                         SearchFunc="this.SearchBanks"
+                                         Label="بانک شرکت"
+                                         Clearable
+                                         ClearIcon="@Icons.Material.Filled.Clear"
+                                         OnClearButtonClick="()=>this.Carrier.Bank=null"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
 
-                @* @if (this.Loading)
+                        @* @if (this.Loading)
                 {
                     <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled>
                         <MudProgressCircular Size="Size.Small" Color="Color.Primary" Indeterminate="true"></MudProgressCircular>
@@ -51,7 +53,9 @@
                 {
                     <MudButton OnClick="this.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled=@this.ButtonDisabled>ذخیره</MudButton>
                 } *@
-            </MudForm>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

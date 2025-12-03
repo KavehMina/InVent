@@ -340,6 +340,18 @@ namespace InVent.Components.Pages.EntryEntity
             this.Date = DateTime.Today;
             this._picker?.CloseAsync();
         }
+        private string SetDifferenceColor()
+        {
+            switch (this.Difference)
+            {
+                case > 0:
+                    return "background-color:palegreen";
+                case < 0:
+                    return "background-color:mistyrose";
+                default:
+                    return string.Empty;
+            }
+        }
     }
 
     //public partial class EditEntryDialog

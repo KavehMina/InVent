@@ -7,36 +7,38 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
-
-        <MudForm ReadOnly>
-            <MudTextField T="string"
-                          Value="this.Package.Name"
-                          Required
-                          Label="نام بسته‌بندی"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudTextField T="int?"
-                          Value="this.Package.Volume"
-                          Format="N0"
-                          Immediate
-                          TextUpdateSuppression="false"
-                          Adornment="Adornment.End"
-                          AdornmentText="لیتر"
-                          Label="حجم بارگیری"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudTextField T="int?"
-                          Value="this.Package.Weight"
-                          Format="N0"
-                          Immediate
-                          TextUpdateSuppression="false"
-                          Adornment="Adornment.End"
-                          AdornmentText="کیلوگرم"
-                          Label="وزن ظرف"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-        </MudForm>
-
+        <div class="form-outer">
+            <MudForm ReadOnly>
+                <div class="form-inner">
+                    <MudTextField T="string"
+                                  Value="this.Package.Name"
+                                  Required
+                                  Label="نام بسته‌بندی"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Package.Volume"
+                                  Format="N0"
+                                  Immediate
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="لیتر"
+                                  Label="حجم بارگیری"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="int?"
+                                  Value="this.Package.Weight"
+                                  Format="N0"
+                                  Immediate
+                                  TextUpdateSuppression="false"
+                                  Adornment="Adornment.End"
+                                  AdornmentText="کیلوگرم"
+                                  Label="وزن ظرف"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                </div>
+            </MudForm>
+        </div>
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary" OnClick="Cancel">بستن</MudButton>

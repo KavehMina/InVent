@@ -32,5 +32,18 @@ namespace InVent.Components.Pages.EntryEntity
             }
             await base.OnInitializedAsync();
         }
+
+        private string SetDifferenceColor()
+        {
+            switch (this.Difference)
+            {
+                case > 0:
+                    return "background-color:palegreen";
+                case < 0:
+                    return "background-color:mistyrose";
+                default:
+                    return string.Empty;
+            }
+        }
     }
 }

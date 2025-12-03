@@ -38,7 +38,7 @@ namespace InVent.Components.Pages.TankerEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters {
                 { "Header" , "تانکر جدید" }
             };
@@ -53,7 +53,7 @@ namespace InVent.Components.Pages.TankerEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Tanker> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters {
                 { "Tanker", e.Item },
                 { "Header" , e.Item?.DriverName }
@@ -66,7 +66,7 @@ namespace InVent.Components.Pages.TankerEntity
         public async Task OpenEditDialog(MouseEventArgs e, Tanker item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters {
                 { "Tanker", item },
                 { "Header" , "ویرایش تانکر" }

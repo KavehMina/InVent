@@ -9,20 +9,24 @@
     <DialogContent>
         @if (this.Customs != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
-                <MudTextField T="string"
-                              @bind-Value="this.Customs.Name"
-                              Required
-                              Label="نام گمرک اظهار"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int?"
-                              @bind-Value="this.Customs.Number"
-                              Required
-                              Label="شماره گمرک اظهار"
-                              Variant="Variant.Outlined">
-                </MudTextField>                
-            </MudForm>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors">
+                    <div class="form-inner">
+                        <MudTextField T="string"
+                                      @bind-Value="this.Customs.Name"
+                                      Required
+                                      Label="نام گمرک اظهار"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="int?"
+                                      @bind-Value="this.Customs.Number"
+                                      Required
+                                      Label="شماره گمرک اظهار"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>

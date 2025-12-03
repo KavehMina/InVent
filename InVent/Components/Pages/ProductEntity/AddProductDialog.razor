@@ -7,31 +7,34 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
-
-        <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-            <MudTextField T="string"
-                          @bind-Value="this.Product.Name"
-                          Required
-                          Label="نام محصول"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudTextField T="string"
-                          @bind-Value="this.Product.Grade"
-                          Required
-                          Label="Grade"
-                          Variant="Variant.Outlined">
-            </MudTextField>
-            <MudAutocomplete T="Refinery"
-                             @bind-Value="this.Refinery"
-                             ToStringFunc="(e)=> RefineryToString(e)"
-                             SearchFunc="this.SearchRefineries"
-                             Label="پالایشگاه"
-                             Clearable
-                             ClearIcon="@Icons.Material.Filled.Clear"
-                             OnClearButtonClick="()=>this.Refinery = null"
-                             Variant="Variant.Outlined">
-            </MudAutocomplete>
-        </MudForm>
+        <div class="form-outer">
+            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+                <div class="form-inner">
+                    <MudTextField T="string"
+                                  @bind-Value="this.Product.Name"
+                                  Required
+                                  Label="نام محصول"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudTextField T="string"
+                                  @bind-Value="this.Product.Grade"
+                                  Required
+                                  Label="Grade"
+                                  Variant="Variant.Outlined">
+                    </MudTextField>
+                    <MudAutocomplete T="Refinery"
+                                     @bind-Value="this.Refinery"
+                                     ToStringFunc="(e)=> RefineryToString(e)"
+                                     SearchFunc="this.SearchRefineries"
+                                     Label="پالایشگاه"
+                                     Clearable
+                                     ClearIcon="@Icons.Material.Filled.Clear"
+                                     OnClearButtonClick="()=>this.Refinery = null"
+                                     Variant="Variant.Outlined">
+                    </MudAutocomplete>
+                </div>
+            </MudForm>
+        </div>
 
     </DialogContent>
     <DialogActions>

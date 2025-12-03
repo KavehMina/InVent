@@ -7,14 +7,10 @@
         <MudText Typo="Typo.body2">@this.Header</MudText>
     </TitleContent>
     <DialogContent>
-        <div class="form-big">
+        <div class="form-outer">
             <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-                @* <MudSwitch T="bool"
-                       @bind-Value=this.Status
-                       Label="@this.StatusText">
-            </MudSwitch> *@
-                <div class="form-big">
-                    <div class="field-group">
+                <div class="form-inner">
+                    <div class="field-group-2">
                         <MudAutocomplete T="Project"
                                          Value="this.Project"
                                          ValueChanged="e=>this.SetProject(e)"
@@ -37,7 +33,7 @@
                                       Variant="Variant.Outlined">
                         </MudTextField>
                     </div>
-                    <div class="field-group">
+                    <div class="field-group-3">
                         <MudTextField T="string"
                                       ReadOnly
                                       Value="this.Product"
@@ -60,7 +56,7 @@
 
                         </MudTextField>
                     </div>
-                    <div class="field-group">
+                    <div class="field-group-3">
                         <MudTextField T="string"
                                       @bind-Value="this.ContainerType"
                                       Required
@@ -95,10 +91,7 @@
                                       Variant="Variant.Outlined">
                         </MudTextField>
                     </div>
-
-
-
-                    <div class="field-group">
+                    <div class="field-group-3">
                         <MudTextField T="string"
                                       @bind-Value="this.Destination"
                                       Clearable

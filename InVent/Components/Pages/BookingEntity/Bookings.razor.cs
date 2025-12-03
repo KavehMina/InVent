@@ -36,7 +36,7 @@ namespace InVent.Components.Pages.BookingEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters
             {
                 { "Header" , "بوکینگ جدید" }
@@ -52,7 +52,7 @@ namespace InVent.Components.Pages.BookingEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Booking> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters
             {
                 { "Booking", e.Item },
@@ -66,7 +66,7 @@ namespace InVent.Components.Pages.BookingEntity
         public async Task OpenEditDialog(MouseEventArgs e, Booking item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth=MaxWidth.False};
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Medium };
             var parameters = new DialogParameters
             {
                 { "Booking", item },

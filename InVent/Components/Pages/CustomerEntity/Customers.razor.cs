@@ -32,7 +32,7 @@ namespace InVent.Components.Pages.CustomerEntity
             {
                 try
                 {
-                    var newCustomer = new Customer { Name = this.NewCustomerName};
+                    var newCustomer = new Customer { Name = this.NewCustomerName };
                     var res = await this.CustomerService.Add(newCustomer);
                     this.HandleMessage(res.Message, res.Success);
                     if (res.Success)
@@ -104,7 +104,7 @@ namespace InVent.Components.Pages.CustomerEntity
         public async Task OpenEditDialog(MouseEventArgs e, Customer item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Customer", item },
                 { "Header" , "ویرایش مشتری" }

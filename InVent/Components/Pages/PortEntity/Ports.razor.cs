@@ -50,7 +50,7 @@ namespace InVent.Components.Pages.PortEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Header" , "گمرک خروج جدید" }
             };
@@ -65,7 +65,7 @@ namespace InVent.Components.Pages.PortEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Port> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Port", e.Item },
                 { "Header" , e.Item?.Name }
@@ -78,7 +78,7 @@ namespace InVent.Components.Pages.PortEntity
         public async Task OpenEditDialog(MouseEventArgs e, Port item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true ,MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Port", item },
                 { "Header" , "ویرایش گمرک خروج" }

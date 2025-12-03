@@ -37,7 +37,7 @@ namespace InVent.Components.Pages.CarrierEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Header" , "شرکت حمل‌ونقل جدید" }
             };
@@ -52,7 +52,7 @@ namespace InVent.Components.Pages.CarrierEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Carrier> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Carrier", e.Item },
                 { "Header" , e.Item?.Name }
@@ -65,7 +65,7 @@ namespace InVent.Components.Pages.CarrierEntity
         public async Task OpenEditDialog(MouseEventArgs e, Carrier item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Carrier", item },
                 { "Header" , "ویرایش شرکت حمل‌ونقل" }

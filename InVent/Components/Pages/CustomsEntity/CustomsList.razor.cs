@@ -38,7 +38,7 @@ namespace InVent.Components.Pages.CustomsEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true ,MaxWidth=MaxWidth.Small};
             var parameters = new DialogParameters {
                 { "Header" , "گمرک اظهار جدید" }
             };
@@ -53,7 +53,7 @@ namespace InVent.Components.Pages.CustomsEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Customs> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Customs", e.Item },
                 { "Header" , e.Item?.Name }
@@ -66,7 +66,7 @@ namespace InVent.Components.Pages.CustomsEntity
         public async Task OpenEditDialog(MouseEventArgs e, Customs item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true , MaxWidth = MaxWidth.Small };
             var parameters = new DialogParameters {
                 { "Customs", item },
                 { "Header" , "ویرایش گمرک اظهار" }

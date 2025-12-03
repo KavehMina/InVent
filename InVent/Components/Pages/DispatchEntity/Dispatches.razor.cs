@@ -84,7 +84,7 @@ namespace InVent.Components.Pages.DispatchEntity
                     FullWeight = dispatch.FullWeight,
                     Fare = dispatch.Fare,
                     IsExport = dispatch.IsExport,
-                    IsDischarged = dispatch.IsDischarged,                   
+                    IsDischarged = dispatch.IsDischarged,
                     IsPaid = value,                             //value set
                     NumberPlate = dispatch.NumberPlate,
                     PackageCount = dispatch.PackageCount,
@@ -137,7 +137,7 @@ namespace InVent.Components.Pages.DispatchEntity
         public async Task OpenAddDialog(MouseEventArgs e)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Header" , "خروجی جدید" }
@@ -153,7 +153,7 @@ namespace InVent.Components.Pages.DispatchEntity
 
         public async Task OpenViewDialog(TableRowClickEventArgs<Dispatch> e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Dispatch", e.Item },
@@ -167,7 +167,7 @@ namespace InVent.Components.Pages.DispatchEntity
         public async Task OpenEditDialog(MouseEventArgs e, Dispatch item)
         {
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.False };
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullScreen = true };
             var parameters = new DialogParameters
             {
                 { "Dispatch", item },

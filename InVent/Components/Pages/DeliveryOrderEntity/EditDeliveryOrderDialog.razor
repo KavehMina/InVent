@@ -9,56 +9,64 @@
     <DialogContent>
         @if (this.DeliveryOrder != null)
         {
-            <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
-                <MudSwitch T="bool"
-                           @bind-Value=this.DeliveryOrder.Status
-                           Color="Color.Success"
-                           UncheckedColor="Color.Error"
-                           Label="@this.StatusText">
-                </MudSwitch>
-                <MudTextField T="string"
-                              @bind-Value="this.DeliveryOrder.DeliveryOrderId"
-                              Required
-                              Clearable
-                              ClearIcon="@Icons.Material.Filled.Clear"
-                              OnClearButtonClick="()=>this.DeliveryOrder.DeliveryOrderId = null"
-                              Label="شماره حواله"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudAutocomplete T="Project"
-                                 @bind-Value="this.DeliveryOrder.Project"
-                                 Required
-                                 ToStringFunc="(e)=> ProjectToString(e)"
-                                 SearchFunc="this.SearchProjects"
-                                 Label="شماره پروژه"
-                                 Clearable
-                                 ClearIcon="@Icons.Material.Filled.Clear"
-                                 OnClearButtonClick="()=>this.Project = null"
-                                 Variant="Variant.Outlined">
-                </MudAutocomplete>
-                <MudTextField T="int"
-                              @bind-Value="this.DeliveryOrder.Weight"
-                              Required
-                              Format="N0"
-                              Immediate
-                              TextUpdateSuppression="false"
-                              Adornment="Adornment.End"
-                              AdornmentText="کیلوگرم"
-                              Label="وزن حواله"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-                <MudTextField T="int"
-                              @bind-Value="this.DeliveryOrder.TankerFare"
-                              Required
-                              Format="N0"
-                              Immediate
-                              TextUpdateSuppression="false"
-                              Adornment="Adornment.End"
-                              AdornmentText="تومان"
-                              Label="کرایه تانکر"
-                              Variant="Variant.Outlined">
-                </MudTextField>
-            </MudForm>
+            <div class="form-outer">
+                <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
+                    <div class="form-inner">
+                        <div class="field-group-2-custom">
+                            <div class="switch-container">
+                                <MudSwitch T="bool"
+                                           @bind-Value=this.DeliveryOrder.Status
+                                           Color="Color.Success"
+                                           UncheckedColor="Color.Error"
+                                           Label="@this.StatusText">
+                                </MudSwitch>
+                            </div>
+                            <MudTextField T="string"
+                                          @bind-Value="this.DeliveryOrder.DeliveryOrderId"
+                                          Required
+                                          Clearable
+                                          ClearIcon="@Icons.Material.Filled.Clear"
+                                          OnClearButtonClick="()=>this.DeliveryOrder.DeliveryOrderId = null"
+                                          Label="شماره حواله"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                        </div>
+                        <MudAutocomplete T="Project"
+                                         @bind-Value="this.DeliveryOrder.Project"
+                                         Required
+                                         ToStringFunc="(e)=> ProjectToString(e)"
+                                         SearchFunc="this.SearchProjects"
+                                         Label="شماره پروژه"
+                                         Clearable
+                                         ClearIcon="@Icons.Material.Filled.Clear"
+                                         OnClearButtonClick="()=>this.Project = null"
+                                         Variant="Variant.Outlined">
+                        </MudAutocomplete>
+                        <MudTextField T="int"
+                                      @bind-Value="this.DeliveryOrder.Weight"
+                                      Required
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="کیلوگرم"
+                                      Label="وزن حواله"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                        <MudTextField T="int"
+                                      @bind-Value="this.DeliveryOrder.TankerFare"
+                                      Required
+                                      Format="N0"
+                                      Immediate
+                                      TextUpdateSuppression="false"
+                                      Adornment="Adornment.End"
+                                      AdornmentText="تومان"
+                                      Label="کرایه تانکر"
+                                      Variant="Variant.Outlined">
+                        </MudTextField>
+                    </div>
+                </MudForm>
+            </div>
         }
     </DialogContent>
     <DialogActions>
