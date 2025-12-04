@@ -25,7 +25,7 @@ namespace InVent.Components.Pages.TankerEntity
         /// <NOTE START>
         /// the order is like this because the logical order e.i. (1st + 2nd + 3rd + 4th),
         /// results in incorrect text order caused by the persian letter in the middle of a text.
-        public string TankerNumber => Third + Fourth + Second + First;
+        //public string TankerNumber => Third + Fourth + Second + First;
         /// </NOTE END>
         public required string DriverName { get; set; }
         public required string DriverPhone { get; set; }
@@ -39,7 +39,12 @@ namespace InVent.Components.Pages.TankerEntity
         public Bank? DriverBank { get; set; }
         public Bank? OwnerBank { get; set; }
 
-        
+        protected override void OnInitialized()
+        {
+            this.SetState(new State<Tanker>());
+            base.OnInitialized();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -84,7 +89,8 @@ namespace InVent.Components.Pages.TankerEntity
             {
                 var newTanker = new TankerDTO
                 {
-                    Number = this.TankerNumber,
+                    Number = this.State.Value.Number,
+                    //Number = this.TankerNumber,
                     DriverName = this.DriverName,
                     DriverPhone = this.DriverPhone,
                     DriverBankNumber = this.DriverBankNumber,

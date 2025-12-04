@@ -302,6 +302,7 @@ namespace InVent.Components.Pages.EntryEntity
                         ProductId = this.Product.Id,
                         RefineryId = this.Refinery.Id,
                         TankerId = this.Tanker.Id,
+                        LastModifiedOn = DateTime.UtcNow,
                         RefineryEmpty = (int)this.RefineryEmpty,
                         RefineryFilled = (int)this.RefineryFilled,
                         WarehouseEmpty = (int)this.WarehouseEmpty,

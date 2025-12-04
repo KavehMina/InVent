@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using InVent.Data.Models;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace InVent.Components.Pages.Shared
@@ -13,16 +14,22 @@ namespace InVent.Components.Pages.Shared
         public PatternMask Mask1 = new("00");
         public PatternMask Mask2 = new("a");
         public PatternMask Mask3 = new("000");
-        [Parameter]
+        //[Parameter]
         public required string First { get; set; }
-        [Parameter]
+        //[Parameter]
         public required string Second { get; set; }
-        [Parameter]
+        //[Parameter]
         public required string Third { get; set; }
-        [Parameter]
+        //[Parameter]
         public required string Fourth { get; set; }
 
-                
+        [Parameter]
+        public required State<Tanker> Tanker { get; set; }
+
+
+        public string TankerNumber => Third + Fourth + Second + First;
+
+        //private string NumberPlate => this.Tanker.Value.Number;
 
         private async Task MoveFocus(string value, MudTextField<string> thisField, MudTextField<string> nextField)
         {
@@ -33,25 +40,25 @@ namespace InVent.Components.Pages.Shared
                 {
                     case "1":
                         First = value;
-                        //this.TankerNumber = Third + Fourth + Second + First;
+                        this.Tanker.SetState(x=>x.Number =this.TankerNumber);
                         if (thisField?.Value?.Length == 2)
                             await nextField.FocusAsync();
                         break;
                     case "2":
                         Second = value;
-                        //this.TankerNumber = Third + Fourth + Second + First;
+                        this.Tanker.SetState(x => x.Number = this.TankerNumber);
                         if (thisField?.Value?.Length == 1)
                             await nextField.FocusAsync();
                         break;
                     case "3":
                         Third = value;
-                        //this.TankerNumber = Third + Fourth + Second + First;
+                        this.Tanker.SetState(x => x.Number = this.TankerNumber);
                         if (thisField?.Value?.Length == 3)
                             await nextField.FocusAsync();
                         break;
                     case "4":
                         Fourth = value;
-                        //this.TankerNumber = Third + Fourth + Second + First;
+                        this.Tanker.SetState(x => x.Number = this.TankerNumber);
                         if (thisField?.Value?.Length == 2)
                             await nextField.FocusAsync();
                         break;

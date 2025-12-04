@@ -48,8 +48,9 @@ namespace InVent.Data.Models
         public int WarehouseEmpty { get; set; }
 
 
+        [Column("LastModifiedOn")]
+        public DateTime? LastModifiedOn { get; set; }
 
-        
 
 
 
@@ -103,6 +104,7 @@ namespace InVent.Data.Models
         public required int RefineryEmpty { get; set; }
         public required int WarehouseFilled { get; set; }
         public required int WarehouseEmpty { get; set; }
+        public DateTime? LastModifiedOn { get; set; }
         public required Guid TankerId { get; set; }//FK
         public required Guid ProductId { get; set; }//FK
         public required Guid DeliveryOrderId { get; set; }//FK

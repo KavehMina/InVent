@@ -76,11 +76,8 @@ namespace InVent.Components.Pages.BookingEntity
             this.Product = this.Project?.Product?.Name;
             this.Customer = this.Project?.Customer?.Name;
             this.ContainerType = this.Project?.Package?.Name ?? string.Empty;
-            int temp = 0;
-            foreach (var booking in this.Bookings)
-            {
-                temp += booking.PackingCount;
-            }
+
+            var temp = this.Bookings.Sum(x => x.PackingCount);
             this.Remaining = this.Project?.PackageCount - temp;
         }
 

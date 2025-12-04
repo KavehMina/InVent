@@ -19,8 +19,22 @@ using MudBlazor;
 
 namespace InVent.Components.Pages.Internals
 {
-    public class BaseDialog : ComponentBase
+    public class BaseDialog : ComponentBase, IDisposable
     {
+
+        
+        protected List<IDisposable> _disposables = [];
+
+        public void AddDisposable(IDisposable disposable) => _disposables.Add(disposable);
+        public void Dispose()
+        {
+            _disposables.ForEach(x => x.Dispose());
+        }
+
+
+
+
+
         [Inject]
         public required ISnackbar Snackbar { get; set; }
         [CascadingParameter]
@@ -49,7 +63,7 @@ namespace InVent.Components.Pages.Internals
             await Task.Delay(1);
         }
 
-        
+
         public void Cancel() => MudDialog?.Cancel();
 
         public void HandleMessage(string Message, bool Success)
@@ -60,6 +74,24 @@ namespace InVent.Components.Pages.Internals
                 Snackbar.Add(Message, Success ? Severity.Success : Severity.Error, cfg => cfg.VisibleStateDuration = 3000);
             }
         }
+    }
+
+    public class BaseTankerDialog<T> : BaseDialog where T : class, new()
+    {
+        public State<T> State { get; set; }
+        
+        protected void SetState(State<T> state)
+        {
+            this.State = state;
+            AddDisposable(State.Observable.Subscribe(async (x) => { await InvokeAsync(StateHasChanged); }));
+        }
+
+
+
+        [Inject]
+        public required TankerService TankerService { get; set; }
+        [Parameter]
+        public required Tanker Tanker { get; set; }
     }
 
     public class BaseTankerDialog : BaseDialog

@@ -1,7 +1,8 @@
 ﻿@using InVent.Components.Pages.Internals
 @using InVent.Components.Pages.Shared
 @using InVent.Data.Models
-@inherits BaseTankerDialog
+@* @inherits BaseTankerDialog *@
+@inherits BaseTankerDialog<Tanker>
 
 <MudDialog>
     <TitleContent>
@@ -11,8 +12,10 @@
         <div class="form-outer">
             <MudForm @ref="this.form" @bind-IsValid="@this.success" @bind-Errors="@errors" @onkeyup="this.DetectEnter">
                 <div class="form-inner">
+                    <NumberPlateComponent TextFieldRefs="this.TextFieldRefs"
+                                          Tanker="this.State">
+                    </NumberPlateComponent>
                     <div class="field-group-2-custom">
-                        @* <div class="bank-container"> *@
                         <div class="number-plate">
                             <div class="number-plate-field">
                                 <MudTextField T="string"
@@ -129,7 +132,7 @@
                         </MudTextField>
                     </div>
                     @* <div class="bank-container"> *@
-                        <div class="field-group-2">
+                    <div class="field-group-2">
                         <MudTextField T="string"
                                       InputId="7"
                                       @ref=this.TextFieldRefs[6]
@@ -154,7 +157,7 @@
                         </MudAutocomplete>
                     </div>
                     @* <div class="bank-container"> *@
-                        <div class="field-group-2">
+                    <div class="field-group-2">
                         <MudTextField T="string"
                                       InputId="8"
                                       @ref=this.TextFieldRefs[7]
@@ -182,7 +185,7 @@
                         </MudTextField>
                     </div>
                     @* <div class="bank-container"> *@
-                        <div class="field-group-2">
+                    <div class="field-group-2">
                         <MudTextField T="string"
                                       InputId="10"
                                       @ref=this.TextFieldRefs[9]
