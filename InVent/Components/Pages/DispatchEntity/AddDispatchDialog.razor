@@ -60,7 +60,8 @@
                     </div>
                     <div class="field-group-4">
                         <MudAutocomplete T="Booking"
-                                         @bind-Value="this.Booking"
+                                         Value="this.Booking"
+                                         ValueChanged="e=>this.SetBooking(e)"
                                          Required
                                          ToStringFunc="(e)=> BookingToString(e)"
                                          SearchFunc="this.SearchBookings"
@@ -247,9 +248,18 @@
                                       Variant="Variant.Outlined">
                         </MudTextField>
                     </div>
-                    <div class="field-group-2">
+                    <div class="field-group-3">
+                        <MudTextField T="int?"
+                                      ReadOnly
+                                      Immediate
+                                      Value="this.Remaining"
+                                      Label="مانده بسته‌های بوکینگ"
+                                      Variant="Variant.Outlined">
+
+                        </MudTextField>
                         <MudTextField T="int?"
                                       @bind-Value="this.PackageCount"
+                                      Validation="@(new Func<int?,string>(this.ValidateMaximumPackageCount))"
                                       Required
                                       Clearable
                                       Immediate

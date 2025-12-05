@@ -30,21 +30,24 @@
                             </MudDatePicker>
                         </div>
                         <div class="field-group-4">
-                            <MudAutocomplete T="string"
-                                             Value="this.Entry.Refinery?.Name"
-                                             Label="پالایشگاه"
-                                             Variant="Variant.Outlined">
-                            </MudAutocomplete>
-                            <MudAutocomplete T="string"
-                                             Label="بسته‌بندی"
-                                             Value="this.Entry.Package?.Name"
-                                             Variant="Variant.Outlined">
-                            </MudAutocomplete>
-                            <MudAutocomplete T="string"
-                                             Value="this.Entry.Product?.Name"
-                                             Label="محصول"
-                                             Variant="Variant.Outlined">
-                            </MudAutocomplete>
+                            <MudTextField T="string"
+                                          Value="this.Entry.DeliveryOrder?.Project?.Product?.Refinery?.Name"
+                                          ReadOnly
+                                          Label="پالایشگاه"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Entry.DeliveryOrder?.Project?.Package?.Name"
+                                          ReadOnly
+                                          Label="بسته‌بندی"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
+                            <MudTextField T="string"
+                                          Value="this.Entry.DeliveryOrder?.Project?.Product?.Name"
+                                          ReadOnly
+                                          Label="محصول"
+                                          Variant="Variant.Outlined">
+                            </MudTextField>
                             <MudTextField T="int?"
                                           Value="this.Entry.DeliveryOrder?.Project?.Number"
                                           ReadOnly

@@ -16,12 +16,12 @@ namespace InVent.Components.Pages.EntryEntity
     {
         [Inject]
         public required DeliveryOrderService DeliveryOrderService { get; set; }
-        [Inject]
-        public required RefineryService RefineryService { get; set; }
-        [Inject]
-        public required PackageService PackageService { get; set; }
-        [Inject]
-        public required ProductService ProductService { get; set; }
+        //[Inject]
+        //public required RefineryService RefineryService { get; set; }
+        //[Inject]
+        //public required PackageService PackageService { get; set; }
+        //[Inject]
+        //public required ProductService ProductService { get; set; }
         [Inject]
         public required TankerService TankerService { get; set; }
         [Inject]
@@ -47,76 +47,88 @@ namespace InVent.Components.Pages.EntryEntity
 
         private int? ProjectNumber { get; set; }
 
-        private Package Package { get; set; }
-        private List<Package> Packages { get; set; } = [];
-        private Product Product { get; set; }
-        private List<Product> Products { get; set; } = [];
-        private Refinery Refinery { get; set; }
-        private List<Refinery> Refineries { get; set; } = [];
+        //private Package Package { get; set; }
+        //private List<Package> Packages { get; set; } = [];
+        //private Product Product { get; set; }
+        //private List<Product> Products { get; set; } = [];
+        //private Refinery Refinery { get; set; }
+        //private List<Refinery> Refineries { get; set; } = [];
         private Tanker Tanker { get; set; }
         private List<Tanker> Tankers { get; set; } = [];
         private DeliveryOrder DeliveryOrder { get; set; }
         private List<DeliveryOrder> DeliveryOrders { get; set; } = [];
 
-
-        protected override async void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
-                Refineries = (await RefineryService.GetAll()).Entities ?? [];
                 DeliveryOrders = (await DeliveryOrderService.GetAll()).Entities ?? [];
-                Packages = (await PackageService.GetAll()).Entities ?? [];
-                Products = (await ProductService.GetAll()).Entities ?? [];
                 Tankers = (await TankerService.GetAll()).Entities ?? [];
             }
             catch (Exception err)
             {
                 HandleMessage(err.Message, false);
             }
+            await  base.OnInitializedAsync();
+        }
+        //protected override async void OnInitialized()
+        //{
+        //    try
+        //    {
+        //        //Refineries = (await RefineryService.GetAll()).Entities ?? [];
+        //        DeliveryOrders = (await DeliveryOrderService.GetAll()).Entities ?? [];
+        //        //Packages = (await PackageService.GetAll()).Entities ?? [];
+        //        //Products = (await ProductService.GetAll()).Entities ?? [];
+        //        Tankers = (await TankerService.GetAll()).Entities ?? [];
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        HandleMessage(err.Message, false);
+        //    }
 
-            base.OnInitialized();
-        }
+        //    base.OnInitialized();
+        //}
 
-        private async Task<IEnumerable<Package>> SearchPackages(string value, CancellationToken token)
-        {
-            await Task.CompletedTask;
-            if (value != null)
-            {
-                return Packages.Where(x => x.Name.Contains(value)).ToList();
-            }
-            return Packages;
-        }
-        private static string? PackageToString(Package package)
-        {
-            return package?.Name;
-        }
-        private async Task<IEnumerable<Product>> SearchProducts(string value, CancellationToken token)
-        {
-            await Task.CompletedTask;
-            if (value != null)
-            {
-                return Products.Where(x => x.Name.Contains(value)).ToList();
-            }
-            return Products;
-        }
-        private static string? ProductToString(Product product)
-        {
-            return product?.Name;
-        }
+        //private async Task<IEnumerable<Package>> SearchPackages(string value, CancellationToken token)
+        //{
+        //    await Task.CompletedTask;
+        //    if (value != null)
+        //    {
+        //        return Packages.Where(x => x.Name.Contains(value)).ToList();
+        //    }
+        //    return Packages;
+        //}
+        //private static string? PackageToString(Package package)
+        //{
+        //    return package?.Name;
+        //}
+        //private async Task<IEnumerable<Product>> SearchProducts(string value, CancellationToken token)
+        //{
+        //    await Task.CompletedTask;
+        //    if (value != null)
+        //    {
+        //        return Products.Where(x => x.Name.Contains(value)).ToList();
+        //    }
+        //    return Products;
+        //}
+        //private static string? ProductToString(Product product)
+        //{
+        //    return product?.Name;
+        //}
 
-        private async Task<IEnumerable<Refinery>> SearchRefineries(string value, CancellationToken token)
-        {
-            await Task.CompletedTask;
-            if (value != null)
-            {
-                return Refineries.Where(x => x.Name.Contains(value)).ToList();
-            }
-            return Refineries;
-        }
-        private static string? RefineryToString(Refinery refinery)
-        {
-            return refinery?.Name;
-        }
+        //private async Task<IEnumerable<Refinery>> SearchRefineries(string value, CancellationToken token)
+        //{
+        //    await Task.CompletedTask;
+        //    if (value != null)
+        //    {
+        //        return Refineries.Where(x => x.Name.Contains(value)).ToList();
+        //    }
+        //    return Refineries;
+        //}
+        //private static string? RefineryToString(Refinery refinery)
+        //{
+        //    return refinery?.Name;
+        //}
         private async Task<IEnumerable<DeliveryOrder>> SearchDeliveryOrders(string value, CancellationToken token)
         {
             await Task.CompletedTask;
@@ -277,9 +289,9 @@ namespace InVent.Components.Pages.EntryEntity
                         Date = (DateTime)this.Date,
                         DeliveryOrderId = this.DeliveryOrder.Id,
                         Filled = (int)this.Filled,
-                        PackageTypeId = this.Package?.Id ?? this.DeliveryOrder.Project.Package.Id, //TEMPORARY
-                        ProductId = this.Product?.Id ?? this.DeliveryOrder.Project.Product.Id, //TEMPORARY
-                        RefineryId = this.Refinery?.Id ?? this.DeliveryOrder.Project.Product.Refinery.Id,   //TEMPORARY
+                        //PackageTypeId = this.Package?.Id ?? this.DeliveryOrder.Project.Package.Id, //TEMPORARY
+                        //ProductId = this.Product?.Id ?? this.DeliveryOrder.Project.Product.Id, //TEMPORARY
+                        //RefineryId = this.Refinery?.Id ?? this.DeliveryOrder.Project.Product.Refinery.Id,   //TEMPORARY
                         TankerId = this.Tanker.Id,
                         RefineryEmpty = (int)this.RefineryEmpty,
                         RefineryFilled = (int)this.RefineryFilled,

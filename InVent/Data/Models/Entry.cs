@@ -62,11 +62,11 @@ namespace InVent.Data.Models
 
 
 
-        [Column("ProductId")] //FK
-        public Guid ProductId { get; set; }
+        //[Column("ProductId")] //FK
+        //public Guid ProductId { get; set; }
 
-        [ForeignKey(nameof(ProductId))] //Navigation
-        public Product? Product { get; set; }
+        //[ForeignKey(nameof(ProductId))] //Navigation
+        //public Product? Product { get; set; }
 
 
 
@@ -78,19 +78,19 @@ namespace InVent.Data.Models
 
 
 
-        [Column("PackageTypeId")] //FK
-        public Guid PackageTypeId { get; set; }
+        //[Column("PackageTypeId")] //FK
+        //public Guid PackageTypeId { get; set; }
 
-        [ForeignKey(nameof(PackageTypeId))] //Navigation
-        public Package? Package { get; set; }
+        //[ForeignKey(nameof(PackageTypeId))] //Navigation
+        //public Package? Package { get; set; }
 
 
 
-        [Column("RefineryId")] //FK
-        public Guid RefineryId { get; set; }
+        //[Column("RefineryId")] //FK
+        //public Guid RefineryId { get; set; }
 
-        [ForeignKey(nameof(RefineryId))] //Navigation
-        public Refinery? Refinery { get; set; }
+        //[ForeignKey(nameof(RefineryId))] //Navigation
+        //public Refinery? Refinery { get; set; }
 
     }
 
@@ -106,10 +106,10 @@ namespace InVent.Data.Models
         public required int WarehouseEmpty { get; set; }
         public DateTime? LastModifiedOn { get; set; }
         public required Guid TankerId { get; set; }//FK
-        public required Guid ProductId { get; set; }//FK
         public required Guid DeliveryOrderId { get; set; }//FK
-        public required Guid PackageTypeId { get; set; }//FK
-        public required Guid RefineryId { get; set; }//FK
+        //public required Guid ProductId { get; set; }//FK
+        //public required Guid PackageTypeId { get; set; }//FK
+        //public required Guid RefineryId { get; set; }//FK
     }
     
 

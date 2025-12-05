@@ -25,6 +25,8 @@ namespace InVent.Components.Pages.DispatchEntity
         [Inject]
         public required CustomsService CustomsService { get; set; }
 
+
+        private List<Dispatch> Dispatches { get; set; } = [];
         private Booking Booking { get; set; }
         private Booking TempBooking { get; set; }
         private List<Booking> Bookings { get; set; } = [];
@@ -55,6 +57,8 @@ namespace InVent.Components.Pages.DispatchEntity
         private bool TempIsExport { get; set; }
         private string? InternationalNumber1 { get; set; }
         private string? InternationalNumber2 { get; set; }
+        private int? Remaining { get; set; }
+
         private DateTime? Date { get; set; } = DateTime.UtcNow;
         private MudDatePicker _picker;
         private string ExportLabel => this.IsExport ? "حمل یک‌سره" : "حمل ترکیبی";
@@ -86,6 +90,15 @@ namespace InVent.Components.Pages.DispatchEntity
             }
 
             base.OnInitialized();
+        }
+
+        private async void SetBooking(Booking e)
+        {
+            if (e == null) return;
+            this.Booking = e;
+            this.Dispatches = (await this.DispatchService.GetByBooking(this.Booking.Id)).Entities ?? [];
+            var sum = Dispatches.Sum(x => x.PackageCount);
+            this.Remaining = this.Booking?.PackingCount - sum;
         }
 
         private async Task<IEnumerable<Booking>> SearchBookings(string value, CancellationToken token)
@@ -305,7 +318,9 @@ namespace InVent.Components.Pages.DispatchEntity
                         this.Customs = this.TempCustoms;
                         this.Carrier = this.TempCarrier;
                         this.Fare = this.TempFare;
-                        this.Booking = this.TempBooking;
+                        //this.Booking = this.TempBooking;
+                        this.SetBooking(this.TempBooking);
+                        this.Second = "ع";
                         this.Date = DateTime.Today;
                         this.files.Clear();
                         this.Attachments.Clear();
@@ -426,6 +441,15 @@ namespace InVent.Components.Pages.DispatchEntity
         {
             if (arg?.Length < 2)
                 return "پلاک نامعتبر";
+            return string.Empty;
+        }
+
+        private string ValidateMaximumPackageCount(int? arg)
+        {
+            if (arg > this.Remaining)
+            {
+                return $"ماکزیمم تعداد بسته {this.Remaining} است.";
+            }
             return string.Empty;
         }
     }

@@ -15,15 +15,15 @@
                 <MudForm @ref=this.form @bind-IsValid="this.success" @bind-Errors="this.errors" @onkeyup="DetectEnter">
                     <div class="form-inner">
                         <div class="field-group-2">
-                            <MudAutocomplete T="Refinery"
-                                             @bind-Value="this.Refinery"
+                            <MudAutocomplete T="DeliveryOrder"
+                                             @bind-Value="this.DeliveryOrder"
                                              Required
-                                             ToStringFunc="(e)=> RefineryToString(e)"
-                                             SearchFunc="this.SearchRefineries"
-                                             Label="پالایشگاه"
+                                             ToStringFunc="(e)=> DeliveryOrderToString(e)"
+                                             SearchFunc="this.SearchDeliveryOrders"
+                                             Label="حواله"
                                              Clearable
                                              ClearIcon="@Icons.Material.Filled.Clear"
-                                             OnClearButtonClick="()=>this.Refinery = null"
+                                             OnClearButtonClick="()=>this.DeliveryOrder = null"
                                              Variant="Variant.Outlined">
                             </MudAutocomplete>
                             <MudDatePicker @bind-Date=this.Date

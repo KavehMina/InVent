@@ -20,11 +20,10 @@ namespace InVent.Services.EntryServices
             try
             {
                 var res = await context.Entries
-                    .Include(x => x.Product)
-                    .Include(x => x.Package)
-                    .Include(x => x.Refinery)
                     .Include(x => x.DeliveryOrder)
                     .Include(x => x.DeliveryOrder.Project)
+                    .Include(x => x.DeliveryOrder.Project.Package)
+                    .Include(x => x.DeliveryOrder.Project.Product.Refinery)
                     .Include(x => x.Tanker)
                     .ToListAsync();
                 return new ResponseModel<Entry> { Message = Messages.Received, Entities = res, Success = true };
@@ -42,9 +41,6 @@ namespace InVent.Services.EntryServices
             {
                 var res = await context.Entries
                     .Where(x => x.Id == id)
-                    .Include(x => x.Product)
-                    .Include(x => x.Package)
-                    .Include(x => x.Refinery)
                     .Include(x => x.DeliveryOrder)
                     .Include(x => x.Tanker)
                     .ToListAsync();

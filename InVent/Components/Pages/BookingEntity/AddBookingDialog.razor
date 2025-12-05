@@ -80,6 +80,7 @@
                         </MudTextField>
                         <MudTextField T="int?"
                                       @bind-Value="this.PackingCount"
+                                      Validation="@(new Func<int?,string>(this.ValidateMaximumPackageCount))"
                                       Required
                                       Clearable
                                       Format="N0"

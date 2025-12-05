@@ -108,7 +108,10 @@ namespace InVent.Components.Pages.TankerEntity
                     this.HandleMessage(res.Message, res.Success);
 
                     if (res.Success)
+                    {
                         await form.ResetAsync();
+                        this.Second = "ع";
+                    }
                 }
                 catch (Exception err)
                 {

@@ -126,5 +126,14 @@ namespace InVent.Components.Pages.BookingEntity
             }
             await EndLoadingProcess();
         }
+        private string ValidateMaximumPackageCount(int? arg)
+        {
+            if (arg > this.Remaining)
+            {
+                return $"ماکزیمم تعداد بسته {this.Remaining} است.";
+            }
+            return string.Empty;
+        }
     }
+
 }
