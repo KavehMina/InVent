@@ -18,7 +18,8 @@ public class DeliveryOrders : BaseTest
             DeliveryOrderId = "667",
             Status = false,
             Weight = 666,
-            ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac")
+            ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac"),
+            TankerFare=1
         };
         var res = await this.Service.Add(item);
 
@@ -46,7 +47,8 @@ public class DeliveryOrders : BaseTest
             DeliveryOrderId = "123",
             Status = true,
             Weight = 100,
-            ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac")
+            ProjectId = new Guid("3343dfca-f71a-4d3a-5595-08de25a2f2ac"),
+            TankerFare = 1
         }));
 
     }

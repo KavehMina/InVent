@@ -19,7 +19,6 @@ namespace InVent.Services
     public class Repository<T>(IDbContextFactory<EntityDBContext> contextFactory) : IRepository<T> where T : class, IEntity
     {
         private readonly IDbContextFactory<EntityDBContext> contextFactory = contextFactory;
-
         public async Task<ResponseModel<T>> Add(T entity)
         {
             using var context = this.contextFactory.CreateDbContext();
@@ -44,7 +43,7 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
         }
@@ -70,7 +69,7 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
         }
@@ -94,7 +93,7 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
         }
@@ -161,7 +160,7 @@ namespace InVent.Services
                 return new ResponseModel<T>
                 {
                     Success = false,
-                    Message = err.Message + Environment.NewLine + err.InnerException?.Message,
+                    Message = ErrorExtension.HandleErrorMessage(err.Message + err.InnerException?.Message),
                 };
             }
 
@@ -191,7 +190,7 @@ namespace InVent.Services
                     return new ResponseModel<T>
                     {
                         Success = false,
-                        Message =Messages.NotFound,
+                        Message = Messages.NotFound,
                     };
                 }
             }

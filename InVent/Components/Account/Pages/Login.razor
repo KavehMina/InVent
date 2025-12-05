@@ -1,5 +1,5 @@
 ﻿@page "/Account/Login"
-
+@using NLog
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
@@ -98,9 +98,10 @@
         var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
         {
+            LogManager.GetCurrentClassLogger().Info($"{Input.Email} logged in");
             // user = await UserAccessor.GetRequiredUserAsync(HttpContext);
             // this.UserService.SetUser(user);
-            Logger.LogInformation("User logged in.");
+            // Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
         }
         else if (result.RequiresTwoFactor)
@@ -117,6 +118,7 @@
         else
         {
             errorMessage = "Error: Invalid login attempt.";
+            LogManager.GetCurrentClassLogger().Warn($"{Input.Email} invalid login attempt");
         }
     }
 

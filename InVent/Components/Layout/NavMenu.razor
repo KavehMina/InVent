@@ -1,9 +1,10 @@
 ﻿@using InVent.Extensions
 @using InVent.Data
 @using InVent.Services
+@using NLog
 @inject NavigationManager NavigationManager
 @inject UserService UserService
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="appbar">
     <div class="appbar-right">
@@ -29,7 +30,7 @@
     <MudNavMenu>
         <MudNavLink Href="/Tankers" Match="NavLinkMatch.All" Ripple>
             <MudText Typo="Typo.body2">
-               تانکرها
+                تانکرها
             </MudText>
         </MudNavLink>
         @* <MudNavLink Href="/Tankers/AddNew" Match="NavLinkMatch.All" Ripple>
@@ -120,7 +121,7 @@
         </AuthorizeView>
         <AuthorizeView>
             <Authorized>
-                <form action="Account/Logout" method="post">
+                <form action="Account/Logout" method="post" @onclick="this.LogExit">
                     <AntiforgeryToken />
                     <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                     <MudNavLink Match="NavLinkMatch.All" Ripple>
@@ -139,8 +140,10 @@
 @code {
     private string? currentUrl;
     private bool _open = false;
-
-
+    private string user = string.Empty;
+    private void LogExit(){
+        LogManager.GetCurrentClassLogger().Info($"{this.user} logged out");
+    }
     private void OpenDrawer()
     {
         _open = !_open;
@@ -151,6 +154,12 @@
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.user = (await this.AuthenticationStateProvider.GetAuthenticationStateAsync()).User?.Identity?.Name ?? string.Empty;
+        await base.OnInitializedAsync();
     }
 
 

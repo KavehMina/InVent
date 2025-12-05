@@ -1,7 +1,6 @@
 using InVent.Components;
 using InVent.Components.Account;
 using InVent.Data;
-using InVent.Data.Models;
 using InVent.Services;
 using InVent.Services.AttachmentServices;
 using InVent.Services.BankServices;
@@ -21,9 +20,22 @@ using InVent.Services.SupplierServices;
 using InVent.Services.TankerServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
+
+
+//096 starts
+var logger = LogManager.Setup()
+                       .LoadConfigurationFromFile("NLog.config")
+                       .GetCurrentClassLogger();
+
+//096 ends
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,13 +48,25 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 ///096 starts
+//NLog
+builder.Logging.ClearProviders();
+builder.Host.UseNLog()
+    .ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddNLog();
+});
+builder.Logging.AddFilter<NLogLoggerProvider>(
+    "Microsoft.*",
+    Microsoft.Extensions.Logging.LogLevel.None);
 //Generic
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 //Tanker
 builder.Services.AddScoped<ITankerRepository, TankerRepository>();
 builder.Services.AddScoped<TankerService>();
 //Bank
-builder.Services.AddScoped<IBankRepository,BankRepository>();
+builder.Services.AddScoped<IBankRepository, BankRepository>();
 builder.Services.AddScoped<BankService>();
 //Carrier
 builder.Services.AddScoped<ICarrierRepositpry, CarrierRepository>();
@@ -101,7 +125,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 ///096 starts
 builder.Services.AddDbContextFactory<EntityDBContext>(options =>
-options.UseSqlServer(connectionString));
+{
+    options.UseSqlServer(connectionString);
+    //options.LogTo(_ => { }, Microsoft.Extensions.Logging.LogLevel.None);
+}
+);
 ///096 ends
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
