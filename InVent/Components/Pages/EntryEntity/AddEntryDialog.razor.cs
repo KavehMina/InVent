@@ -208,6 +208,7 @@ namespace InVent.Components.Pages.EntryEntity
             {
                 this.WarehouseNet = null;
             }
+
         }
 
         private void SetDifference()

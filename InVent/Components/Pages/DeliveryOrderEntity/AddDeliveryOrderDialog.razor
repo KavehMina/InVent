@@ -40,6 +40,8 @@
                                      OnClearButtonClick="()=>this.Project = null"
                                      Variant="Variant.Outlined">
                     </MudAutocomplete>
+                                  @* Immediate
+                                  TextUpdateSuppression="false" *@
                     <MudTextField T="int?"
                                   @bind-Value="this.Weight"
                                   Required
@@ -47,13 +49,13 @@
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.Weight = null"
                                   Format="N0"
-                                  Immediate
-                                  TextUpdateSuppression="false"
                                   Adornment="Adornment.End"
                                   AdornmentText="کیلوگرم"
                                   Label="وزن حواله"
                                   Variant="Variant.Outlined">
                     </MudTextField>
+                                  @* Immediate
+                                  TextUpdateSuppression="false" *@
                     <MudTextField T="int?"
                                   @bind-Value="this.TankerFare"
                                   Required
@@ -61,8 +63,6 @@
                                   ClearIcon="@Icons.Material.Filled.Clear"
                                   OnClearButtonClick="()=>this.TankerFare = null"
                                   Format="N0"
-                                  Immediate
-                                  TextUpdateSuppression="false"
                                   Adornment="Adornment.End"
                                   AdornmentText="تومان"
                                   Label="کرایه تانکر"

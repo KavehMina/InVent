@@ -53,6 +53,14 @@ namespace InVent.Data.Models
 
 
 
+        [Column("IsPaid")]
+        public bool IsPaid { get; set; }
+
+
+        [Column("Description")]
+        public string? Description { get; set; }
+
+
 
         [Column("TankerId")] //FK
         public Guid TankerId { get; set; }
@@ -105,6 +113,8 @@ namespace InVent.Data.Models
         public required int WarehouseFilled { get; set; }
         public required int WarehouseEmpty { get; set; }
         public DateTime? LastModifiedOn { get; set; }
+        public bool IsPaid { get; set; }
+        public string? Description { get; set; }
         public required Guid TankerId { get; set; }//FK
         public required Guid DeliveryOrderId { get; set; }//FK
         //public required Guid ProductId { get; set; }//FK

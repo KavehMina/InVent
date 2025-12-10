@@ -68,25 +68,25 @@
                                           Label="‌نوع کانتینر"
                                           Variant="Variant.Outlined">
                             </MudTextField>
+                                          @* Immediate
+                                          TextUpdateSuppression="false" *@
                             <MudTextField T="int?"
                                           @bind-Value="this.ContainerCount"
                                           Required
                                           Clearable
                                           Format="N0"
-                                          Immediate
-                                          TextUpdateSuppression="false"
                                           ClearIcon="@Icons.Material.Filled.Clear"
                                           OnClearButtonClick="()=>this.ContainerCount = null"
                                           Label="تعداد کانتینر"
                                           Variant="Variant.Outlined">
                             </MudTextField>
+                                          @* Immediate
+                                          TextUpdateSuppression="false" *@
                             <MudTextField T="int?"
                                           @bind-Value="this.PackingCount"
                                           Required
                                           Clearable
                                           Format="N0"
-                                          Immediate
-                                          TextUpdateSuppression="false"
                                           ClearIcon="@Icons.Material.Filled.Clear"
                                           OnClearButtonClick="()=>this.PackingCount = null"
                                           Label="تعداد بسته"

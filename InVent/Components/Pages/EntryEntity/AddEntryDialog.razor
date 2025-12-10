@@ -98,7 +98,7 @@
                                       Variant="Variant.Outlined">
                         </MudTextField>
                     </div>
-                    <div class="field-group-3">                        
+                    <div class="field-group-3">
                         <MudAutocomplete T="Tanker"
                                          @bind-Value="this.Tanker"
                                          Required
@@ -110,27 +110,29 @@
                                          OnClearButtonClick="()=>this.Tanker = null"
                                          Variant="Variant.Outlined">
                         </MudAutocomplete>
+                        @* Immediate
+                                      TextUpdateSuppression="false" 
+                                      ValueChanged="(e)=>{this.SetFilled(e);this.SetAverage();}"*@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[0]
-                                      Value="this.Filled"
-                                      ValueChanged="(e)=>{this.SetFilled(e);this.SetAverage();}"
-                                      Immediate
+                                      @bind-Value="this.Filled"
+                                      OnBlur="this.SetAverage"
                                       Required
                                       Clearable
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       OnClearButtonClick="()=>this.Filled = null"
                                       Label="تعداد بسته"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[1]
                                       @bind-Value="this.Damaged"
+                                      OnBlur="this.SetAverage"
                                       Required
                                       Clearable
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.Damaged = null"
                                       Label="معیوب"
@@ -138,31 +140,33 @@
                         </MudTextField>
                     </div>
                     <div class="field-group-3">
+                        @* ValueChanged="e=>this.SetRefineryFilled(e)"
+                                      Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[2]
-                                      Value="this.RefineryFilled"
-                                      ValueChanged="e=>this.SetRefineryFilled(e)"
-                                      Immediate
+                                      @bind-Value="this.RefineryFilled"
+                                      OnBlur="this.SetRefineryNet"
                                       Required
                                       Clearable
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       OnClearButtonClick="()=>this.RefineryFilled = null"
                                       Label="پر پالایشگاه"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* ValueChanged="e=>this.SetRefineryEmpty(e)"
+                                      Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[3]
-                                      Value="this.RefineryEmpty"
-                                      ValueChanged="e=>this.SetRefineryEmpty(e)"
-                                      Required
+                                      @bind-Value="this.RefineryEmpty"
+                                      OnBlur="this.SetRefineryNet"
                                       Clearable
-                                      Immediate
+                                      Required
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       ClearIcon="@Icons.Material.Filled.Clear"
@@ -170,14 +174,16 @@
                                       Label="خالی پالایشگاه"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* 
+                                      *@
                         <MudTextField T="int?"
                                       Value="this.RefineryNet"
-                                      TextChanged="this.SetDifference"
                                       Immediate
+                                      TextUpdateSuppression="false" 
+                                      TextChanged="this.SetDifference"
                                       ReadOnly
                                       Required
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       Label="خالص پالایشگاه"
@@ -185,15 +191,16 @@
                         </MudTextField>
                     </div>
                     <div class="field-group-3">
+                        @*  ValueChanged="e=>this.SetWarehouseFilled(e)"
+                                      Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[4]
-                                      Value="this.WarehouseFilled"
-                                      ValueChanged="e=>this.SetWarehouseFilled(e)"
-                                      Immediate
+                                      @bind-Value="this.WarehouseFilled"
+                                      OnBlur="this.SetWarehouseNet"
                                       Required
                                       Clearable
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       ClearIcon="@Icons.Material.Filled.Clear"
@@ -201,15 +208,16 @@
                                       Label="پر انبار"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* ValueChanged="e=>this.SetWarehouseEmpty(e)"
+                                      Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @ref=this.TextFieldRefs[5]
-                                      Value="this.WarehouseEmpty"
-                                      ValueChanged="e=>this.SetWarehouseEmpty(e)"
+                                      @bind-Value="this.WarehouseEmpty"
+                                      OnBlur="this.SetWarehouseNet"
                                       Required
                                       Clearable
-                                      Immediate
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       ClearIcon="@Icons.Material.Filled.Clear"
@@ -217,14 +225,15 @@
                                       Label="خالی انبار"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        
                         <MudTextField T="int?"
                                       Value="this.WarehouseNet"
                                       TextChanged="(e)=>{this.SetDifference();this.SetAverage();}"
                                       Immediate
+                                      TextUpdateSuppression="false"
                                       ReadOnly
                                       Required
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       Label="خالص انبار"
@@ -232,11 +241,11 @@
                         </MudTextField>
                     </div>
                     <div class="field-group-2">
+                        @* TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       Value="this.Difference"
                                       ReadOnly
                                       Format="N0"
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       Style="@this.SetDifferenceColor()"
@@ -253,8 +262,8 @@
                     </div>
                     <div class="attachments">
                         <FileUploadComponent Title="بیجک" IsMultiple="false" Files="this.files" Attachments="this.Attachments" Required="true"></FileUploadComponent>
-                        <FileUploadComponent Title="قبض باسکول" IsMultiple="false" Files="this.files" Attachments="this.Attachments" Required="true"></FileUploadComponent>
-                        <FileUploadComponent Title="سایر" IsMultiple="true" Files="this.files" Attachments="this.Attachments"></FileUploadComponent>
+                        <FileUploadComponent Title="قبض باسکول" IsMultiple="false" Files="this.files" Attachments="this.Attachments" Required="false"></FileUploadComponent>
+                        <FileUploadComponent Title="سایر" IsMultiple="true" Files="this.files" Attachments="this.Attachments" Required="false"></FileUploadComponent>
                     </div>
                 </div>
             </MudForm>

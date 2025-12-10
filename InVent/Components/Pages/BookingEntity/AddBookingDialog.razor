@@ -51,6 +51,7 @@
                         <MudTextField T="int?"
                                       ReadOnly
                                       Value="this.Remaining"
+                                      Format="N0"
                                       Label="مانده بسته‌های پروژه"
                                       Variant="Variant.Outlined">
 
@@ -66,26 +67,26 @@
                                       Label="‌نوع کانتینر"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                                      @* Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @bind-Value="this.ContainerCount"
                                       Required
                                       Clearable
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.ContainerCount = null"
                                       Label="تعداد کانتینر"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                                      @* Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @bind-Value="this.PackingCount"
                                       Validation="@(new Func<int?,string>(this.ValidateMaximumPackageCount))"
                                       Required
                                       Clearable
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.PackingCount = null"
                                       Label="تعداد بسته"

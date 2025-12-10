@@ -21,6 +21,12 @@ namespace InVent.Data.Models
         [Column("DriverPhone")]
         public string? DriverPhone { get; set; }
 
+        [Column("DriverBankNumber")]
+        public string? DriverBankNumber { get; set; }
+
+        [Column("DriverBank")]
+        public string? DriverBank { get; set; }
+
         [Column("NumberPlate")]
         public string? NumberPlate { get; set; }
 
@@ -50,9 +56,12 @@ namespace InVent.Data.Models
 
         [Column("InternationalNumber2")]
         public string? InternationalNumber2 { get; set; }
-        
+
         [Column("LastModifiedOn")]
         public DateTime? LastModifiedOn { get; set; }
+
+        [Column("Description")]
+        public string? Description { get; set; }
 
         [Column("BookingId")] //FK
         public Guid BookingId { get; set; }
@@ -91,6 +100,8 @@ namespace InVent.Data.Models
         public required string DriverName { get; set; }
         public required string DriverNationalCode { get; set; }
         public required string DriverPhone { get; set; }
+        public string? DriverBankNumber { get; set; }
+        public string? DriverBank { get; set; }
         public required string NumberPlate { get; set; }
         public required int FullWeight { get; set; }
         public required int EmptyWeight { get; set; }
@@ -101,6 +112,7 @@ namespace InVent.Data.Models
         public required bool IsPaid { get; set; }
         public string? InternationalNumber1 { get; set; }
         public string? InternationalNumber2 { get; set; }
+        public string? Description { get; set; }
         public DateTime? LastModifiedOn { get; set; }
         public required Guid BookingId { get; set; }//FK
         public required Guid CarrierId { get; set; }//FK

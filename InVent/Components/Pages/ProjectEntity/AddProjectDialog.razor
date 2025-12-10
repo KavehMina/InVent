@@ -59,6 +59,8 @@
                         </MudAutocomplete>
                     </div>
                     <div class="field-group-2">
+                                      @* Immediate *@
+                                      @* TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @bind-Value="this.Weight"
                                       Required
@@ -66,13 +68,13 @@
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.Weight = null"
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       Label="وزن پروژه"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                                      @* Immediate *@
+                                      @* TextUpdateSuppression="false" *@
                         <MudTextField T="int?"
                                       @bind-Value="this.PackageCount"
                                       Required
@@ -80,8 +82,6 @@
                                       ClearIcon="@Icons.Material.Filled.Clear"
                                       OnClearButtonClick="()=>this.Weight = null"
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       Label="تعداد بسته"
                                       Variant="Variant.Outlined">
                         </MudTextField>

@@ -38,6 +38,15 @@ namespace InVent.Data.Models
         public string? Forwarder { get; set; }
 
 
+        [Column("IsPaymentRecieved")]
+        public bool IsPaymentRecieved { get; set; }
+
+
+        [Column("IsDelivered")]
+        public bool IsDelivered { get; set; }
+
+
+
         [Column("ProjectId")] //FK
         public Guid ProjectId { get; set; }
 
@@ -57,5 +66,7 @@ namespace InVent.Data.Models
         public string? Destination { get; set; }
         public string? ShippingLine { get; set; }
         public string? Forwarder { get; set; }
+        public bool IsPaymentRecieved { get; set; }
+        public bool IsDelivered { get; set; }
     }
 }

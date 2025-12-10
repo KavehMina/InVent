@@ -42,23 +42,23 @@
                                          OnClearButtonClick="()=>this.Project = null"
                                          Variant="Variant.Outlined">
                         </MudAutocomplete>
+                                      @* Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int"
                                       @bind-Value="this.DeliveryOrder.Weight"
                                       Required
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="کیلوگرم"
                                       Label="وزن حواله"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                                      @* Immediate
+                                      TextUpdateSuppression="false" *@
                         <MudTextField T="int"
                                       @bind-Value="this.DeliveryOrder.TankerFare"
                                       Required
                                       Format="N0"
-                                      Immediate
-                                      TextUpdateSuppression="false"
                                       Adornment="Adornment.End"
                                       AdornmentText="تومان"
                                       Label="کرایه تانکر"

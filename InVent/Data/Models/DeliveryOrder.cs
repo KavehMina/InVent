@@ -25,6 +25,9 @@ namespace InVent.Data.Models
         [Column("Status")]
         public bool Status { get; set; }
 
+        [Column("IsDriverPaid")]
+        public bool IsDriverPaid { get; set; }
+
 
         [Column("ProjectId")] //FK
         public Guid ProjectId { get; set; }
@@ -41,6 +44,7 @@ namespace InVent.Data.Models
         public required int Weight { get; set; }
         public required int TankerFare { get; set; }
         public required bool Status { get; set; }
+        public required bool IsDriverPaid { get; set; }
         public required Guid ProjectId { get; set; }//FK
 
     }

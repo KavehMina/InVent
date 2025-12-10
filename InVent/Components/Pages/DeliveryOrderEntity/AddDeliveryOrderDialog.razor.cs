@@ -69,6 +69,7 @@ namespace InVent.Components.Pages.DeliveryOrderEntity
                         Weight = (int)this.Weight,
                         TankerFare = (int)this.TankerFare,
                         Status = this.Status,
+                        IsDriverPaid = false
 
                     };
                     var res = await DeliveryOrderService.Add(tempDeliveryOrder);
