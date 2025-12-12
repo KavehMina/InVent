@@ -1,6 +1,7 @@
 using InVent.Components;
 using InVent.Components.Account;
 using InVent.Data;
+using InVent.Data.Models;
 using InVent.Services;
 using InVent.Services.AttachmentServices;
 using InVent.Services.BankServices;
@@ -38,7 +39,9 @@ var logger = LogManager.Setup()
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+//096 starts
+builder.Configuration.AddJsonFile("config.json", optional: false, reloadOnChange: true);
+//096 ends
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -48,6 +51,9 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 ///096 starts
+///
+//config.json
+builder.Services.Configure<Config>(builder.Configuration);
 //NLog
 builder.Logging.ClearProviders();
 builder.Host.UseNLog()

@@ -18,37 +18,40 @@
                     <div class="field-group-2-custom">
                         <div class="number-plate">
                             <div class="number-plate-field">
-                                              @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[2])" *@
+                                @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[0],this.TextFieldRefs[2])" *@
                                 <MudTextField T="string"
                                               @ref="this.TextFieldRefs[0]"
                                               InputId="1"
                                               Mask="Mask1"
                                               @bind-Value=this.First
                                               Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
+                                              DebounceInterval=this.DebounceInterval
                                               Style="background-color:#fcfceb;"
                                               Placeholder="_ _"
                                               Required
                                               RequiredError="اجباری"
                                               Variant="Variant.Outlined">
                                 </MudTextField>
-                                              @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[1],this.TextFieldRefs[2])" *@
+                                @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[1],this.TextFieldRefs[2])" *@
                                 <MudTextField T="string"
                                               @ref="this.TextFieldRefs[1]"
                                               InputId="2"
                                               Mask="Mask2"
                                               @bind-Value=this.Second
+                                              DebounceInterval=this.DebounceInterval
                                               Style="background-color:#fcfceb"
                                               Validation=@(new Func<string,string>(this.ValidateSecondPartofNumberPlate))
                                               Required
                                               RequiredError="اجباری"
                                               Variant="Variant.Outlined">
                                 </MudTextField>
-                                              @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[2],this.TextFieldRefs[3])" *@
+                                @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[2],this.TextFieldRefs[3])" *@
                                 <MudTextField T="string"
                                               @ref="this.TextFieldRefs[2]"
                                               InputId="3"
                                               Mask="Mask3"
                                               @bind-Value=this.Third
+                                              DebounceInterval=this.DebounceInterval
                                               Style="background-color:#fcfceb"
                                               Validation=@(new Func<string,string>(this.ValidateThirdPartofNumberPlate))
                                               Placeholder="_ _ _"
@@ -56,12 +59,13 @@
                                               RequiredError="اجباری"
                                               Variant="Variant.Outlined">
                                 </MudTextField>
-                                              @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])" *@
+                                @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[3],this.TextFieldRefs[4])" *@
                                 <MudTextField T="string"
                                               @ref="this.TextFieldRefs[3]"
                                               InputId="4"
                                               Mask="Mask1"
                                               @bind-Value=this.Fourth
+                                              DebounceInterval=this.DebounceInterval
                                               Validation=@(new Func<string,string>(this.ValidateForthPartofNumberPlate))
                                               Placeholder="_ _"
                                               Style="background-color:#fcfceb"
@@ -113,12 +117,12 @@
                                       Label="نام راننده"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[5],this.TextFieldRefs[6])" 
+                                      Mask="MobileMask" *@
                         <MudTextField T="string"
                                       InputId="6"
                                       @ref=this.TextFieldRefs[5]
-                                      Mask="MobileMask"
-                                      Value=this.DriverPhone
-                                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[5],this.TextFieldRefs[6])"
+                                      @bind-Value=this.DriverPhone
                                       Validation="@(new Func<string, string>(this.ValidateMobilePhone))"
                                       Required
                                       RequiredError="تلفن راننده اجباری است."
@@ -168,12 +172,12 @@
                                       OnClearButtonClick="()=>this.OwnerName=null"
                                       Variant="Variant.Outlined">
                         </MudTextField>
+                        @* ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[8],this.TextFieldRefs[9])"
+                                      Mask="MobileMask" *@
                         <MudTextField T="string"
                                       InputId="9"
                                       @ref=this.TextFieldRefs[8]
-                                      Value=this.OwnerPhone
-                                      ValueChanged="(e)=> MoveFocus(e,this.TextFieldRefs[8],this.TextFieldRefs[9])"
-                                      Mask="MobileMask"
+                                      @bind-Value=this.OwnerPhone
                                       Validation="@(new Func<string, string>(this.ValidateMobilePhone))"
                                       Label="تلفن مالک"
                                       Immediate="false"

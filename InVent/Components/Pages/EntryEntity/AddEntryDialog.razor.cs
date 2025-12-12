@@ -32,7 +32,7 @@ namespace InVent.Components.Pages.EntryEntity
 
         private readonly List<MudTextField<int?>> TextFieldRefs = new(new MudTextField<int?>[6]);
         private int? Filled { get; set; }
-        private int? Damaged { get; set; }
+        private int? Damaged { get; set; } = 0;
 
         private int? RefineryFilled { get; set; }
         private int? RefineryEmpty { get; set; }
@@ -56,6 +56,7 @@ namespace InVent.Components.Pages.EntryEntity
         private Tanker Tanker { get; set; }
         private List<Tanker> Tankers { get; set; } = [];
         private DeliveryOrder DeliveryOrder { get; set; }
+        private DeliveryOrder TempDeliveryOrder { get; set; }
         private List<DeliveryOrder> DeliveryOrders { get; set; } = [];
 
         protected override async Task OnInitializedAsync()
@@ -308,10 +309,18 @@ namespace InVent.Components.Pages.EntryEntity
                             var attRes = await this.AttachmentService.Add(att);
                             this.HandleMessage(att.FileName, attRes.Success);
                         }
-                        
+
+
+                        this.TempDeliveryOrder = this.DeliveryOrder;
                         await form.ResetAsync();
                         this.files.Clear();
                         this.Attachments.Clear();
+                        this.Date = DateTime.Now;
+                        this.Damaged = 0;
+                        this.RefineryNet = null;
+                        this.WarehouseNet = null;
+                        this.DeliveryOrder = this.TempDeliveryOrder;
+                        this.StateHasChanged();
                     }
                     this.HandleMessage(res.Message, res.Success);
 

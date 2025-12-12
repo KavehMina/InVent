@@ -75,7 +75,7 @@ namespace InVent.Components.Pages.BookingEntity
             this.Bookings = (await BookingService.GetByProject(this.Project.Id)).Entities ?? [];
             this.Product = this.Project?.Product?.Name;
             this.Customer = this.Project?.Customer?.Name;
-            this.ContainerType = this.Project?.Package?.Name ?? string.Empty;
+            //this.ContainerType = this.Project?.Package?.Name ?? string.Empty;
 
             var temp = this.Bookings.Sum(x => x.PackingCount);
             this.Remaining = this.Project?.PackageCount - temp;

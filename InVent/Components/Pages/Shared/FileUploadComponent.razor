@@ -3,7 +3,11 @@
 @inherits BaseComponent
 
 <div class="upload-container">
-    <MudText Style="height:24px!important">@this.Title</MudText>
+    <MudText Style="height:24px!important">@this.Title
+        @if(this.IsRequired()){
+            <span>*</span>
+        }
+    </MudText>
     
     <MudFileUpload T="IReadOnlyList<IBrowserFile>"
                    @ref=this.FileUploadRef

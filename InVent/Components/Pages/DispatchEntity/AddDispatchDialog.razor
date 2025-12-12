@@ -114,6 +114,7 @@
                                               InputId="1"
                                               Mask="Mask1"
                                               @bind-Value=this.First
+                                              DebounceInterval="this.DebounceInterval"
                                               Validation=@(new Func<string,string>(this.ValidateFirstPartofNumberPlate))
                                               Style="background-color:#fcfceb;"
                                               Placeholder="_ _"
@@ -127,6 +128,7 @@
                                               InputId="2"
                                               Mask="Mask2"
                                               @bind-Value=this.Second
+                                              DebounceInterval="this.DebounceInterval"
                                               Style="background-color:#fcfceb"
                                               Validation=@(new Func<string,string>(this.ValidateSecondPartofNumberPlate))
                                               Required
@@ -139,6 +141,7 @@
                                               InputId="3"
                                               Mask="Mask3"
                                               @bind-Value=this.Third
+                                              DebounceInterval="this.DebounceInterval"
                                               Style="background-color:#fcfceb"
                                               Validation=@(new Func<string,string>(this.ValidateThirdPartofNumberPlate))
                                               Placeholder="_ _ _"
@@ -153,6 +156,7 @@
                                               InputId="4"
                                               Mask="Mask1"
                                               @bind-Value=this.Fourth
+                                              DebounceInterval="this.DebounceInterval"
                                               Validation=@(new Func<string,string>(this.ValidateForthPartofNumberPlate))
                                               Placeholder="_ _"
                                               Style="background-color:#fcfceb"

@@ -7,6 +7,7 @@ using InVent.Services.PortServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Options;
 using MudBlazor;
 using System.Text.RegularExpressions;
 
@@ -24,7 +25,8 @@ namespace InVent.Components.Pages.DispatchEntity
         public required PortService PortService { get; set; }
         [Inject]
         public required CustomsService CustomsService { get; set; }
-
+        [Inject]
+        public required IOptionsMonitor<Config> ConfigOptions { get; set; }
 
         private List<Dispatch> Dispatches { get; set; } = [];
         private Booking Booking { get; set; }
@@ -62,6 +64,7 @@ namespace InVent.Components.Pages.DispatchEntity
         private DateTime? Date { get; set; } = DateTime.UtcNow;
         private MudDatePicker _picker;
         private string ExportLabel => this.IsExport ? "حمل یک‌سره" : "حمل ترکیبی";
+        private double DebounceInterval { get; set; }
 
         public required string First { get; set; }
         public required string Second { get; set; } = "ع";
@@ -77,6 +80,7 @@ namespace InVent.Components.Pages.DispatchEntity
 
         protected override async void OnInitialized()
         {
+            this.DebounceInterval = this.ConfigOptions.CurrentValue.DebounceInterval;
             try
             {
                 this.Bookings = (await BookingService.GetAll()).Entities ?? [];

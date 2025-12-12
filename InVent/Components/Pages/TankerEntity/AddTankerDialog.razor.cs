@@ -1,9 +1,12 @@
 ﻿using InVent.Data.Models;
+using InVent.Extensions;
 using InVent.Services.BankServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Options;
 using MudBlazor;
 using System.Text.RegularExpressions;
+using static InVent.Extensions.JsonFileReader;
 
 namespace InVent.Components.Pages.TankerEntity
 {
@@ -11,6 +14,7 @@ namespace InVent.Components.Pages.TankerEntity
     {
         [Inject]
         public required BankService BankService { get; set; }
+        
         const string RPO = "RPO";
         const string SlackWax = "Slack Wax";
         const string RPOSlack = "RPO و Slack Wax";
@@ -39,14 +43,22 @@ namespace InVent.Components.Pages.TankerEntity
         public Bank? DriverBank { get; set; }
         public Bank? OwnerBank { get; set; }
 
+        private double DebounceInterval { get; set; }  
+
         protected override void OnInitialized()
         {
             //this.SetState(new State<Tanker>());
             base.OnInitialized();
         }
 
+
+        [Inject]
+        public required IOptionsMonitor<Config> ConfigOptions { get; set; }
+
+
         protected override async Task OnInitializedAsync()
         {
+            this.DebounceInterval = this.ConfigOptions.CurrentValue.DebounceInterval;
             try
             {
                 var res = await BankService.GetAllBanks();

@@ -37,11 +37,17 @@
                     Grade
                 </MudText>
             </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.body2">
+                    پالایشگاه
+                </MudText>
+            </MudTh>
             <MudTh></MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="نام">@context.Name</MudTd>
-            <MudTd DataLabel="نام">@context.Grade</MudTd>
+            <MudTd DataLabel="Grade">@context.Grade</MudTd>
+            <MudTd DataLabel="پالایشگاه">@context.Refinery?.Name</MudTd>
             <MudTd Style="display:flex;justify-content:end">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                OnClick="(e)=>this.OpenEditDialog(e,context)"
